@@ -1,0 +1,256 @@
+{
+  "source": {
+    "hash": "0xb70e846fc48a086d59fe111555b05e5f90631b186fc5d6926e0d429eb0d18ae6",
+    "language": "ink! 3.4.0",
+    "compiler": "rustc 1.67.0-nightly"
+  },
+  "contract": {
+    "name": "phat_boiler_plate",
+    "version": "0.1.0",
+    "authors": [
+      "Shelven Zhou <shelvenzhou@phala.network>"
+    ]
+  },
+  "V3": {
+    "spec": {
+      "constructors": [
+        {
+          "args": [],
+          "docs": [
+            "Constructor to initializes your contract"
+          ],
+          "label": "new",
+          "payable": false,
+          "selector": "0x9bae9d5e"
+        }
+      ],
+      "docs": [],
+      "events": [],
+      "messages": [
+        {
+          "args": [
+            {
+              "label": "account",
+              "type": {
+                "displayName": [
+                  "String"
+                ],
+                "type": 1
+              }
+            }
+          ],
+          "docs": [
+            " A function to handle direct off-chain Query from users.",
+            " Such functions use the immutable reference `&self`",
+            " so WILL NOT change the contract state."
+          ],
+          "label": "get_eth_balance",
+          "mutates": false,
+          "payable": false,
+          "returnType": {
+            "displayName": [
+              "Result"
+            ],
+            "type": 3
+          },
+          "selector": "0x437a5ed1"
+        },
+        {
+          "args": [
+            {
+              "label": "new_message",
+              "type": {
+                "displayName": [
+                  "String"
+                ],
+                "type": 1
+              }
+            }
+          ],
+          "docs": [],
+          "label": "set_my_message",
+          "mutates": true,
+          "payable": false,
+          "returnType": null,
+          "selector": "0xd9f5db73"
+        },
+        {
+          "args": [],
+          "docs": [],
+          "label": "get_my_message",
+          "mutates": false,
+          "payable": false,
+          "returnType": {
+            "displayName": [
+              "String"
+            ],
+            "type": 1
+          },
+          "selector": "0x1d5814ee"
+        },
+        {
+          "args": [
+            {
+              "label": "new_number",
+              "type": {
+                "displayName": [
+                  "u8"
+                ],
+                "type": 2
+              }
+            }
+          ],
+          "docs": [],
+          "label": "set_my_number",
+          "mutates": true,
+          "payable": false,
+          "returnType": null,
+          "selector": "0x5f412325"
+        },
+        {
+          "args": [],
+          "docs": [],
+          "label": "get_my_number",
+          "mutates": false,
+          "payable": false,
+          "returnType": {
+            "displayName": [
+              "u8"
+            ],
+            "type": 2
+          },
+          "selector": "0x2dda2519"
+        }
+      ]
+    },
+    "storage": {
+      "struct": {
+        "fields": [
+          {
+            "layout": {
+              "cell": {
+                "key": "0x0000000000000000000000000000000000000000000000000000000000000000",
+                "ty": 0
+              }
+            },
+            "name": "demo_field"
+          },
+          {
+            "layout": {
+              "cell": {
+                "key": "0x0100000000000000000000000000000000000000000000000000000000000000",
+                "ty": 1
+              }
+            },
+            "name": "my_message"
+          },
+          {
+            "layout": {
+              "cell": {
+                "key": "0x0200000000000000000000000000000000000000000000000000000000000000",
+                "ty": 2
+              }
+            },
+            "name": "my_number"
+          }
+        ]
+      }
+    },
+    "types": [
+      {
+        "id": 0,
+        "type": {
+          "def": {
+            "primitive": "bool"
+          }
+        }
+      },
+      {
+        "id": 1,
+        "type": {
+          "def": {
+            "primitive": "str"
+          }
+        }
+      },
+      {
+        "id": 2,
+        "type": {
+          "def": {
+            "primitive": "u8"
+          }
+        }
+      },
+      {
+        "id": 3,
+        "type": {
+          "def": {
+            "variant": {
+              "variants": [
+                {
+                  "fields": [
+                    {
+                      "type": 1
+                    }
+                  ],
+                  "index": 0,
+                  "name": "Ok"
+                },
+                {
+                  "fields": [
+                    {
+                      "type": 4
+                    }
+                  ],
+                  "index": 1,
+                  "name": "Err"
+                }
+              ]
+            }
+          },
+          "params": [
+            {
+              "name": "T",
+              "type": 1
+            },
+            {
+              "name": "E",
+              "type": 4
+            }
+          ],
+          "path": [
+            "Result"
+          ]
+        }
+      },
+      {
+        "id": 4,
+        "type": {
+          "def": {
+            "variant": {
+              "variants": [
+                {
+                  "index": 0,
+                  "name": "InvalidEthAddress"
+                },
+                {
+                  "index": 1,
+                  "name": "HttpRequestFailed"
+                },
+                {
+                  "index": 2,
+                  "name": "InvalidResponseBody"
+                }
+              ]
+            }
+          },
+          "path": [
+            "phat_boiler_plate",
+            "phat_boiler_plate",
+            "Error"
+          ]
+        }
+      }
+    ]
+  }
+}
