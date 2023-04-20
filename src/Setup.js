@@ -12,7 +12,9 @@ import { typeDefinitions } from '@polkadot/types'
 // import { types} from "@phala/sdk";
 
 // ***** Phala *****
-import phat_boiler_plate_metadata from './Abis/phat_boiler_plate_metadata';  
+// import phat_boiler_plate_metadata from './Abis/phat_boiler_plate_metadata';  
+import phat_boiler_plate_metadata from './Abis/phat_boiler_plate.json';  
+
 
 import oracle_dex_metadata from './Abis/oracle_dex_metadata';  
 import pallet_metadata from './Abis/pallet_metadata';  
@@ -20,7 +22,9 @@ import treasury_manager_metadata from './Abis/treasury_manager_metadata';
 
 
 // ***** Phala *****
-const phat_contractId = "0x09f3a33b91baca9cef11fd158800ead3019bfa498001c94d4297b329c50120ee"
+// const phat_contractId = "0x09f3a33b91baca9cef11fd158800ead3019bfa498001c94d4297b329c50120ee"
+const phat_contractId = "0x3c33c3a713c3f595f1c764b8c7102c80338f037c015123e244dbcc0eb40a55ea"
+
 console.log(" ********** phat_contractId ********** : ",phat_contractId);
 let phala_api, phat_contract_boiler_plate;
 
@@ -52,7 +56,7 @@ const setPolkadotInjector = (injector, injectorAddress) => {
 	// Setup New Polkadot Signer/Injector polkadotInjectorAddress: 5DAqjjBN3CJteqrmps95HUmo325xDBuErC8BoNd88ud6Cxgo polkadotInjector: ...
 }
 
-
+ 
 //#region ***** Setup Substrate Chain //*****
 const setup_SubstrateChain = async (wsURL = 'Shibuya') => {
   console.log("setup_SubstrateChain is RUN for wsURL: ",wsURL);
@@ -384,6 +388,7 @@ const set_my_number = async (newNumber=5) => {
 		const options = {
 			gasLimit: gasRequired.refTime,
 			storageDepositLimit: storageDeposit.isCharge ? storageDeposit.asCharge : null,
+			value: "2000000000000"
 		}
 
 		const tx = await contract.tx

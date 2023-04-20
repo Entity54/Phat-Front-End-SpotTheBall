@@ -138,13 +138,10 @@ const MyWallet = () => {
 							{/* <div class="rect" id="rect" style={{ position: "relative", backgroundColor:"blue", height:"98%", width:"98%", left:"1%", top:"1%"}}  */}
 							{/* <div class="rect" id="rect" style={{ position: "relative", backgroundColor:"blue", height:"100%", width:"100%", margin: "0px", padding: "0px" }}  */}
 							<div class="rect" id="rect" style={{ position: "relative", backgroundColor:"blue",  width:"1550px", height:"1000px", margin: "10px", padding: "0px" }} 
-
-
 									// onClick = { (e) => getPosition(e)}
-
 							>
 									<img alt="images" width={1550} height={1000} src={shibuyalogo} 
-									onClick = { (e) => getPosition(e)}
+										onClick = { (e) => getPosition(e)}
 									/>  
 
 							</div>

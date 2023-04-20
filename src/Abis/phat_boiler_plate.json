@@ -1,0 +1,779 @@
+{
+  "source": {
+    "hash": "0xa9909baba960c6b5f689503ccd26deba99102d67f7ff6747e838aa6fb2247d78",
+    "language": "ink! 4.1.0",
+    "compiler": "rustc 1.68.2",
+    "build_info": {
+      "build_mode": "Debug",
+      "cargo_contract_version": "2.1.0",
+      "rust_toolchain": "stable-x86_64-apple-darwin",
+      "wasm_opt_settings": {
+        "keep_debug_symbols": false,
+        "optimization_passes": "Z"
+      }
+    }
+  },
+  "contract": {
+    "name": "phat_boiler_plate",
+    "version": "0.1.0",
+    "authors": [
+      "Entity54"
+    ]
+  },
+  "spec": {
+    "constructors": [
+      {
+        "args": [],
+        "docs": [
+          "Constructor to initializes your contract"
+        ],
+        "label": "new",
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink_primitives",
+            "ConstructorResult"
+          ],
+          "type": 3
+        },
+        "selector": "0x9bae9d5e"
+      }
+    ],
+    "docs": [],
+    "events": [],
+    "lang_error": {
+      "displayName": [
+        "ink",
+        "LangError"
+      ],
+      "type": 5
+    },
+    "messages": [
+      {
+        "args": [
+          {
+            "label": "account",
+            "type": {
+              "displayName": [
+                "String"
+              ],
+              "type": 1
+            }
+          }
+        ],
+        "docs": [
+          " A function to handle direct off-chain Query from users.",
+          " Such functions use the immutable reference `&self`",
+          " so WILL NOT change the contract state."
+        ],
+        "label": "get_eth_balance",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 6
+        },
+        "selector": "0x437a5ed1"
+      },
+      {
+        "args": [
+          {
+            "label": "new_message",
+            "type": {
+              "displayName": [
+                "String"
+              ],
+              "type": 1
+            }
+          }
+        ],
+        "docs": [],
+        "label": "set_my_message",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 3
+        },
+        "selector": "0xd9f5db73"
+      },
+      {
+        "args": [],
+        "docs": [],
+        "label": "get_my_message",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 9
+        },
+        "selector": "0x1d5814ee"
+      },
+      {
+        "args": [
+          {
+            "label": "new_number",
+            "type": {
+              "displayName": [
+                "u8"
+              ],
+              "type": 2
+            }
+          }
+        ],
+        "docs": [],
+        "label": "set_my_number",
+        "mutates": true,
+        "payable": true,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 3
+        },
+        "selector": "0x5f412325"
+      },
+      {
+        "args": [],
+        "docs": [],
+        "label": "get_my_number",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 10
+        },
+        "selector": "0x2dda2519"
+      },
+      {
+        "args": [],
+        "docs": [
+          " get contract balance TESTED"
+        ],
+        "label": "contract_balance",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 11
+        },
+        "selector": "0xba16113a"
+      },
+      {
+        "args": [],
+        "docs": [
+          " get contract address TESTED"
+        ],
+        "label": "contract_address",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 13
+        },
+        "selector": "0x09c19fa9"
+      },
+      {
+        "args": [
+          {
+            "label": "account",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 14
+            }
+          }
+        ],
+        "docs": [
+          " check if accoutn is a contract TESTED"
+        ],
+        "label": "account_is_contract",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 16
+        },
+        "selector": "0x62d2c767"
+      },
+      {
+        "args": [],
+        "docs": [
+          " get_existential_deposit TESTED"
+        ],
+        "label": "get_existential_deposit",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 11
+        },
+        "selector": "0x3920e773"
+      },
+      {
+        "args": [],
+        "docs": [
+          " Withdraw all your balance from the contract."
+        ],
+        "label": "withdraw",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 3
+        },
+        "selector": "0x410fcc9d"
+      },
+      {
+        "args": [
+          {
+            "label": "value",
+            "type": {
+              "displayName": [
+                "Balance"
+              ],
+              "type": 12
+            }
+          }
+        ],
+        "docs": [],
+        "label": "give_me",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 3
+        },
+        "selector": "0x499bb739"
+      }
+    ]
+  },
+  "storage": {
+    "root": {
+      "layout": {
+        "struct": {
+          "fields": [
+            {
+              "layout": {
+                "leaf": {
+                  "key": "0x00000000",
+                  "ty": 0
+                }
+              },
+              "name": "demo_field"
+            },
+            {
+              "layout": {
+                "leaf": {
+                  "key": "0x00000000",
+                  "ty": 1
+                }
+              },
+              "name": "my_message"
+            },
+            {
+              "layout": {
+                "leaf": {
+                  "key": "0x00000000",
+                  "ty": 2
+                }
+              },
+              "name": "my_number"
+            }
+          ],
+          "name": "PhatBoilerPlate"
+        }
+      },
+      "root_key": "0x00000000"
+    }
+  },
+  "types": [
+    {
+      "id": 0,
+      "type": {
+        "def": {
+          "primitive": "bool"
+        }
+      }
+    },
+    {
+      "id": 1,
+      "type": {
+        "def": {
+          "primitive": "str"
+        }
+      }
+    },
+    {
+      "id": 2,
+      "type": {
+        "def": {
+          "primitive": "u8"
+        }
+      }
+    },
+    {
+      "id": 3,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 4
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 5
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 4
+          },
+          {
+            "name": "E",
+            "type": 5
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 4,
+      "type": {
+        "def": {
+          "tuple": []
+        }
+      }
+    },
+    {
+      "id": 5,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 1,
+                "name": "CouldNotReadInput"
+              }
+            ]
+          }
+        },
+        "path": [
+          "ink_primitives",
+          "LangError"
+        ]
+      }
+    },
+    {
+      "id": 6,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 7
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 5
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 7
+          },
+          {
+            "name": "E",
+            "type": 5
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 7,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 1
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 8
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 1
+          },
+          {
+            "name": "E",
+            "type": 8
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 8,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "InvalidEthAddress"
+              },
+              {
+                "index": 1,
+                "name": "HttpRequestFailed"
+              },
+              {
+                "index": 2,
+                "name": "InvalidResponseBody"
+              }
+            ]
+          }
+        },
+        "path": [
+          "phat_boiler_plate",
+          "phat_boiler_plate",
+          "Error"
+        ]
+      }
+    },
+    {
+      "id": 9,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 1
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 5
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 1
+          },
+          {
+            "name": "E",
+            "type": 5
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 10,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 2
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 5
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 2
+          },
+          {
+            "name": "E",
+            "type": 5
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 11,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 12
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 5
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 12
+          },
+          {
+            "name": "E",
+            "type": 5
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 12,
+      "type": {
+        "def": {
+          "primitive": "u128"
+        }
+      }
+    },
+    {
+      "id": 13,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 14
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 5
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 14
+          },
+          {
+            "name": "E",
+            "type": 5
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 14,
+      "type": {
+        "def": {
+          "composite": {
+            "fields": [
+              {
+                "type": 15,
+                "typeName": "[u8; 32]"
+              }
+            ]
+          }
+        },
+        "path": [
+          "ink_primitives",
+          "types",
+          "AccountId"
+        ]
+      }
+    },
+    {
+      "id": 15,
+      "type": {
+        "def": {
+          "array": {
+            "len": 32,
+            "type": 2
+          }
+        }
+      }
+    },
+    {
+      "id": 16,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 0
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 5
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 0
+          },
+          {
+            "name": "E",
+            "type": 5
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    }
+  ],
+  "version": "4"
+}
