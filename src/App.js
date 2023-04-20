@@ -10,7 +10,7 @@ import {
 } from './Setup.js';    
 import { web3Accounts, web3Enable, web3FromAddress, web3AccountsSubscribe, web3FromSource, web3ListRpcProviders, web3UseRpcProvider } from '@polkadot/extension-dapp';
 
-
+ 
 
 function App (props) {
 

@@ -5,6 +5,9 @@ import { ThemeContext } from "../../../context/ThemeContext";
 import DatePicker  from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
+import shibuyalogo from "../../../images/shibuyalogo.png";
+//TODO load image from AWS-S3
+
 
 import { pallet_get_treasury_manager_address, pallet_get_admin, pallet_addNewVotedJob, pallet_removeJob, pallet_depositFundsToTreasuryManager } from "../../../Setup";
 
@@ -29,6 +32,10 @@ const MyWallet = () => {
 	const [payee, setPayee] = useState("");
 	const [numOfInstallements, setNumOfInstallements] = useState("");
 	const [installmentPeriod, setInstallmentPeriod] = useState("");
+
+	const [coordinates, setCoordinates] = useState({x: "", y: ""});
+
+
 
 
 	const addNewJob = () => {
@@ -104,16 +111,48 @@ const MyWallet = () => {
 		} else console.log(`ApplicationScreen: There is a missign value in addNewJob`);
 
 	}
+
+	const getPosition = (e) => {
+			var rect = e.target.getBoundingClientRect();
+			var x = e.clientX - rect.left;
+			var y = e.clientY - rect.top;
+			console.log(`=========> X: ${x} . Y: ${y}`);
+		    setCoordinates({x, y, });
+	}
  
 
 	return(
 		<Fragment>
-			<div className="col-xl-6 col-lg-12">
+			<div className="col-xl-12 col-lg-12">
 				<div className="card bg-gradient-1" style={{backgroundColor:""}}>
 					<div className="card-header mt-4">
-						<p className="card-title mx-4 fs-28" style={{color:"#AEAEAE"}}>Treasury Application SmartPay Form</p>
+						<p className="card-title mx-4 fs-28" style={{color:"#AEAEAE"}}>SPOT THE BALL</p>
 					</div>
 					<div className="card-body" style={{backgroundColor:""}}>
+
+							<input type="textarea" id="area" value={` Coordinates: x: ${coordinates.x} y: ${coordinates.y}`} placeholder="TICKET COORDINATES WILL BE SHOWN HERE" disabled style={{ fontSize:"18px", color:"white", position: "absolute", backgroundColor:"black", height:"100px", width:"500px", right:"0px", top:"0px"}} />
+						<div style={{backgroundColor:"darkgreen", height: "80vh", width:"100%", padding:"10px" }}>
+
+							{/* <div class="rect" id="rect" style={{ position: "absolute", backgroundColor:"red", height:"50px", width:"50px", left:"0px", top:"100px"}}> */}
+							{/* position: "absolute" relative fixed */}
+							{/* <div class="rect" id="rect" style={{ position: "relative", backgroundColor:"blue", height:"98%", width:"98%", left:"1%", top:"1%"}}  */}
+							{/* <div class="rect" id="rect" style={{ position: "relative", backgroundColor:"blue", height:"100%", width:"100%", margin: "0px", padding: "0px" }}  */}
+							<div class="rect" id="rect" style={{ position: "relative", backgroundColor:"blue",  width:"1550px", height:"1000px", margin: "10px", padding: "0px" }} 
+
+
+									// onClick = { (e) => getPosition(e)}
+
+							>
+									<img alt="images" width={1550} height={1000} src={shibuyalogo} 
+									onClick = { (e) => getPosition(e)}
+									/>  
+
+							</div>
+				
+						</div> 
+
+
+
 						{/* <div className="basic-form">
 							<form onSubmit={(e) => { e.preventDefault(); addNewJob(); }
 							}>
