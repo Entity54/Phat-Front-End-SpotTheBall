@@ -172,11 +172,12 @@ const SideBar = () => {
           </li>
           <li className={`${charts.includes(path) ? "mm-active" : ""}`}>
             <Link className="ai-icon" to="/LiveJobss"><i className="fa fa-list"></i> <span className="nav-text">Live Jobs</span></Link>
-
           </li>
           <li className={`${charts.includes(path) ? "mm-active" : ""}`}>
             <Link className="ai-icon" to="/readme"><i className="fa fa-book"></i> <span className="nav-text">Readme</span></Link>
-
+          </li>
+          <li className={`${charts.includes(path) ? "mm-active" : ""}`}>
+            <Link className="ai-icon" to="/SpotTheBall"><i className="fa fa-book"></i> <span className="nav-text">Spot The Ball</span></Link>
           </li>
         </MM>
       </PerfectScrollbar>
