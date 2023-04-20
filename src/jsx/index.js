@@ -11,6 +11,7 @@ import Footer from "./layouts/Footer";
 
 import SmartPayDashboard from "./components/Screens/SmartPayDashboard";
 import ApplicationForm from "./components/Screens/Application";
+import SpotTheBall from "./components/Screens/SpotTheBall";
 import LiveJobs from "./components/Screens/LiveJobs";
 import ReadMe from "./components/Screens/ReadMe";
 
@@ -60,6 +61,11 @@ const Markup = ( { astar_api, blockHeader, polakdotSignerfunction, polkadtoAccou
                     astar_api={astar_api} blockHeader={blockHeader}
                   /> 
 
+              </Route>
+              <Route exact path='/SpotTheBall'> 
+                  <SpotTheBall 
+                      astar_api={astar_api} blockHeader={blockHeader}
+                  /> 
               </Route>
               <Route exact path='/readme'> <ReadMe/> </Route>
               <Route exact path='/'> <ReadMe/> </Route>
