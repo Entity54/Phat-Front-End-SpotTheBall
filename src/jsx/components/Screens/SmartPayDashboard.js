@@ -12,7 +12,21 @@ import { pallet_get_treasury_manager_address, pallet_get_admin, pallet_launchTre
 	tm_getCheckPointIntervals, tm_getBalance,
 	tm_setLiabilitiesThresholds,
 	//PHALA
-	set_my_number, set_my_message
+	set_my_number, set_my_message, 
+	get_account_balance,
+	get_game_stats,
+	get_players,
+	get_players_mapping,
+	get_tickets_mapping,
+	get_all_tickets,
+	get_wisdom_of_crowd_coordinates,
+	get_total_pot,
+	get_total_net_pot,
+	get_total_fees,
+	get_hall_of_fame,
+	start_new_game,
+	check_game,
+	submit_tickets,
 } from "../../../Setup";
 
 
@@ -51,6 +65,129 @@ const SmartPay = ({ astar_api, blockHeader }) => {
 	const [smartPay_notification_thirty_active, setSmartPay_notification_thrity_active] = useState(false);
 	const [smartPay_notification_overall_active, setSmartPay_notification_overall_active] = useState(true);
 	
+	const [phala_account_balance, setPhala_account_balance] = useState("");
+	const [phala_game_stats, setPhala_game_stats] = useState({state: false, imageHash:"", startTime: "", endTime: "", ticketPrice: "", feesPerccent: ""});
+	// const [coordinates, setCoordinates] = useState({x: "", y: ""});
+	const [coordinatesX, setCoordinatesX] = useState("");
+	const [coordinatesY, setCoordinatesY] = useState("");
+	const [tickets, setTickets] = useState([]);
+
+
+
+
+
+
+	const phala_get_account_balance = async (account) => {
+		const balance = await get_account_balance(account);
+		console.log(`phala_get_account_balance for acocunt: ${account} is ${balance}`);
+		setPhala_account_balance(balance);
+		// return balance;
+	}
+
+	const phala_get_game_stats = async () => {
+		const output = await get_game_stats();
+		// console.log(`|||>>> phala_get_game_stats for output: ${typeof output}`,JSON.stringify(output));
+		// console.log(`|||>>> phala_get_game_stats for output: `,output.Ok);
+		console.log(`|||>>> phala_get_game_stats for output: ${output.Ok[0]}`);  //state
+		console.log(`|||>>> phala_get_game_stats for output: ${output.Ok[1]}`);  //image hash
+		console.log(`|||>>> phala_get_game_stats for output: ${output.Ok[2]}`);  //start time
+		console.log(`|||>>> phala_get_game_stats for output: ${output.Ok[3]}`);  //end time
+		console.log(`|||>>> phala_get_game_stats for output: ${output.Ok[4]}`);  //ticket price
+		console.log(`|||>>> phala_get_game_stats for output: ${output.Ok[5]}`);  //fees percent
+		setPhala_game_stats({state: output.Ok[0], imageHash: output.Ok[1], startTime: output.Ok[2], endTime: output.Ok[3], ticketPrice: output.Ok[4], feesPerccent: output.Ok[5]})
+
+
+		// return balance;
+	}
+
+	const phala_get_players = async () => {
+		const output = await get_players();
+		console.log(`|||>>> phala_get_players for output: ${output}`);
+		// return balance;
+	}
+
+	const phala_get_players_mapping = async () => {
+		const output = await get_players_mapping();
+		console.log(`|||>>> phala_get_players_mapping for output: ${output}`);
+		// return balance;
+	}
+
+	const phala_get_tickets_mapping = async () => {
+		const output = await get_tickets_mapping();
+		console.log(`|||>>> phala_get_tickets_mapping for output: ${output}`);
+		// return balance;
+	}
+
+	const phala_get_all_tickets = async () => {
+		const output = await get_all_tickets();
+		console.log(`|||>>> phala_get_all_tickets for output: ${output}`);
+		// return balance;
+	}
+
+	const phala_get_wisdom_of_crowd_coordinates = async () => {
+		const output = await get_wisdom_of_crowd_coordinates();
+		console.log(`|||>>> phala_get_wisdom_of_crowd_coordinates for output: ${output}`);
+		// return balance;
+	}
+
+	const phala_get_total_pot = async () => {
+		const output = await get_total_pot();
+		console.log(`|||>>> phala_get_total_pot for output: ${output}`);
+		// return balance;
+	}
+
+	const phala_get_total_net_pot = async () => {
+		const output = await get_total_net_pot();
+		console.log(`|||>>> phala_get_total_net_pot for output: ${output}`);
+		// return balance;
+	}
+
+	const phala_get_total_fees = async () => {
+		const output = await get_total_fees();
+		console.log(`|||>>> phala_get_total_fees for output: ${output}`);
+		// return balance;
+	}
+
+	
+	const phala_get_hall_of_fame = async () => {
+		const output = await get_hall_of_fame();
+		console.log(`|||>>> phala_get_hall_of_fame for output: ${output}`);
+		// return balance;
+	}
+
+
+
+	const phala_start_new_game = async () => {
+		const image_hash = "someimagehashfrom4everlandIPFS"
+		const start_time = Date.now(); //1682088239631
+		const duration_mins = 15;
+		const end_time =  start_time + duration_mins*60*1000;
+		console.log(`|||>>> phala_start_new_game image_hash: ${image_hash} start_time: ${start_time} end_time: ${end_time}`);
+
+		await start_new_game(image_hash, start_time, end_time);
+	}
+
+	const phala_check_game = async () => {
+		const output = await check_game();
+		console.log(`|||>>> phala_check_game`);
+	}
+
+	const phala_play_ticket = async (newTicket_X,newTicket_Y) => {
+		let newTicket = [newTicket_X,newTicket_Y];
+		console.log(`|||>>> phala_play_ticket newTicket: `,newTicket);
+		setTickets([...tickets,newTicket]);
+	}
+
+	const phala_submit_tickets = async () => {
+		console.log(`|||>>> phala_submit_tickets tickets: `,tickets);
+		await submit_tickets(tickets);
+	}
+
+
+
+
+
+
 
 	const phala_setMyNymber = async () => {
 				await set_my_number(palletAdminAddress);
@@ -58,10 +195,10 @@ const SmartPay = ({ astar_api, blockHeader }) => {
 	}
 	const phala_setMyMessage = async () => {
 		await set_my_message(palletAdminAddress);
-		console.log(`A new phala_setMyMessage has been submitted`);
+		console.log(`A new phala_setMyMessage has been submitted`); 
 	}
 
-
+ 
 	const getLiabilityThresholds_tm = async () => {
 		const levelsArray = await tm_getLiabilityThresholds();
 		// console.log(`levelsArray: ${levelsArray[0]} ${levelsArray[1]} ${levelsArray[2]} `);
@@ -442,6 +579,513 @@ const SmartPay = ({ astar_api, blockHeader }) => {
 						</div>
 						<div className="card-body text-center fs-16" style={{height:"auto"}}>
 
+         {/* 1 */}
+						<div  className="bg-gradient-1 coin-holding" style={{height:"80px", marginBottom:"15px", backgroundColor:""}}>
+								<div className="col-xl-2 col-xxl-3"style={{backgroundColor:""}}>
+									<div className="mb-2">
+										<div className="align-items-center">
+											<div className="ms-3 pt-2">
+												<p className="mb-0 op-6" >Account Balance</p>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div className="col-xl-6 col-xxl-3"  style={{backgroundColor:""}}>
+									<div className="mb-2" style={{backgroundColor:""}}> 
+										<div className="align-items-center"  style={{backgroundColor:""}}>
+											<div className="ms-0 pt-2" style={{backgroundColor:"", width:"90%"}}>
+												<input type="text" value = {phala_account_balance} placeholder="" className="form-control fs-16" style={{color:"white",  textAlign:"center",  }} 
+													onChange={(event) => setPalletAdminAddress(event.target.value)}
+												/>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div className="col-xl-2 col-xxl-4">
+									<button className="btn btn-dark py-3 px-3" style={{height:"", backgroundColor:`${!smartPay_button_active?"grey":"red"}`  }} disabled={!smartPay_button_active} 
+									onClick = { () => phala_get_account_balance()}
+									>
+										Get Phala account Balance
+									</button> 
+
+								</div>
+								<div className="col-xl-2 col-xxl-3"></div>
+							</div>
+
+			{/* 2 */}
+						   <div  className="bg-gradient-1 coin-holding" style={{height:"80px", marginBottom:"15px", backgroundColor:""}}>
+								<div className="col-xl-2 col-xxl-3"style={{backgroundColor:""}}>
+									<div className="mb-2">
+										<div className="align-items-center">
+											<div className="ms-3 pt-2">
+												<p className="mb-0 op-6" >Account Balance</p>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div className="col-xl-6 col-xxl-3"  style={{backgroundColor:""}}>
+									<div className="mb-2" style={{backgroundColor:""}}> 
+										<div className="align-items-center"  style={{backgroundColor:""}}>
+											<div className="ms-0 pt-2" style={{backgroundColor:"", width:"90%"}}>
+												<input type="text" value = {`${phala_game_stats.state} ${phala_game_stats.imageHash} ${phala_game_stats.startTime} ${phala_game_stats.endTime} ${phala_game_stats.ticketPrice} ${phala_game_stats.feesPerccent}`} placeholder="" className="form-control fs-16" style={{color:"white",  textAlign:"center",  }} 
+													onChange={(event) => setPalletAdminAddress(event.target.value)}
+												/>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div className="col-xl-2 col-xxl-4">
+									<button className="btn btn-dark py-3 px-3" style={{height:"", backgroundColor:`${!smartPay_button_active?"grey":"red"}`  }} disabled={!smartPay_button_active} 
+									onClick = { () => phala_get_game_stats()}
+									>
+										Get game_stats
+									</button> 
+
+								</div>
+								<div className="col-xl-2 col-xxl-3"></div>
+							</div>
+
+			{/* 3 */}
+							<div  className="bg-gradient-1 coin-holding" style={{height:"80px", marginBottom:"15px", backgroundColor:""}}>
+								<div className="col-xl-2 col-xxl-3"style={{backgroundColor:""}}>
+									<div className="mb-2">
+										<div className="align-items-center">
+											<div className="ms-3 pt-2">
+												<p className="mb-0 op-6" >Get Players</p>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div className="col-xl-6 col-xxl-3"  style={{backgroundColor:""}}>
+									<div className="mb-2" style={{backgroundColor:""}}> 
+										<div className="align-items-center"  style={{backgroundColor:""}}>
+											<div className="ms-0 pt-2" style={{backgroundColor:"", width:"90%"}}>
+												<input type="text" value = {phala_account_balance} placeholder="" className="form-control fs-16" style={{color:"white",  textAlign:"center",  }} 
+													onChange={(event) => setPalletAdminAddress(event.target.value)}
+												/>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div className="col-xl-2 col-xxl-4">
+									<button className="btn btn-dark py-3 px-3" style={{height:"", backgroundColor:`${!smartPay_button_active?"grey":"red"}`  }} disabled={!smartPay_button_active} 
+									onClick = { () => phala_get_players()}
+									>
+										Get Players
+									</button> 
+
+								</div>
+								<div className="col-xl-2 col-xxl-3"></div>
+							</div>
+
+
+
+
+
+							{/* 4 */}
+							<div  className="bg-gradient-1 coin-holding" style={{height:"80px", marginBottom:"15px", backgroundColor:""}}>
+								<div className="col-xl-2 col-xxl-3"style={{backgroundColor:""}}>
+									<div className="mb-2">
+										<div className="align-items-center">
+											<div className="ms-3 pt-2">
+												<p className="mb-0 op-6" >get_players_mapping</p>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div className="col-xl-6 col-xxl-3"  style={{backgroundColor:""}}>
+									<div className="mb-2" style={{backgroundColor:""}}> 
+										<div className="align-items-center"  style={{backgroundColor:""}}>
+											<div className="ms-0 pt-2" style={{backgroundColor:"", width:"90%"}}>
+												<input type="text" value = {phala_account_balance} placeholder="" className="form-control fs-16" style={{color:"white",  textAlign:"center",  }} 
+													onChange={(event) => setPalletAdminAddress(event.target.value)}
+												/>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div className="col-xl-2 col-xxl-4">
+									<button className="btn btn-dark py-3 px-3" style={{height:"", backgroundColor:`${!smartPay_button_active?"grey":"red"}`  }} disabled={!smartPay_button_active} 
+									onClick = { () => phala_get_players_mapping()}
+									>
+										get_players_mapping
+									</button> 
+
+								</div>
+								<div className="col-xl-2 col-xxl-3"></div>
+							</div>
+
+
+
+
+
+							{/* 5 */}
+							<div  className="bg-gradient-1 coin-holding" style={{height:"80px", marginBottom:"15px", backgroundColor:""}}>
+								<div className="col-xl-2 col-xxl-3"style={{backgroundColor:""}}>
+									<div className="mb-2">
+										<div className="align-items-center">
+											<div className="ms-3 pt-2">
+												<p className="mb-0 op-6" >get_tickets_mapping</p>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div className="col-xl-6 col-xxl-3"  style={{backgroundColor:""}}>
+									<div className="mb-2" style={{backgroundColor:""}}> 
+										<div className="align-items-center"  style={{backgroundColor:""}}>
+											<div className="ms-0 pt-2" style={{backgroundColor:"", width:"90%"}}>
+												<input type="text" value = {phala_account_balance} placeholder="" className="form-control fs-16" style={{color:"white",  textAlign:"center",  }} 
+													onChange={(event) => setPalletAdminAddress(event.target.value)}
+												/>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div className="col-xl-2 col-xxl-4">
+									<button className="btn btn-dark py-3 px-3" style={{height:"", backgroundColor:`${!smartPay_button_active?"grey":"red"}`  }} disabled={!smartPay_button_active} 
+									onClick = { () => phala_get_tickets_mapping()}
+									>
+										get_tickets_mapping
+									</button> 
+
+								</div>
+								<div className="col-xl-2 col-xxl-3"></div>
+							</div>
+
+
+
+
+
+							{/* 6 */}
+							<div  className="bg-gradient-1 coin-holding" style={{height:"80px", marginBottom:"15px", backgroundColor:""}}>
+								<div className="col-xl-2 col-xxl-3"style={{backgroundColor:""}}>
+									<div className="mb-2">
+										<div className="align-items-center">
+											<div className="ms-3 pt-2">
+												<p className="mb-0 op-6" >get_all_tickets</p>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div className="col-xl-6 col-xxl-3"  style={{backgroundColor:""}}>
+									<div className="mb-2" style={{backgroundColor:""}}> 
+										<div className="align-items-center"  style={{backgroundColor:""}}>
+											<div className="ms-0 pt-2" style={{backgroundColor:"", width:"90%"}}>
+												<input type="text" value = {phala_account_balance} placeholder="" className="form-control fs-16" style={{color:"white",  textAlign:"center",  }} 
+													onChange={(event) => setPalletAdminAddress(event.target.value)}
+												/>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div className="col-xl-2 col-xxl-4">
+									<button className="btn btn-dark py-3 px-3" style={{height:"", backgroundColor:`${!smartPay_button_active?"grey":"red"}`  }} disabled={!smartPay_button_active} 
+									onClick = { () => phala_get_all_tickets()}
+									>
+										get_all_tickets
+									</button> 
+
+								</div>
+								<div className="col-xl-2 col-xxl-3"></div>
+							</div>
+
+
+
+
+							{/* 7 */}
+							<div  className="bg-gradient-1 coin-holding" style={{height:"80px", marginBottom:"15px", backgroundColor:""}}>
+								<div className="col-xl-2 col-xxl-3"style={{backgroundColor:""}}>
+									<div className="mb-2">
+										<div className="align-items-center">
+											<div className="ms-3 pt-2">
+												<p className="mb-0 op-6" >get_wisdom_of_crowd_coordinates</p>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div className="col-xl-6 col-xxl-3"  style={{backgroundColor:""}}>
+									<div className="mb-2" style={{backgroundColor:""}}> 
+										<div className="align-items-center"  style={{backgroundColor:""}}>
+											<div className="ms-0 pt-2" style={{backgroundColor:"", width:"90%"}}>
+												<input type="text" value = {phala_account_balance} placeholder="" className="form-control fs-16" style={{color:"white",  textAlign:"center",  }} 
+													onChange={(event) => setPalletAdminAddress(event.target.value)}
+												/>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div className="col-xl-2 col-xxl-4">
+									<button className="btn btn-dark py-3 px-3" style={{height:"", backgroundColor:`${!smartPay_button_active?"grey":"red"}`  }} disabled={!smartPay_button_active} 
+									onClick = { () => phala_get_wisdom_of_crowd_coordinates()}
+									>
+										get_wisdom_of_crowd_coordinates
+									</button> 
+
+								</div>
+								<div className="col-xl-2 col-xxl-3"></div>
+							</div>
+
+
+
+							{/* 8 */}
+							<div  className="bg-gradient-1 coin-holding" style={{height:"80px", marginBottom:"15px", backgroundColor:""}}>
+								<div className="col-xl-2 col-xxl-3"style={{backgroundColor:""}}>
+									<div className="mb-2">
+										<div className="align-items-center">
+											<div className="ms-3 pt-2">
+												<p className="mb-0 op-6" >get_total_pot</p>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div className="col-xl-6 col-xxl-3"  style={{backgroundColor:""}}>
+									<div className="mb-2" style={{backgroundColor:""}}> 
+										<div className="align-items-center"  style={{backgroundColor:""}}>
+											<div className="ms-0 pt-2" style={{backgroundColor:"", width:"90%"}}>
+												<input type="text" value = {phala_account_balance} placeholder="" className="form-control fs-16" style={{color:"white",  textAlign:"center",  }} 
+													onChange={(event) => setPalletAdminAddress(event.target.value)}
+												/>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div className="col-xl-2 col-xxl-4">
+									<button className="btn btn-dark py-3 px-3" style={{height:"", backgroundColor:`${!smartPay_button_active?"grey":"red"}`  }} disabled={!smartPay_button_active} 
+									onClick = { () => phala_get_total_pot()}
+									>
+										get_total_pot
+									</button> 
+
+								</div>
+								<div className="col-xl-2 col-xxl-3"></div>
+							</div>
+
+
+							{/* 9 */}
+							<div  className="bg-gradient-1 coin-holding" style={{height:"80px", marginBottom:"15px", backgroundColor:""}}>
+								<div className="col-xl-2 col-xxl-3"style={{backgroundColor:""}}>
+									<div className="mb-2">
+										<div className="align-items-center">
+											<div className="ms-3 pt-2">
+												<p className="mb-0 op-6" >get_total_net_pot</p>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div className="col-xl-6 col-xxl-3"  style={{backgroundColor:""}}>
+									<div className="mb-2" style={{backgroundColor:""}}> 
+										<div className="align-items-center"  style={{backgroundColor:""}}>
+											<div className="ms-0 pt-2" style={{backgroundColor:"", width:"90%"}}>
+												<input type="text" value = {phala_account_balance} placeholder="" className="form-control fs-16" style={{color:"white",  textAlign:"center",  }} 
+													onChange={(event) => setPalletAdminAddress(event.target.value)}
+												/>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div className="col-xl-2 col-xxl-4">
+									<button className="btn btn-dark py-3 px-3" style={{height:"", backgroundColor:`${!smartPay_button_active?"grey":"red"}`  }} disabled={!smartPay_button_active} 
+									onClick = { () => phala_get_total_net_pot()}
+									>
+										get_total_net_pot
+									</button> 
+
+								</div>
+								<div className="col-xl-2 col-xxl-3"></div>
+							</div>
+
+							{/* 10 */}
+							<div  className="bg-gradient-1 coin-holding" style={{height:"80px", marginBottom:"15px", backgroundColor:""}}>
+								<div className="col-xl-2 col-xxl-3"style={{backgroundColor:""}}>
+									<div className="mb-2">
+										<div className="align-items-center">
+											<div className="ms-3 pt-2">
+												<p className="mb-0 op-6" >get_total_fees</p>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div className="col-xl-6 col-xxl-3"  style={{backgroundColor:""}}>
+									<div className="mb-2" style={{backgroundColor:""}}> 
+										<div className="align-items-center"  style={{backgroundColor:""}}>
+											<div className="ms-0 pt-2" style={{backgroundColor:"", width:"90%"}}>
+												<input type="text" value = {phala_account_balance} placeholder="" className="form-control fs-16" style={{color:"white",  textAlign:"center",  }} 
+													onChange={(event) => setPalletAdminAddress(event.target.value)}
+												/>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div className="col-xl-2 col-xxl-4">
+									<button className="btn btn-dark py-3 px-3" style={{height:"", backgroundColor:`${!smartPay_button_active?"grey":"red"}`  }} disabled={!smartPay_button_active} 
+									onClick = { () => phala_get_total_fees()}
+									>
+										get_total_fees
+									</button> 
+
+								</div>
+								<div className="col-xl-2 col-xxl-3"></div>
+							</div>
+
+
+							{/* 11 */}
+							<div  className="bg-gradient-1 coin-holding" style={{height:"80px", marginBottom:"15px", backgroundColor:""}}>
+								<div className="col-xl-2 col-xxl-3"style={{backgroundColor:""}}>
+									<div className="mb-2">
+										<div className="align-items-center">
+											<div className="ms-3 pt-2">
+												<p className="mb-0 op-6" >get_hall_of_fame</p>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div className="col-xl-6 col-xxl-3"  style={{backgroundColor:""}}>
+									<div className="mb-2" style={{backgroundColor:""}}> 
+										<div className="align-items-center"  style={{backgroundColor:""}}>
+											<div className="ms-0 pt-2" style={{backgroundColor:"", width:"90%"}}>
+												<input type="text" value = {phala_account_balance} placeholder="" className="form-control fs-16" style={{color:"white",  textAlign:"center",  }} 
+													onChange={(event) => setPalletAdminAddress(event.target.value)}
+												/>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div className="col-xl-2 col-xxl-4">
+									<button className="btn btn-dark py-3 px-3" style={{height:"", backgroundColor:`${!smartPay_button_active?"grey":"red"}`  }} disabled={!smartPay_button_active} 
+									onClick = { () => phala_get_hall_of_fame()}
+									>
+										get_hall_of_fame
+									</button> 
+
+								</div>
+								<div className="col-xl-2 col-xxl-3"></div>
+							</div>
+<br></br>
+<br></br>
+<br></br>
+
+							{/* 12 */}
+							<div  className="bg-gradient-1 coin-holding" style={{height:"80px", marginBottom:"15px", backgroundColor:""}}>
+								<div className="col-xl-2 col-xxl-3"style={{backgroundColor:""}}>
+									<div className="mb-2">
+										<div className="align-items-center">
+											<div className="ms-3 pt-2">
+												<p className="mb-0 op-6" >start_new_game</p>
+											</div>
+										</div>
+									</div>
+								</div>
+								{/* <div className="col-xl-6 col-xxl-3"  style={{backgroundColor:""}}>
+									<div className="mb-2" style={{backgroundColor:""}}> 
+										<div className="align-items-center"  style={{backgroundColor:""}}>
+											<div className="ms-0 pt-2" style={{backgroundColor:"", width:"90%"}}>
+												<input type="text" value = {phala_account_balance} placeholder="" className="form-control fs-16" style={{color:"white",  textAlign:"center",  }} 
+													onChange={(event) => setPalletAdminAddress(event.target.value)}
+												/>
+											</div>
+										</div>
+									</div>
+								</div> */}
+								<div className="col-xl-2 col-xxl-4">
+									<button className="btn btn-dark py-3 px-3" style={{height:"", backgroundColor:`${!smartPay_button_active?"grey":"red"}`  }} disabled={!smartPay_button_active} 
+									onClick = { () => phala_start_new_game()}
+									>
+										start_new_game
+									</button> 
+
+								</div>
+								<div className="col-xl-2 col-xxl-3"></div>
+							</div>
+
+							{/* 13 */}
+							<div  className="bg-gradient-1 coin-holding" style={{height:"80px", marginBottom:"15px", backgroundColor:""}}>
+								<div className="col-xl-2 col-xxl-3"style={{backgroundColor:""}}>
+									<div className="mb-2">
+										<div className="align-items-center">
+											<div className="ms-3 pt-2">
+												<p className="mb-0 op-6" >check_game</p>
+											</div>
+										</div>
+									</div>
+								</div>
+								{/* <div className="col-xl-6 col-xxl-3"  style={{backgroundColor:""}}>
+									<div className="mb-2" style={{backgroundColor:""}}> 
+										<div className="align-items-center"  style={{backgroundColor:""}}>
+											<div className="ms-0 pt-2" style={{backgroundColor:"", width:"90%"}}>
+												<input type="text" value = {phala_account_balance} placeholder="" className="form-control fs-16" style={{color:"white",  textAlign:"center",  }} 
+													onChange={(event) => setPalletAdminAddress(event.target.value)}
+												/>
+											</div>
+										</div>
+									</div>
+								</div> */}
+								<div className="col-xl-2 col-xxl-4">
+									<button className="btn btn-dark py-3 px-3" style={{height:"", backgroundColor:`${!smartPay_button_active?"grey":"red"}`  }} disabled={!smartPay_button_active} 
+									onClick = { () => phala_check_game()}
+									>
+										check_game
+									</button> 
+
+								</div>
+								<div className="col-xl-2 col-xxl-3"></div>
+							</div>
+
+
+							{/* 14 */}
+							<div  className="bg-gradient-1 coin-holding" style={{height:"80px", marginBottom:"15px", backgroundColor:""}}>
+								<div className="col-xl-2 col-xxl-3"style={{backgroundColor:""}}>
+									<div className="mb-2">
+										<div className="align-items-center">
+											<div className="ms-3 pt-2">
+												<p className="mb-0 op-6" >submit_tickets</p>
+											</div>
+										</div>
+									</div>
+								</div>
+								<br></br>
+								<br></br>
+
+								<div className="col-xl-6 col-xxl-3"  style={{backgroundColor:""}}>
+									<div className="mb-2" style={{backgroundColor:""}}> 
+										<div className="align-items-center"  style={{backgroundColor:""}}>
+											<div className="ms-0 pt-2" style={{backgroundColor:"", width:"90%"}}>
+											   <input type="text" value = {`X: ${coordinatesX} Y: ${coordinatesY}`} placeholder="" className="form-control fs-16" style={{color:"white",  textAlign:"center",  }} 
+												/>
+												<input type="text" value = {`${coordinatesX}`} placeholder="" className="form-control fs-16" style={{color:"white",  textAlign:"center",  }} 
+													onChange={(event) => setCoordinatesX(event.target.value)}
+												/>
+											    <input type="text" value = {`${coordinatesY}`} placeholder="" className="form-control fs-16" style={{color:"white",  textAlign:"center",  }} 
+													onChange={(event) => setCoordinatesY(event.target.value)}
+												/>
+												
+											</div>
+										</div>
+									</div>
+								</div>
+								<div className="col-xl-2 col-xxl-4">
+									<button className="btn btn-dark py-3 px-3" style={{height:"", backgroundColor:`${!smartPay_button_active?"grey":"red"}`  }} disabled={!smartPay_button_active} 
+									onClick = { () => phala_play_ticket(coordinatesX,coordinatesY)}
+									>
+										Play ticket
+									</button> 
+
+								</div>
+								<div className="col-xl-2 col-xxl-4">
+									<button className="btn btn-dark py-3 px-3" style={{height:"", backgroundColor:`${!smartPay_button_active?"grey":"red"}`  }} disabled={!smartPay_button_active} 
+									onClick = { () => phala_submit_tickets()}
+									>
+										Submit Tickets
+									</button> 
+
+								</div>
+								<div className="col-xl-2 col-xxl-3"></div>
+							</div>
+
+<br></br>
+<br></br>
+<br></br>
+
+
 							<div  className="bg-gradient-1 coin-holding" style={{height:"80px", marginBottom:"15px", backgroundColor:""}}>
 								<div className="col-xl-2 col-xxl-3"style={{backgroundColor:""}}>
 									<div className="mb-2">
@@ -524,7 +1168,7 @@ const SmartPay = ({ astar_api, blockHeader }) => {
 								</div>
 								<div className="col-xl-1 col-xxl-3"></div>
 							</div>
-
+{/* 
 							<div  className="bg-gradient-1 coin-holding" style={{height:"80px", marginBottom:"15px", marginTop:"95px", backgroundColor:""}}>
 								<div className="col-xl-2 col-xxl-3">
 									<div className="mb-2">
@@ -596,13 +1240,13 @@ const SmartPay = ({ astar_api, blockHeader }) => {
 									</div>
 								</div>
 								<div className="col-xl-8 col-xxl-3"></div>
-							</div>
+							</div> */}
 						</div>
 					</div>
 				</div>
 			</div>
 
-			<div className="row" style={{height:"auto"}}>
+			{/* <div className="row" style={{height:"auto"}}>
 				<div className="col-xl-2 col-xxl-4"></div>
 
 
@@ -1008,7 +1652,7 @@ const SmartPay = ({ astar_api, blockHeader }) => {
 						</div>
 					</div>
 				</div>
-			</div>
+			</div> */}
 		</Fragment>
 	)
 }		

@@ -14,6 +14,7 @@ import { typeDefinitions } from '@polkadot/types'
 // ***** Phala *****
 // import phat_boiler_plate_metadata from './Abis/phat_boiler_plate_metadata';  
 import phat_boiler_plate_metadata from './Abis/phat_boiler_plate.json';  
+import phala_games_STB_metadata from './Abis/phala_games_STB.json';  
 
 
 import oracle_dex_metadata from './Abis/oracle_dex_metadata';  
@@ -23,10 +24,12 @@ import treasury_manager_metadata from './Abis/treasury_manager_metadata';
 
 // ***** Phala *****
 // const phat_contractId = "0x09f3a33b91baca9cef11fd158800ead3019bfa498001c94d4297b329c50120ee"
-const phat_contractId = "0x3c33c3a713c3f595f1c764b8c7102c80338f037c015123e244dbcc0eb40a55ea"
+// const phat_contractId = "0x3c33c3a713c3f595f1c764b8c7102c80338f037c015123e244dbcc0eb40a55ea"
+const phat_contractId = "0xfd71ba453828647b8a08dae3d68b370b4cdd8c8bd3d04a0d0eb060b9813f866c"
+const phat_games_STB_contractId = "0x496964276d74908fda758625e17e50e2252f14146ec08f9a3f364b149a6f249c"
 
 console.log(" ********** phat_contractId ********** : ",phat_contractId);
-let phala_api, phat_contract_boiler_plate;
+let phala_api, phat_contract_boiler_plate, phat_games_STB;
 
 
 const oracle_dex_address = "YSefjGpCV1sC9K6LGwGPiZPNyxKDTBCxRkVd7WSkEC643yD";
@@ -45,6 +48,10 @@ let polkadot_test_account;
 
 const mantissa18 = new BN("1000000000000000000");
 const mantissa15 = new BN("1000000000000000");
+const mantissa12 = new BN("1000000000000");
+const mantissa9 = new BN("1000000000");
+
+
 
 
 let polkadotInjector = null, polkadotInjectorAddress=null;
@@ -98,11 +105,15 @@ const setup_SubstrateChain = async (wsURL = 'Shibuya') => {
 	//2
 	console.log(" ********** phat_abi ********** ");
 	const phat_abi = phat_boiler_plate_metadata;
+	const phat_abi_games_STB = phala_games_STB_metadata;
+
 	//   const phat_abi = JSON.parse(JSON.stringify(phat_boiler_plate_metadata));
 
 	//3
 	console.log(" ********** phat_contractKey ********** ");
 	const phat_contractKey = await phatRegistry.getContractKey(phat_contractId)
+	const phat_games_STB_contractKey = await phatRegistry.getContractKey(phat_games_STB_contractId)
+
 	console.log("phat_contractKey: ",phat_contractKey);
 	//Alternative way
 	//   console.log(" ********** contractKeyQuery For Information Only********** ");
@@ -116,8 +127,13 @@ const setup_SubstrateChain = async (wsURL = 'Shibuya') => {
 	//4
 	console.log(" ********** Phala contract ********** ");
 	const contract = new PinkContractPromise(api, phatRegistry, phat_abi, phat_contractId, phat_contractKey);
+	const contract_games_STB = new PinkContractPromise(api, phatRegistry, phat_abi_games_STB, phat_games_STB_contractId, phat_games_STB_contractKey);
+
+	phat_games_STB = contract_games_STB;
 	phat_contract_boiler_plate = contract;
 	console.log("contract:",contract.abi.messages.map((e)=>{return e.method}))
+	console.log("contract:",contract_games_STB.abi.messages.map((e)=>{return e.method}))
+
 	//contract: ['getEthBalance', 'setMyMessage', 'getMyMessage', 'setMyNumber', 'getMyNumber']
 	//NOTE: SEE THE DIFFERENCE IN FUNCTION NAMES VS SC
 
@@ -138,6 +154,9 @@ const setup_SubstrateChain = async (wsURL = 'Shibuya') => {
 	phala_api = api;
 	get_my_number();
 	get_my_message();
+
+	get_account_balance();
+
 	// ***** Phala *****
 	
 	//   astar_api = api;
@@ -193,9 +212,363 @@ const getAccountIdtoHex = (accountI32="") => {
 
 
 
-//READ
+// R E A D
 
-//#region PHALA
+//#region PHALA DONE
+const get_account_balance = async (khala_Address = "5HWdttFeYE89GQDGNRYspsJouxZ56xwm6bzKxSPtbDjwpQbb") => {
+
+	if (phala_api) 
+	{
+      // Phala
+	//   const { nonce, data: balance } = await phala_api.query.system.account(khala_Address);   // Retrieve the account balance & nonce via the system module
+	  const { nonce, data: balance } = await phala_api.query.system.account(polkadotInjectorAddress);   // Retrieve the account balance & nonce via the system module
+
+	  console.log(`=======> balance: ${balance} (balance.free).toString(): ${(balance.free).toString()}`);
+	  //   =======> balance: {"free":"0x00000000000000000022fe607717a5e1","reserved":0,"miscFrozen":0,"feeFrozen":0} (balance.free).toString(): 9849839476516321
+
+	  const freeBalance = new BN((balance.free).toString());
+	  const formatted_PHABalance_3decimals =  new BN( `${freeBalance.div(mantissa9)}` );
+	  const balance3decimals = Number(`${formatted_PHABalance_3decimals}`) / 1000;
+
+	  console.log(`balance: ${balance} freeBalance: ${freeBalance} formatted_PHABalance_3decimals: ${formatted_PHABalance_3decimals} balance3decimals" ${balance3decimals}`);
+	  return balance3decimals;
+	} else return 0
+
+}
+
+//phat_games_STB
+//#region READ 1   
+const get_game_stats = async () => {
+
+	if (phala_api && phat_games_STB) 
+	{
+		const contract = phat_games_STB;
+		const { gasRequired, storageDeposit, result, output } = await contract.query.getGameStats(polkadot_test_account);
+
+		if (result.isOk) {
+			// output the return value
+			console.log('Success', output.toHuman());  //Success false
+			return  output.toHuman()
+		} else {
+			console.error('Error', result.asErr);
+			return result.asErr
+		}
+
+	}
+	else { console.log(`PHALA API IS NOT SET UP YET`); return null }
+}
+//#endregion
+
+//#region READ 2  get_players 
+const get_players = async () => {
+
+	if (phala_api && phat_games_STB) 
+	{
+		const contract = phat_games_STB;
+		const { gasRequired, storageDeposit, result, output } = await contract.query.getPlayers(polkadot_test_account);
+
+		if (result.isOk) {
+			// output the return value
+			console.log('Success', output.toHuman());  //Success false
+			return  output.toHuman()
+		} else {
+			console.error('Error', result.asErr);
+			return result.asErr
+		}
+
+	}
+	else { console.log(`PHALA API IS NOT SET UP YET`); return null }
+}
+//#endregion
+
+//#region READ 3  get_players_mapping 
+const get_players_mapping = async () => {
+
+	if (phala_api && phat_games_STB) 
+	{
+		const contract = phat_games_STB;
+		const { gasRequired, storageDeposit, result, output } = await contract.query.getPlayersMapping(polkadotInjectorAddress);
+
+		if (result.isOk) {
+			// output the return value
+			console.log('Success', output.toHuman());  //Success false
+			return  output.toHuman()
+		} else {
+			console.error('Error', result.asErr);
+			return result.asErr
+		}
+
+	}
+	else { console.log(`PHALA API IS NOT SET UP YET`); return null }
+}
+//#endregion
+
+//#region READ 4  get_playeget_tickets_mappingrs_mapping 
+const get_tickets_mapping = async (ticket_id) => {
+
+	if (phala_api && phat_games_STB) 
+	{
+		const contract = phat_games_STB;
+		const { gasRequired, storageDeposit, result, output } = await contract.query.getTicketsMapping(ticket_id);
+
+		if (result.isOk) {
+			// output the return value
+			console.log('Success', output.toHuman());  //Success false
+			return  output.toHuman()
+		} else {
+			console.error('Error', result.asErr);
+			return result.asErr
+		}
+
+	}
+	else { console.log(`PHALA API IS NOT SET UP YET`); return null }
+}
+//#endregion
+
+//#region READ 5  get_all_tickets 
+const get_all_tickets = async (ticket_id) => {
+
+	if (phala_api && phat_games_STB) 
+	{
+		const contract = phat_games_STB;
+		const { gasRequired, storageDeposit, result, output } = await contract.query.getAllTickets();
+
+		if (result.isOk) {
+			// output the return value
+			console.log('Success', output.toHuman());  //Success false
+			return  output.toHuman()
+		} else {
+			console.error('Error', result.asErr);
+			return result.asErr
+		}
+
+	}
+	else { console.log(`PHALA API IS NOT SET UP YET`); return null }
+}
+//#endregion
+
+//#region READ 6  get_wisdom_of_crowd_coordinates 
+const get_wisdom_of_crowd_coordinates = async () => {
+
+	if (phala_api && phat_games_STB) 
+	{
+		const contract = phat_games_STB;
+		const { gasRequired, storageDeposit, result, output } = await contract.query.getWisdomOfCrowdCoordinates();
+
+		if (result.isOk) {
+			// output the return value
+			console.log('Success', output.toHuman());  //Success false
+			return  output.toHuman()
+		} else {
+			console.error('Error', result.asErr);
+			return result.asErr
+		}
+
+	}
+	else { console.log(`PHALA API IS NOT SET UP YET`); return null }
+}
+//#endregion
+
+//#region READ 7  get_total_pot 
+const get_total_pot = async () => {
+
+	if (phala_api && phat_games_STB) 
+	{
+		const contract = phat_games_STB;
+		const { gasRequired, storageDeposit, result, output } = await contract.query.getTotalPot();
+
+		if (result.isOk) {
+			// output the return value
+			console.log('Success', output.toHuman());  //Success false
+			return  output.toHuman()
+		} else {
+			console.error('Error', result.asErr);
+			return result.asErr
+		}
+
+	}
+	else { console.log(`PHALA API IS NOT SET UP YET`); return null }
+}
+//#endregion
+
+//#region READ 8  get_total_net_pot 
+const get_total_net_pot = async () => {
+
+	if (phala_api && phat_games_STB) 
+	{
+		const contract = phat_games_STB;
+		const { gasRequired, storageDeposit, result, output } = await contract.query.getTotalNetPot();
+
+		if (result.isOk) {
+			// output the return value
+			console.log('Success', output.toHuman());  //Success false
+			return  output.toHuman()
+		} else {
+			console.error('Error', result.asErr);
+			return result.asErr
+		}
+
+	}
+	else { console.log(`PHALA API IS NOT SET UP YET`); return null }
+}
+//#endregion
+
+
+//#region READ 9  get_total_fees 
+const get_total_fees = async () => {
+
+	if (phala_api && phat_games_STB) 
+	{
+		const contract = phat_games_STB;
+		const { gasRequired, storageDeposit, result, output } = await contract.query.getTotalFees();
+
+		if (result.isOk) {
+			// output the return value
+			console.log('Success', output.toHuman());  //Success false
+			return  output.toHuman()
+		} else {
+			console.error('Error', result.asErr);
+			return result.asErr
+		}
+
+	}
+	else { console.log(`PHALA API IS NOT SET UP YET`); return null }
+}
+//#endregion
+
+
+//#region READ 10  get_hall_of_fame 
+const get_hall_of_fame = async () => {
+
+	if (phala_api && phat_games_STB) 
+	{
+		const contract = phat_games_STB;
+		const { gasRequired, storageDeposit, result, output } = await contract.query.getHallOfFame();
+
+		if (result.isOk) {
+			// output the return value
+			console.log('Success', output.toHuman());  //Success false
+			return  output.toHuman()
+		} else {
+			console.error('Error', result.asErr);
+			return result.asErr
+		}
+
+	}
+	else { console.log(`PHALA API IS NOT SET UP YET`); return null }
+}
+//#endregion
+
+
+
+// W R I T E
+//#region WRITE 1 start_new_game DONE
+const start_new_game = async (image_hash="someimagehash", start_time=0, end_time=0, ticket_cost=0, fees_percent=0 ) => {
+	if (phala_api && phat_games_STB) 
+	{
+		const contract = phat_games_STB;
+		console.log(`image_hash: ${image_hash} start_time: ${start_time} end_time: ${end_time} ticket_cost: ${ticket_cost} fees_percent: ${fees_percent} polkadotInjectorAddress: `,polkadotInjectorAddress);
+
+		//DRY RUN
+		const { gasRequired, storageDeposit } = await contract.query.configGame(polkadot_test_account, image_hash, Number(start_time), Number(end_time), ticket_cost, fees_percent);
+		console.log("gasRequired & storageDeposit: ",gasRequired.toHuman(),storageDeposit.toHuman());
+
+		const options = {
+			gasLimit: gasRequired.refTime,
+			storageDepositLimit: storageDeposit.isCharge ? storageDeposit.asCharge : null,
+		}
+
+		const tx = await contract.tx
+		.configGame(options,  image_hash, start_time, end_time, ticket_cost, fees_percent)
+		.signAndSend(polkadotInjectorAddress, { signer:  polkadotInjector.signer }, result => {
+
+			if (result.status.isInBlock) {
+				console.log(' =====>>> in a block');
+			} else if (result.status.isFinalized) {
+				console.log(' =====>>> finalized');
+				console.log('result: ',JSON.stringify(result,null,"\t"));
+			}
+		})
+  
+	}
+	else console.log(`PHALA API IS NOT SET UP YET`);
+  
+}
+//#endregion
+
+
+//#region WRITE 2 check_game
+const check_game = async () => {
+	if (phala_api && phat_games_STB) 
+	{
+		const contract = phat_games_STB;
+
+		//DRY RUN
+		const { gasRequired, storageDeposit } = await contract.query.checkGame(polkadot_test_account);
+		console.log("gasRequired & storageDeposit: ",gasRequired.toHuman(),storageDeposit.toHuman());
+
+		const options = {
+			gasLimit: gasRequired.refTime,
+			storageDepositLimit: storageDeposit.isCharge ? storageDeposit.asCharge : null,
+		}
+
+		const tx = await contract.tx
+		.checkGame(options)
+		.signAndSend(polkadotInjectorAddress, { signer:  polkadotInjector.signer }, result => {
+
+			if (result.status.isInBlock) {
+				console.log(' =====>>> in a block');
+			} else if (result.status.isFinalized) {
+				console.log(' =====>>> finalized');
+				console.log('result: ',JSON.stringify(result,null,"\t"));
+			}
+		})
+  
+	}
+	else console.log(`PHALA API IS NOT SET UP YET`);
+  
+}
+//#endregion
+
+
+
+//#region WRITE 3 submit_tickets
+const submit_tickets = async (ticketsArrayOftuples) => {
+	if (phala_api && phat_games_STB && ticketsArrayOftuples.length > 0) 
+	{
+		const contract = phat_games_STB;
+		console.log(`ticketsArrayOftuples.length: ${ticketsArrayOftuples.length}`);
+		
+		//DRY RUN
+		const { gasRequired, storageDeposit } = await contract.query.submitTickets(polkadot_test_account, ticketsArrayOftuples);
+		console.log("gasRequired & storageDeposit: ",gasRequired.toHuman(),storageDeposit.toHuman());
+
+		const options = {
+			gasLimit: gasRequired.refTime,
+			storageDepositLimit: storageDeposit.isCharge ? storageDeposit.asCharge : null,
+		}
+
+		const tx = await contract.tx
+		.submitTickets(options, ticketsArrayOftuples)
+		.signAndSend(polkadotInjectorAddress, { signer:  polkadotInjector.signer }, result => {
+
+			if (result.status.isInBlock) {
+				console.log(' =====>>> in a block');
+			} else if (result.status.isFinalized) {
+				console.log(' =====>>> finalized');
+				console.log('result: ',JSON.stringify(result,null,"\t"));
+			}
+		})
+  
+	}
+	else console.log(`PHALA API IS NOT SET UP YET ticketsArrayOftuples.length(): ${ticketsArrayOftuples.length}`);
+  
+}
+//#endregion
+
+
+
+
 //#region PHAT_query get_my_number
 const get_my_number = async () => {
 
@@ -390,6 +763,7 @@ const set_my_number = async (newNumber=5) => {
 			storageDepositLimit: storageDeposit.isCharge ? storageDeposit.asCharge : null,
 			value: "2000000000000"
 		}
+		// value: "2000000000000" is 2 PHA
 
 		const tx = await contract.tx
 		.setMyNumber(options, newNumber)
@@ -2250,6 +2624,21 @@ export {
 
 		  //PHALA
 		  set_my_number,
-		  set_my_message
+		  set_my_message,
+
+		  get_account_balance,
+		  get_game_stats,
+		  get_players,
+		  get_players_mapping,
+		  get_tickets_mapping,
+		  get_all_tickets,
+		  get_wisdom_of_crowd_coordinates,
+		  get_total_pot,
+		  get_total_net_pot,
+		  get_total_fees,
+		  get_hall_of_fame,
+		  start_new_game,
+		  check_game,
+		  submit_tickets,
 
        };
