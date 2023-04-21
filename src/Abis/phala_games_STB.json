@@ -1,6 +1,6 @@
 {
   "source": {
-    "hash": "0xb48107c1ae05f16c2ab3cec30b1f66fbe12cd2b069790eec8342d1351065e830",
+    "hash": "0xa80aee772096cde046dab4661aa2c18cbdd11f9d022560f8a83bbcb190fb89bb",
     "language": "ink! 4.1.0",
     "compiler": "rustc 1.68.2",
     "build_info": {
@@ -263,6 +263,21 @@
           "type": 25
         },
         "selector": "0x8445b4a5"
+      },
+      {
+        "args": [],
+        "docs": [],
+        "label": "get_ordered_ticket_ids",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 22
+        },
+        "selector": "0x7be322d9"
       },
       {
         "args": [],

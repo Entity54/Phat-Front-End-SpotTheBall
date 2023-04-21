@@ -102,8 +102,13 @@ const SmartPay = ({ astar_api, blockHeader }) => {
 
 	const phala_get_players = async () => {
 		const output = await get_players();
-		console.log(`|||>>> phala_get_players for output: ${output}`);
-		// return balance;
+		// console.log(`|||>>> phala_get_players for output: ${output}`);
+			// console.log(`|||>>> phala_get_game_stats for output: `,output.Ok);
+		for (let i=0; i<output.Ok.length; i++) {
+			console.log(`|||>>> phala_get_players PLAYER ${i} Address: ${output.Ok[i]}`);  
+
+		}
+		return output.Ok;
 	}
 
 	const phala_get_players_mapping = async () => {
@@ -120,8 +125,14 @@ const SmartPay = ({ astar_api, blockHeader }) => {
 
 	const phala_get_all_tickets = async () => {
 		const output = await get_all_tickets();
-		console.log(`|||>>> phala_get_all_tickets for output: ${output}`);
-		// return balance;
+		// console.log(`|||>>> phala_get_all_tickets for output: ${output}`);
+			// console.log(`|||>>> phala_get_game_stats for output: `,output.Ok);
+
+		for (let i=0; i<output.Ok.length; i++) {
+			console.log(`|||>>> phala_get_all_tickets TICKET ${i} X: ${output.Ok[i][0]} Y: ${output.Ok[i][1]}`);  
+
+		}
+		return output.Ok;
 	}
 
 	const phala_get_wisdom_of_crowd_coordinates = async () => {
@@ -133,6 +144,8 @@ const SmartPay = ({ astar_api, blockHeader }) => {
 	const phala_get_total_pot = async () => {
 		const output = await get_total_pot();
 		console.log(`|||>>> phala_get_total_pot for output: ${output}`);
+			console.log(`|||>>> get_total_pot output: `,output.Ok);
+
 		// return balance;
 	}
 

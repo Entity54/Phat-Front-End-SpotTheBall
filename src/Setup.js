@@ -26,7 +26,7 @@ import treasury_manager_metadata from './Abis/treasury_manager_metadata';
 // const phat_contractId = "0x09f3a33b91baca9cef11fd158800ead3019bfa498001c94d4297b329c50120ee"
 // const phat_contractId = "0x3c33c3a713c3f595f1c764b8c7102c80338f037c015123e244dbcc0eb40a55ea"
 const phat_contractId = "0xfd71ba453828647b8a08dae3d68b370b4cdd8c8bd3d04a0d0eb060b9813f866c"
-const phat_games_STB_contractId = "0x496964276d74908fda758625e17e50e2252f14146ec08f9a3f364b149a6f249c"
+const phat_games_STB_contractId = "0xca51eb78758d7799e29bd93904ea26394883aed323004d73ac8a2fcd1638cb24"
 
 console.log(" ********** phat_contractId ********** : ",phat_contractId);
 let phala_api, phat_contract_boiler_plate, phat_games_STB;
@@ -287,7 +287,7 @@ const get_players_mapping = async () => {
 	if (phala_api && phat_games_STB) 
 	{
 		const contract = phat_games_STB;
-		const { gasRequired, storageDeposit, result, output } = await contract.query.getPlayersMapping(polkadotInjectorAddress);
+		const { gasRequired, storageDeposit, result, output } = await contract.query.getPlayersMapping(polkadot_test_account,polkadotInjectorAddress);
 
 		if (result.isOk) {
 			// output the return value
@@ -309,7 +309,7 @@ const get_tickets_mapping = async (ticket_id) => {
 	if (phala_api && phat_games_STB) 
 	{
 		const contract = phat_games_STB;
-		const { gasRequired, storageDeposit, result, output } = await contract.query.getTicketsMapping(ticket_id);
+		const { gasRequired, storageDeposit, result, output } = await contract.query.getTicketsMapping(polkadot_test_account,ticket_id);
 
 		if (result.isOk) {
 			// output the return value
@@ -328,10 +328,12 @@ const get_tickets_mapping = async (ticket_id) => {
 //#region READ 5  get_all_tickets 
 const get_all_tickets = async (ticket_id) => {
 
+	console.log(`get_all_tickets get_all_tickets get_all_tickets get_all_tickets`);
+
 	if (phala_api && phat_games_STB) 
 	{
 		const contract = phat_games_STB;
-		const { gasRequired, storageDeposit, result, output } = await contract.query.getAllTickets();
+		const { gasRequired, storageDeposit, result, output } = await contract.query.getAllTickets(polkadot_test_account);
 
 		if (result.isOk) {
 			// output the return value
@@ -353,7 +355,7 @@ const get_wisdom_of_crowd_coordinates = async () => {
 	if (phala_api && phat_games_STB) 
 	{
 		const contract = phat_games_STB;
-		const { gasRequired, storageDeposit, result, output } = await contract.query.getWisdomOfCrowdCoordinates();
+		const { gasRequired, storageDeposit, result, output } = await contract.query.getWisdomOfCrowdCoordinates(polkadot_test_account);
 
 		if (result.isOk) {
 			// output the return value
@@ -375,12 +377,20 @@ const get_total_pot = async () => {
 	if (phala_api && phat_games_STB) 
 	{
 		const contract = phat_games_STB;
-		const { gasRequired, storageDeposit, result, output } = await contract.query.getTotalPot();
+		const { gasRequired, storageDeposit, result, output } = await contract.query.getTotalPot(polkadot_test_account);
 
 		if (result.isOk) {
 			// output the return value
-			console.log('Success', output.toHuman());  //Success false
-			return  output.toHuman()
+			// console.log('Success', output.toHuman());  //Success false
+			const _result = JSON.parse(output.toString()).ok;
+			console.log(`result ${_result} result: `,_result);
+			const alpha = new BN(`${_result}`);
+			console.log(`alpha ${alpha}`);
+			const beta =  new BN( `${alpha.div(mantissa9)}` );
+			console.log(`beta ${beta}`);
+			const gamma = Number(`${beta}`) / 1000;
+			console.log(`gamma ${gamma}`);
+			return gamma.toFixed(3)
 		} else {
 			console.error('Error', result.asErr);
 			return result.asErr
@@ -397,12 +407,17 @@ const get_total_net_pot = async () => {
 	if (phala_api && phat_games_STB) 
 	{
 		const contract = phat_games_STB;
-		const { gasRequired, storageDeposit, result, output } = await contract.query.getTotalNetPot();
+		const { gasRequired, storageDeposit, result, output } = await contract.query.getTotalNetPot(polkadot_test_account);
 
 		if (result.isOk) {
-			// output the return value
-			console.log('Success', output.toHuman());  //Success false
-			return  output.toHuman()
+			const _result = JSON.parse(output.toString()).ok;
+			const alpha = new BN(`${_result}`);
+			console.log(`alpha ${alpha}`);
+			const beta =  new BN( `${alpha.div(mantissa9)}` );
+			console.log(`beta ${beta}`);
+			const gamma = Number(`${beta}`) / 1000;
+			console.log(`gamma ${gamma}`);
+			return gamma.toFixed(3)
 		} else {
 			console.error('Error', result.asErr);
 			return result.asErr
@@ -420,12 +435,17 @@ const get_total_fees = async () => {
 	if (phala_api && phat_games_STB) 
 	{
 		const contract = phat_games_STB;
-		const { gasRequired, storageDeposit, result, output } = await contract.query.getTotalFees();
+		const { gasRequired, storageDeposit, result, output } = await contract.query.getTotalFees(polkadot_test_account);
 
 		if (result.isOk) {
-			// output the return value
-			console.log('Success', output.toHuman());  //Success false
-			return  output.toHuman()
+			const _result = JSON.parse(output.toString()).ok;
+			const alpha = new BN(`${_result}`);
+			console.log(`alpha ${alpha}`);
+			const beta =  new BN( `${alpha.div(mantissa9)}` );
+			console.log(`beta ${beta}`);
+			const gamma = Number(`${beta}`) / 1000;
+			console.log(`gamma ${gamma}`);
+			return gamma.toFixed(3)
 		} else {
 			console.error('Error', result.asErr);
 			return result.asErr
@@ -443,7 +463,7 @@ const get_hall_of_fame = async () => {
 	if (phala_api && phat_games_STB) 
 	{
 		const contract = phat_games_STB;
-		const { gasRequired, storageDeposit, result, output } = await contract.query.getHallOfFame();
+		const { gasRequired, storageDeposit, result, output } = await contract.query.getHallOfFame(polkadot_test_account);
 
 		if (result.isOk) {
 			// output the return value
@@ -546,6 +566,7 @@ const submit_tickets = async (ticketsArrayOftuples) => {
 		const options = {
 			gasLimit: gasRequired.refTime,
 			storageDepositLimit: storageDeposit.isCharge ? storageDeposit.asCharge : null,
+			value: "1000000000000"
 		}
 
 		const tx = await contract.tx
