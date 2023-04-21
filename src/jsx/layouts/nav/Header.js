@@ -66,9 +66,9 @@ const Header = ({ walletConnected, polakdotSignerfunction, polkadtoAccountList }
 
             <Dropdown.Toggle variant="" as="div" className="input-group-text form-control style-2 default-select cursor-pointer" style={{width:"550px", fontSize:"12px", color: dropdowncolor,  backgroundColor:"#171622"}}>
               {/* <span className="fs-22 font-w650 d-flex" style={{color: dropdowncolor,  backgroundColor:"#171622"}}><i className="fa fa-google-wallet">Polkadot</i></span> */}
-              <input type="image"style={{width:"130px", height:"35px", marginRight:"40px"}} src={shibuyalinklogo} />
+              {/* <input type="image"style={{width:"130px", height:"35px", marginRight:"40px"}} src={shibuyalinklogo} /> */}
 
-              <span className="fs-14 font-w650 d-flex" style={{color: dropdowncolor, backgroundColor:"#171622", marginRight:"10px"}}>{polkadotAccount? polkadotAccount : "Sign in to Polkadot Extension"}</span>
+              <span className="fs-16 font-w650 d-flex" style={{color: dropdowncolor, backgroundColor:"#171622", marginRight:"10px"}}>{polkadotAccount? polkadotAccount : "Sign in to Polkadot Extension"}</span>
             </Dropdown.Toggle>
             <Dropdown.Menu style={{height:"200px", width:"550px", overflowY: "scroll", fontSize:"14px"}}>{polkadotAccountsDropDown}</Dropdown.Menu>
           </Dropdown>

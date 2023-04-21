@@ -3,7 +3,7 @@ import React, { Fragment, useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { ThemeContext } from "../../../context/ThemeContext";
 
-import shibuyalogo from "../../../images/shibuyalogo.png";
+import phalalogo from "../../../images/phalalogo.png";
 
 
 const NavHader = ({blockHeader}) => {
@@ -20,17 +20,17 @@ const NavHader = ({blockHeader}) => {
           <Fragment>
               <div className="row">
                   <div className="col-xl-4 col-xxl-4">
-                        <img alt="images" width={50} src={shibuyalogo} />  
+                        <img alt="images" width={50} src={phalalogo} />  
                   </div>
                   <div className="col-xl-8 col-xxl-8">
-                            <h6 style={{fontSize:"16px"}}>Shibuya</h6> 
+                            <h6 style={{fontSize:"16px"}}>Phala</h6> 
                             <h6 style={{fontSize:"16px"}}>#{blockHeader.number? blockHeader.number : "Not Connected"}</h6>
                   </div>
               </div>
           </Fragment>
         ) : (
           <Fragment>
-							<img alt="images" width={50} src={shibuyalogo} />
+							<img alt="images" width={50} src={phalalogo} />
           </Fragment>
         )}
       </Link>

@@ -5,7 +5,9 @@ import { ThemeContext } from "../../../context/ThemeContext";
 import DatePicker  from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-import shibuyalogo from "../../../images/shibuyalogo.png";
+import golf from "../../../images/golf.jpg";
+import stbtitle from "../../../images/stbtitle.png";
+
 //TODO load image from AWS-S3
 
 
@@ -126,236 +128,254 @@ const MyWallet = () => {
 			<div className="col-xl-12 col-lg-12">
 				<div className="card bg-gradient-1" style={{backgroundColor:""}}>
 					<div className="card-header mt-4">
-						<p className="card-title mx-4 fs-28" style={{color:"#AEAEAE"}}>SPOT THE BALL</p>
+						<div className="col-xl-8 col-lg-6"style={{alignItems:"center", display:"flex", justifyContent:"center"}}>
+							<img alt="images" width={1550} src={stbtitle} ></img>
+						</div>	
+						<div className="col-xl-2 col-lg-6"style={{backgroundColor:""}}>
+							<div  className="coin-holding" style={{height:"80px", marginBottom:"15px", backgroundColor:"#2a2e47"}}>
+								<div className="col-xl-6 col-xxl-3"style={{backgroundColor:""}}>
+									<div className="mb-2">
+										<div className="align-items-center">
+											<div className="ms-3 pt-2">
+												<p className="mb-0 op-6 fs-24" >Balance</p>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div className="col-xl-6 col-xxl-3"  style={{backgroundColor:""}}>
+									<div className="mb-2" style={{backgroundColor:""}}> 
+										<div className="align-items-center"  style={{backgroundColor:""}}>
+											<div className="ms-0 pt-2" style={{backgroundColor:"", width:"100%"}}>
+												<input type="text" disabled readOnly value = {''} placeholder="" className="form-control fs-16" style={{color:"white",  textAlign:"center",  }} />
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 					<div className="card-body" style={{backgroundColor:""}}>
-
-							<input type="textarea" id="area" value={` Coordinates: x: ${coordinates.x} y: ${coordinates.y}`} placeholder="TICKET COORDINATES WILL BE SHOWN HERE" disabled style={{ fontSize:"18px", color:"white", position: "absolute", backgroundColor:"black", height:"100px", width:"500px", right:"0px", top:"0px"}} />
-						<div style={{backgroundColor:"darkgreen", height: "80vh", width:"100%", padding:"10px" }}>
-
-							{/* <div class="rect" id="rect" style={{ position: "absolute", backgroundColor:"red", height:"50px", width:"50px", left:"0px", top:"100px"}}> */}
-							{/* position: "absolute" relative fixed */}
-							{/* <div class="rect" id="rect" style={{ position: "relative", backgroundColor:"blue", height:"98%", width:"98%", left:"1%", top:"1%"}}  */}
-							{/* <div class="rect" id="rect" style={{ position: "relative", backgroundColor:"blue", height:"100%", width:"100%", margin: "0px", padding: "0px" }}  */}
-							<div class="rect" id="rect" style={{ position: "relative", backgroundColor:"blue",  width:"1550px", height:"1000px", margin: "10px", padding: "0px" }} 
-									// onClick = { (e) => getPosition(e)}
-							>
-									<img alt="images" width={1550} height={1000} src={shibuyalogo} 
+						<div className="row">
+							<div className="col-xl-8 col-lg-8" style={{backgroundColor:""}}>
+								<div class="rect" id="rect" style={{alignItems:"center", display:"flex", justifyContent:"center", margin: "10px", cursor:"crosshair"  }}> 
+									<img alt="images" width={1550} height={1000} src={golf} border= '5px solid rgba(42,46,71,0.3)'
 										onClick = { (e) => getPosition(e)}
-									/>  
-
+									/> 
+								</div>
+								<div className="row">
+									<div className="col-xl-3 col-lg-6"style={{backgroundColor:""}}></div>
+									<div className="col-xl-2 col-lg-6"style={{backgroundColor:""}}>
+										<div  className="coin-holding" style={{height:"80px", marginBottom:"15px", border:"2px solid orange", backgroundColor:"#2a2e47"}}>
+											<div className="col-xl-6 col-xxl-3"style={{backgroundColor:""}}>
+												<div className="mb-2">
+													<div className="align-items-center">
+														<div className="ms-3 pt-2">
+															<p className="mb-0 op-6 fs-24 text-orange" >Pot Size</p>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div className="col-xl-6 col-xxl-3"  style={{backgroundColor:""}}>
+												<div className="mb-2" style={{backgroundColor:""}}> 
+													<div className="align-items-center"  style={{backgroundColor:""}}>
+														<div className="ms-0 pt-2" style={{backgroundColor:"", width:"100%"}}>
+															<input type="text" disabled readOnly value = {''} placeholder="" className="form-control fs-16" style={{color:"white",  textAlign:"center",  }} />
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div className="col-xl-2 col-lg-6"style={{backgroundColor:""}}>
+										<div  className="coin-holding" style={{height:"80px", marginBottom:"15px", border:"2px solid orange", backgroundColor:"#2a2e47"}}>
+											<div className="col-xl-6 col-xxl-3"style={{backgroundColor:""}}>
+												<div className="mb-2">
+													<div className="align-items-center">
+														<div className="ms-3 pt-2">
+															<p className="mb-0 op-6 fs-24 text-orange" >Fees</p>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div className="col-xl-6 col-xxl-3"  style={{backgroundColor:""}}>
+												<div className="mb-2" style={{backgroundColor:""}}> 
+													<div className="align-items-center"  style={{backgroundColor:""}}>
+														<div className="ms-0 pt-2" style={{backgroundColor:"", width:"100%"}}>
+															<input type="text" disabled readOnly value = {''} placeholder="" className="form-control fs-16" style={{color:"white",  textAlign:"center",  }} />
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div className="col-xl-2 col-lg-6"style={{backgroundColor:""}}>
+										<div  className="coin-holding" style={{height:"80px", marginBottom:"15px", border:"2px solid orange", backgroundColor:"#2a2e47"}}>
+											<div className="col-xl-6 col-xxl-3"style={{backgroundColor:""}}>
+												<div className="mb-2">
+													<div className="align-items-center">
+														<div className="ms-3 pt-2">
+															<p className="mb-0 op-6 fs-24 text-orange" >Payout</p>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div className="col-xl-6 col-xxl-3"  style={{backgroundColor:""}}>
+												<div className="mb-2" style={{backgroundColor:""}}> 
+													<div className="align-items-center"  style={{backgroundColor:""}}>
+														<div className="ms-0 pt-2" style={{backgroundColor:"", width:"100%"}}>
+															<input type="text" disabled readOnly value = {''} placeholder="" className="form-control fs-16" style={{color:"white",  textAlign:"center",  }} />
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div className="col-xl-3 col-lg-6"style={{backgroundColor:""}}></div>
+								</div>
 							</div>
-				
-						</div> 
-
-
-
-						{/* <div className="basic-form">
-							<form onSubmit={(e) => { e.preventDefault(); addNewJob(); }
-							}>
+							<div className="col-xl-4 col-lg-3" style={{backgroundColor:""}}>
 								<div className="row">
 									<div className="form-group mx-4 my-2 col-md-6 text-white fs-18">
-										<label>Applicant Address</label>
+										<label>Current Coordinates</label>
 										<input
-											type="appaddress"
-											className="form-control fs-18"
-											placeholder="Your Astar Address"
-											value={inputApplicantAddress}
-											onChange={(event) => setInputApplicantAddress(event.target.value)}
+											type="textarea"
+											id="area"
+											className="form-control fs-18 text-center"
+											placeholder="Current Coordinates"
+											value={`x:  ${coordinates.x}    y:  ${coordinates.y}`}
+											// onChange={(event) => (event.target.value)}
 										/>
+									</div>
+								</div>
+								<div className="row">
+									<div className="form-group mx-4 col-md-6 text-white fs-18"style={{marginTop:"100px"}}>
+										<label>Ticket 1</label>
+										<input
+											type="textarea"
+											className="form-control fs-18 text-center"
+											placeholder=""
+											// value={}
+											// onChange={(event) => (event.target.value)}
+										/>
+									</div>
+									<div className="form-group col-md-2 d-flex align-items-center p-0"style={{backgroundColor:""}}>
+										<button type="submit" className="btn btn-primary text-center mx-0"style={{marginTop:"132px"}}>
+											Play
+										</button>
 									</div>
 									<div className="form-group mx-4 my-2 col-md-6 text-white fs-18">
-										<label>Treasury Proposal Hash</label>
+										<label>Ticket 2</label>
 										<input
-											type="appaddress"
-											className="form-control fs-18"
-											placeholder="Enter your original proposal hash"
-											value={proposalHash}
-											onChange={(event) => setProposalHash(event.target.value)}
+											type="textarea"
+											className="form-control fs-18 text-center"
+											placeholder=""
+											// value={}
+											// onChange={(event) => (event.target.value)}
 										/>
 									</div>
-									<div className="form-group mx-4 my-2 col-md-9 text-white fs-18">
-										<label>Description</label>
+									<div className="form-group col-md-2 d-flex align-items-center p-0"style={{backgroundColor:""}}>
+										<button type="submit" className="btn btn-primary text-center mx-0"style={{marginTop:"32px"}}>
+											Play
+										</button>
+									</div>
+									<div className="form-group mx-4 my-2 col-md-6 text-white fs-18">
+										<label>Ticket 3</label>
 										<input
-											type="description"
-											className="form-control fs-18"
-											placeholder="Describe why you are applying for funds from the Treasury"
-											value={title}
-											onChange={(event) => setTitle(event.target.value)}
+											type="textarea"
+											className="form-control fs-18 text-center"
+											placeholder=""
+											// value={}
+											// onChange={(event) => (event.target.value)}
 										/>
 									</div>
-								</div>
-								<div className="row">
-									<div className="card-header mt-4">
-										<p className="card-title mx-2 fs-28" style={{color:"#AEAEAE"}}>SmartPay Settings</p>
+									<div className="form-group col-md-2 d-flex align-items-center p-0"style={{backgroundColor:""}}>
+										<button type="submit" className="btn btn-primary text-center mx-0"style={{marginTop:"32px"}}>
+											Play
+										</button>
 									</div>
-									<div className="form-group mx-4 mt-3 mb-2 col-md-3 text-white text-center fs-18" style={{width:"20%"}}>
-										<label>Requested Token</label>
-										<select
-											id="inputState"
-											className="form-control text-center fs-18"
-											value={requestedToken}
-											onChange={(event) => setRequestedToken(event.target.value)}
-										>
-											<option value="option" disabled>
-											Choose...
-											</option>
-											<option>DOT</option>
-											<option>USDT</option>
-											<option disabled>ASTR</option>
-											<option disabled>GLMR</option>
-											<option disabled>ACA</option>
-										</select>
-									</div>
-									<div className="form-group mx-4 mt-3 mb-2 col-md-3 text-white text-center fs-18" style={{width:"20%"}}>
-										<label>Denominated In</label>
-										<select
-											id="inputState"
-											className="form-control text-center fs-18"
-											value={denominatedToken}
-											onChange={(event) => setDenominatedToken(event.target.value)}
-										>
-											<option value="option" disabled>
-											Choose...
-											</option>
-											<option>DOT</option>
-											<option>USDT</option>
-											<option disabled>ASTR</option>
-											<option disabled>GLMR</option>
-											<option disabled>ACA</option>
-										</select>
-									</div>
-									<div className="form-group mx-4 mt-3 mb-2 col-md-3 text-white text-center fs-18" style={{width:"20%"}}>
-										<label>Token Amount</label>
+									<div className="form-group mx-4 my-2 col-md-6 text-white fs-18">
+										<label>Ticket 4</label>
 										<input
-											type="Amount"
-											className="form-control text-center fs-18"
-											placeholder="Amount"
-											value={tokenAmount}
-											onChange={(event) => setTokenAmount(event.target.value)}
+											type="textarea"
+											className="form-control fs-18 text-center"
+											placeholder=""
+											// value={}
+											// onChange={(event) => (event.target.value)}
 										/>
 									</div>
-									<div className="form-group mx-4 mt-3 mb-2 col-md-3 text-white text-center fs-18" style={{width:"20%"}}>
-										<label>Payment Date</label>
-										<DatePicker  className="form-control text-center"
-										   value={paymentDate!==""? new Date(paymentDate).toISOString():""}
-										   onChange={(newValue) => { 
-											console.log(`DatePicker >>>>>>>>>>>>> newValue: `,newValue);
-											console.log(`DatePicker >>>>>>>>>>>>> newValue: `,newValue.toISOString());
-											const given_date_in_milliseconds = Date.parse(newValue.toISOString());
-											const now = Date.now();
-											let timestamp = given_date_in_milliseconds;
-											if (given_date_in_milliseconds <= now)
-											{
-												timestamp = now+30000
-											}
-											console.log(`DatePicker >>>>>>>>>>>>> given_date_in_milliseconds: ${given_date_in_milliseconds} now: ${now} timestamp: ${timestamp}`);
-											setPaymentDate(timestamp);
-
-										}}
-										/> 
+									<div className="form-group col-md-2 d-flex align-items-center p-0"style={{backgroundColor:""}}>
+										<button type="submit" className="btn btn-primary text-center mx-0"style={{marginTop:"32px"}}>
+											Play
+										</button>
 									</div>
-									<div className="row">
-										<div className="col-md-3"></div>
-										<div className="form-group mx-4 my-2 col-md-6 text-white text-center fs-18" style={{width:"47%"}}>
-											<label>Payee Address</label>
-											<input
-												type="appaddress"
-												className="form-control text-center fs-18"
-												placeholder="Astar address of payee"
-												value={payee}
-												onChange={(event) => setPayee(event.target.value)}
-											/>
-										</div>
-										<div className="col-md-3"></div>
+									<div className="form-group mx-4 my-2 col-md-6 text-white fs-18">
+										<label>Ticket 5</label>
+										<input
+											type="textarea"
+											className="form-control fs-18 text-center"
+											placeholder=""
+											// value={}
+											// onChange={(event) => (event.target.value)}
+										/>
 									</div>
-
-
-
-
-									<div className="form-group m-4 col-md-12 text-white fs-22">
-										<label>Select the SmartPay type required</label>
-										<div className="form-group m-2 d-flex align-items-center fs-18">
-											<div className="form-check">
-												<input className="form-check-input" type="radio"   name="optiongroup2" id="222" 
-													onChange={(event) => setPaymentType("OneOff")}
-												/>
-												<label className="form-check-label" htmlFor="222">
-													Single Future Dated Payment
-												</label>
-											</div>
-											<div className="form-check mx-4">
-												<input className="form-check-input" type="radio"  name="optiongroup2" id="223" 
-													onChange={(event) => setPaymentType("Installments")}
-												/>
-												<label className="form-check-label" htmlFor="223">
-													Regular Interval Payments
-												</label>
-											</div>
-										</div>
+									<div className="form-group col-md-2 d-flex align-items-center p-0"style={{backgroundColor:""}}>
+										<button type="submit" className="btn btn-primary text-center mx-0"style={{marginTop:"32px"}}>
+											Play
+										</button>
 									</div>
-								</div>
-								<div className="row">
-									<div className="form-group mx-4 my-2 col-md-3 text-white text-center fs-18" style={{width:"20%"}}>
-										<label>No. Of Payments</label>
-										<select
-											defaultValue={"option"}
-											id="inputState"
-											className="form-control text-center fs-18"
-											value={numOfInstallements}
-											onChange={(event) => setNumOfInstallements(event.target.value)}
-										>
-											<option value="option" disabled>
-											Choose...
-											</option>
-											<option>1</option>
-											<option>2</option>
-											<option>3</option>
-											<option disabled>4</option>
-											<option disabled>5</option>
-											<option disabled>6</option>
-											<option disabled>7</option>
-											<option disabled>8</option>
-											<option disabled>9</option>
-											<option disabled>10</option>
-											<option disabled>11</option>
-											<option disabled>12</option>
-											<option disabled>52</option>
-										</select>
+									<div className="form-group mx-4 my-2 col-md-4 text-white fs-18">
+										<label>Total Cost ( 1 PHA = 1 Ticket )</label>
+										<input
+											type="textarea"
+											className="form-control fs-18 text-center"
+											placeholder=""
+											// value={}
+											// onChange={(event) => (event.target.value)}
+										/>
 									</div>
-									<div className="form-group mx-4 my-2 col-md-3 text-white text-center fs-18" style={{width:"20%"}}>
-										<label>Frequency</label>
-										<select
-											defaultValue={"option"}
-											id="inputState"
-											className="form-control text-center fs-18"
-											value={installmentPeriod}
-											onChange={(event) => {
-												console.log("===> InstallmentPeriod",event.target.value)
-												setInstallmentPeriod(event.target.value);
-											}
-											}
-										>
-											<option value="option" disabled>
-											Choose...
-											</option>
-											<option>Every 7 Days</option>
-											<option>Every 30 Days</option>
-											<option disabled>Every 90 Days</option>
-											<option disabled>Every 365 Days</option>
-											<option>Every 1 Minute</option>
-										</select>
-									</div>
-								</div>
-								<div className="row">
-									<div className="form-group m-4 col-md-2">
-										<button type="submit" className="btn btn-primary text-center" style={{width:"100%"}}>
+									<div className="form-group col-md-4 d-flex align-items-center p-0"style={{backgroundColor:""}}>
+										<button type="submit" className="btn btn-primary text-center mx-0"style={{marginTop:"32px", width:"50%"}}>
 											Submit
 										</button>
 									</div>
 								</div>
-							</form>
-						</div> */}
+								<div className="col-xl-10 col-xxl-12">
+									<div className="card"style={{backgroundColor:"#2a2e47", marginTop:"50px"}}>
+										<div className="card-body" style={{height:"", backgroundColor:""}}>
+											<div className="row">
+												<div className="form-group mx-4 col-md-8 text-white fs-18"style={{marginTop:""}}>
+													<label>Wisdom Of The Crowd Answer</label>
+													<input
+														type="textarea"
+														id="area"
+														className="form-control fs-18 text-center"
+														placeholder="Wait For Competition End"
+														value={`x:  ${coordinates.x}    y:  ${coordinates.y}`}
+														// onChange={(event) => (event.target.value)}
+													/>
+												</div>
+												<div className="form-group mx-4 col-md-8 text-white fs-18 mt-4"style={{marginTop:""}}>
+													<label>Winning Entry</label>
+													<input
+														type="textarea"
+														id="area"
+														className="form-control fs-18 text-center"
+														placeholder="Wait For Competition End"
+														value={`x:  ${coordinates.x}    y:  ${coordinates.y}`}
+														// onChange={(event) => (event.target.value)}
+													/>
+												</div>
+												<div className="form-group col-md-3 d-flex align-items-center p-0"style={{backgroundColor:""}}>
+													<button type="submit" className="btn btn-warning text-center mx-0 px-3"style={{marginBottom:"50px", marginTop:""}}>
+														Show On Screen
+													</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
