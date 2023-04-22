@@ -8,57 +8,27 @@ import "react-datepicker/dist/react-datepicker.css";
 import golf from "../../../images/golf.jpg";
 import stbtitle from "../../../images/stbtitle.png";
 
-//TODO load image from AWS-S3
+//TODO load image from AWS-S3 4everland
 
 
-import { pallet_addNewVotedJob,
+import { 
 	get_account_balance,
-	get_game_stats,
-	get_players,
-	get_players_mapping,
-	get_tickets_mapping,
-	get_all_tickets,
 	get_wisdom_of_crowd_coordinates,
 	get_total_pot,
 	get_total_net_pot,
 	get_total_fees,
-	get_hall_of_fame,
-	start_new_game,
-	check_game,
 	submit_tickets,
+	get_winning_tickets,
 } from "../../../Setup";
 
-
-// const CoinChart = loadable(() =>
-//   pMinDelay(import("../Boltz/MyWallet/CoinChart"), 1000)
-// );
-
-
-const MyWallet = () => {
+const SpotTheBall = ({ api,  blockHeader }) => {
 	const { background } = useContext(ThemeContext);
-
-	const [proposalHash, setProposalHash] = useState("");
-	
-	const [title, setTitle] = useState("");
-	const [inputApplicantAddress, setInputApplicantAddress] = useState("");
-	const [requestedToken, setRequestedToken] = useState("DOT");
-	const [denominatedToken, setDenominatedToken] = useState("DOT");
-	const [tokenAmount, setTokenAmount] = useState("");
-	const [paymentType, setPaymentType] = useState("OneOff");   // OneOff / Installments
-	const [paymentDate, setPaymentDate] = useState(Date.now() + 30000);
-	const [payee, setPayee] = useState("");
-	const [numOfInstallements, setNumOfInstallements] = useState("");
-	const [installmentPeriod, setInstallmentPeriod] = useState("");
-
 	const [coordinates, setCoordinates] = useState({x: "", y: ""});
-
 	const [phala_account_balance, setPhala_account_balance] = useState("");
 	const [phala_game_stats, setPhala_game_stats] = useState({state: false, imageHash:"", startTime: "", endTime: "", ticketPrice: "", feesPerccent: ""});
-	// const [coordinates, setCoordinates] = useState({x: "", y: ""});
 	const [coordinatesX, setCoordinatesX] = useState("");
 	const [coordinatesY, setCoordinatesY] = useState("");
 	const [tickets, setTickets] = useState([]);
-
 	const [potSize, setPotSize] = useState("");
 	const [fees, setFees] = useState("");
 	const [payout, setPayout] = useState("");
@@ -71,34 +41,30 @@ const MyWallet = () => {
 
 	const [totalCost, setTotalCost] = useState("");
 
+	const [wisdomOfCrowd, setWisdomOfCrowd] = useState("");
+	const [winningTicket, setWinningTicket] = useState("");
+
+	 
 
 
-
-
-
-
-	const phala_get_account_balance = async (account) => {
-		const balance = await get_account_balance(account);
-		console.log(`phala_get_account_balance for acocunt: ${account} is ${balance}`);
+	const phala_get_account_balance = async () => {
+		const balance = await get_account_balance();
+		console.log(`phala_get_account_balance: ${balance}`);
 		setPhala_account_balance(balance);
-		// return balance;
 	}
 
-	const phala_get_game_stats = async () => {
-		const output = await get_game_stats();
-		// console.log(`|||>>> phala_get_game_stats for output: ${typeof output}`,JSON.stringify(output));
-		// console.log(`|||>>> phala_get_game_stats for output: `,output.Ok);
-		console.log(`|||>>> phala_get_game_stats for output: ${output.Ok[0]}`);  //state
-		console.log(`|||>>> phala_get_game_stats for output: ${output.Ok[1]}`);  //image hash
-		console.log(`|||>>> phala_get_game_stats for output: ${output.Ok[2]}`);  //start time
-		console.log(`|||>>> phala_get_game_stats for output: ${output.Ok[3]}`);  //end time
-		console.log(`|||>>> phala_get_game_stats for output: ${output.Ok[4]}`);  //ticket price
-		console.log(`|||>>> phala_get_game_stats for output: ${output.Ok[5]}`);  //fees percent
-		setPhala_game_stats({state: output.Ok[0], imageHash: output.Ok[1], startTime: output.Ok[2], endTime: output.Ok[3], ticketPrice: output.Ok[4], feesPerccent: output.Ok[5]})
-
-
-		// return balance;
-	}
+	// const phala_get_game_stats = async () => {
+	// 	const output = await get_game_stats();
+	// 	// console.log(`|||>>> phala_get_game_stats for output: ${typeof output}`,JSON.stringify(output));
+	// 	// console.log(`|||>>> phala_get_game_stats for output: `,output.Ok);
+	// 	console.log(`|||>>> phala_get_game_stats for output: ${output.Ok[0]}`);  //state
+	// 	console.log(`|||>>> phala_get_game_stats for output: ${output.Ok[1]}`);  //image hash
+	// 	console.log(`|||>>> phala_get_game_stats for output: ${output.Ok[2]}`);  //start time
+	// 	console.log(`|||>>> phala_get_game_stats for output: ${output.Ok[3]}`);  //end time
+	// 	console.log(`|||>>> phala_get_game_stats for output: ${output.Ok[4]}`);  //ticket price
+	// 	console.log(`|||>>> phala_get_game_stats for output: ${output.Ok[5]}`);  //fees percent
+	// 	setPhala_game_stats({state: output.Ok[0], imageHash: output.Ok[1], startTime: output.Ok[2], endTime: output.Ok[3], ticketPrice: output.Ok[4], feesPerccent: output.Ok[5]})
+	// }
 
 	// const phala_get_players = async () => {
 	// 	const output = await get_players();
@@ -137,13 +103,23 @@ const MyWallet = () => {
 
 	const phala_get_wisdom_of_crowd_coordinates = async () => {
 		const output = await get_wisdom_of_crowd_coordinates();
-		console.log(`|||>>> phala_get_wisdom_of_crowd_coordinates for output: ${output}`);
-		// return balance;
+		// console.log(`|||>>> phala_get_wisdom_of_crowd_coordinates for output: ${output}`);
+		setWisdomOfCrowd(`x: ${output.Ok[0]} y: ${output.Ok[1]}`);
 	}
+
+	const phala_get_winning_tickets = async () => {
+		const output = await get_winning_tickets();
+		// console.log(`|||>>> phala_get_wisdom_of_crowd_coordinates for output: ${output}`);
+		// console.log(`|||>>> phala_get_wisdom_of_crowd_coordinates |||>>>`,output.Ok[0]);
+		// {ticketId: '5', owner: '464inykovjdRPhMhW2zbJ47iA8qYSmPWqKLkaEgH2xc6SQ4c', ticketsCoordinates: Array(2), distanceFromTarget: '149,164,338,901,000,000,000'}
+		setWinningTicket(`x: ${output.Ok[0].ticketsCoordinates[0]} y: ${output.Ok[0].ticketsCoordinates[1]}`);
+	}
+
+
 
 	const phala_get_total_pot = async () => {
 		const output = await get_total_pot();
-		console.log(`|||>>> phala_get_total_pot for output: ${output}`);
+		// console.log(`|||>>> phala_get_total_pot for output: ${output}`);
 		setPotSize(output);
 	}
 
@@ -157,32 +133,8 @@ const MyWallet = () => {
 		setFees(output);
 	}
 
-	
-	// const phala_get_hall_of_fame = async () => {
-	// 	const output = await get_hall_of_fame();
-	// 	console.log(`|||>>> phala_get_hall_of_fame for output: ${output}`);
-	// 	// return balance;
-	// }
-
-
-
-	// const phala_start_new_game = async () => {
-	// 	const image_hash = "someimagehashfrom4everlandIPFS"
-	// 	const start_time = Date.now(); //1682088239631
-	// 	const duration_mins = 15;
-	// 	const end_time =  start_time + duration_mins*60*1000;
-	// 	console.log(`|||>>> phala_start_new_game image_hash: ${image_hash} start_time: ${start_time} end_time: ${end_time}`);
-
-	// 	await start_new_game(image_hash, start_time, end_time);
-	// }
-
-	// const phala_check_game = async () => {
-	// 	const output = await check_game();
-	// 	console.log(`|||>>> phala_check_game`);
-	// }
-
 	const play_coordinates = (whichTicket) => {
-		console.log("play_coordinates");		
+		// console.log("play_coordinates");		
 
 		const ticket_value = `x:  ${coordinates.x}    y:  ${coordinates.y}`;
 		if (whichTicket==1)
@@ -210,13 +162,13 @@ const MyWallet = () => {
 
 	const phala_play_ticket =  (newTicket_X,newTicket_Y) => {
 		let newTicket = [newTicket_X,newTicket_Y];
-		console.log(`|||>>> phala_play_ticket newTicket: `,newTicket);
+		// console.log(`|||>>> phala_play_ticket newTicket: `,newTicket);
 		setTickets([...tickets,newTicket]);
 		setTotalCost((tickets.length + 1) * 1);
 	}
 
 	const phala_submit_tickets = async () => {
-		console.log(`|||>>> phala_submit_tickets tickets: `,tickets);
+		// console.log(`|||>>> phala_submit_tickets tickets: `,tickets);
 		if (tickets.length > 0)
 		{
 			await submit_tickets(tickets);
@@ -229,90 +181,43 @@ const MyWallet = () => {
 		}
 	}
 
-
-	const addNewJob = () => {
-		// console.log(`addNewJob => inputApplicantAddress: ${inputApplicantAddress} proposalHash: ${proposalHash}
-		// title: ${title} requestedToken: ${requestedToken} denominatedToken: ${denominatedToken} tokenAmount: ${tokenAmount}
-		// paymentType: ${paymentType} numOfInstallements: ${numOfInstallements} installmentPeriod: ${installmentPeriod}
-		// `) 
-
-		// addNewJob => inputApplicantAddress: 0x123 proposalHash: oxabc
-		// title: Translation requestedToken: DOT denominatedToken: USDC tokenAmount: 111
-		// paymentType: OneOff numOfInstallements: 2 installmentPeriod: 
-        
-		// const paymentDateInMilliseconds = paymentDate;      //Date.now() + 1000;   //1676543500090
-
-	 
-		// let installmentPeriodMilliseconds = 60000;
-		// if (installmentPeriod==="Every 1 Minute")
-		// {
-		// 	installmentPeriodMilliseconds = 60000;
-		// }
-		// else if (installmentPeriod==="Every 7 Days")
-		// {
-		// 	installmentPeriodMilliseconds = 60000 * 60 * 24 * 7;
-
-		// }
-		// else if (installmentPeriod==="Every 30 Days")
-		// {
-		// 	installmentPeriodMilliseconds =  60000 * 60 * 24 * 30;
-			
-		// }
-		// else if (installmentPeriod==="Every 90 Days")
-		// {
-		// 	installmentPeriodMilliseconds =  60000 * 60 * 24 * 90;
-			
-		// }
-		// else if (installmentPeriod==="Every 365 Days")
-		// {
-		// 	installmentPeriodMilliseconds =  60000 * 60 * 24 * 365;
-			
-		// }
-
-
-		// if (
-		// 	title!=="" && inputApplicantAddress!=="" && tokenAmount!==""  && payee!=="" && paymentDateInMilliseconds
-		// 	&& (paymentType==="OneOff" || (numOfInstallements!=="" && installmentPeriodMilliseconds!==""))
-		// 	&& proposalHash!==""
-		// ) 
-		// {
-
-		// 	const valueInUsd = denominatedToken==="DOT"? false : true;
-		// 	const typeofPayment = paymentType==="OneOff"? 0 : 1;
-		// 	const payeeAccounts_array = [payee];
-
-		// 	let paymentSchedule_timestamp_array=[];
-		// 	if (paymentType==="OneOff")
-		// 	{
-		// 		paymentSchedule_timestamp_array.push(paymentDateInMilliseconds);
-		// 	}
-		// 	else 
-		// 	{
-		// 		for (let i=0; i<=(numOfInstallements-1); i++)
-		// 		{
-		// 			paymentSchedule_timestamp_array.push(paymentDateInMilliseconds + i * installmentPeriodMilliseconds);
-		// 		}
-		// 	}
-			
-		// 	console.log(`paymentDateInMilliseconds: `,paymentDateInMilliseconds);
-
-		// 	pallet_addNewVotedJob(title, proposalHash, inputApplicantAddress, requestedToken, valueInUsd, tokenAmount, 
-		// 		typeofPayment, paymentSchedule_timestamp_array, payeeAccounts_array 
-		// 	);
-
-		// } else console.log(`ApplicationScreen: There is a missign value in addNewJob`);
-
-	}
-
 	const getPosition = (e) => {
 			var rect = e.target.getBoundingClientRect();
 			var x = e.clientX - rect.left;
 			var y = e.clientY - rect.top;
-			console.log(`=========> X: ${x} . Y: ${y}`);
+			// console.log(`=========> X: ${x} . Y: ${y}`);
 		    setCoordinates({x: parseInt(x), y: parseInt(y) });
 			setCoordinatesX(parseInt(x));
 			setCoordinatesY(parseInt(y));
 	}
+
+	useEffect(() => {
+		const getSnapShot = async () => {
+			if (blockHeader && blockHeader.number && ((Number(blockHeader.number)%2) ===0) )
+			{
+				console.log(`updating Tickets   at Block Number: ${blockHeader.number}`);
+				await phala_get_wisdom_of_crowd_coordinates();
+				await phala_get_total_pot();
+				await phala_get_total_net_pot();
+				await phala_get_total_fees();
+				await phala_get_account_balance();
+				await phala_get_winning_tickets();
+			}
+		}
+		getSnapShot();
+	},[blockHeader])
+
+	useEffect(() => {
+		if (api) 
+		{
+			phala_get_wisdom_of_crowd_coordinates();
+			phala_get_total_pot();
+			phala_get_total_net_pot();
+			phala_get_total_fees();
+			phala_get_account_balance();
+			phala_get_winning_tickets();
+		}
+	},[api]) 
  
 
 	return(
@@ -567,8 +472,7 @@ const MyWallet = () => {
 														id="area"
 														className="form-control fs-18 text-center"
 														placeholder="Wait For Competition End"
-														// value={`x:  ${coordinates.x}    y:  ${coordinates.y}`}
-														value={""}
+														value={wisdomOfCrowd}
 													/>
 												</div>
 												<div className="form-group mx-4 col-md-8 text-white fs-18 mt-4"style={{marginTop:""}}>
@@ -578,8 +482,7 @@ const MyWallet = () => {
 														id="area"
 														className="form-control fs-18 text-center"
 														placeholder="Wait For Competition End"
-														// value={`x:  ${coordinates.x}    y:  ${coordinates.y}`}
-														value={""}
+														value={winningTicket}
 													/>
 												</div>
 												<div className="form-group col-md-3 d-flex align-items-center p-0"style={{backgroundColor:""}}>
@@ -599,4 +502,4 @@ const MyWallet = () => {
 		</Fragment>
 	)
 }		
-export default MyWallet;
+export default SpotTheBall;

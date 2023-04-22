@@ -5,8 +5,10 @@ import "./css/style.css";
 
 import { 
   setup_SubstrateChain, setPolkadotInjector,
-  server_tm_checkOpenJobs, server_tm_checkPendingJobs, server_tm_makeNativePayments, server_tm_makeNativeUsdPayments, server_tm_makeNonNativePayments, tm_calculateLiabilities,
-
+	get_game_stats,
+	get_wisdom_of_crowd_coordinates,
+	get_hall_of_fame,
+	check_game,
 } from './Setup.js';    
 import { web3Accounts, web3Enable, web3FromAddress, web3AccountsSubscribe, web3FromSource, web3ListRpcProviders, web3UseRpcProvider } from '@polkadot/extension-dapp';
 
@@ -63,14 +65,9 @@ function App (props) {
   useEffect(() => {
     const runSetup = async () => {
         console.log("api_rel running setup ");
-        // const { api: api_Shibuya } = await setup_SubstrateChain("Shibuya");
-        // console.log("api_Shibuya: ",api_Shibuya);
-  
-
-        // setParachainSpecs({ api: api_Shibuya, chainID: undefined, blockNumber: undefined });
-
         const { api: api_Phala } = await setup_SubstrateChain("PhalaTestNet");
         console.log("api_Phala: ",api_Phala);
+        setParachainSpecs({ api: api_Phala, chainID: undefined, blockNumber: undefined });
     }
     runSetup();
 
@@ -93,14 +90,10 @@ function App (props) {
               //HERE ADD  CHECKS *******
               if (((lastHeader.number)%2) ===0) 
               {
-                console.log(` ********** updating ********** ||| SmartPay PROJECT START ||| at Block Number: ${lastHeader.number}`);
-                await server_tm_checkOpenJobs();
-                await server_tm_checkPendingJobs(); 
-                await server_tm_makeNativePayments(); 
-                await server_tm_makeNativeUsdPayments(); 
-                await server_tm_makeNonNativePayments(); 
-                await tm_calculateLiabilities();
-                console.log(` ********** updating ********** ||| SmartPay PROJECT END ||| at Block Number: ${lastHeader.number}`);
+                console.log(` ********** updating ********** ||| Spot The Ball PROJECT START ||| at Block Number: ${lastHeader.number}`);
+                
+                await check_game();
+                console.log(` ********** updating ********** ||| Spot The Ball  PROJECT END ||| at Block Number: ${lastHeader.number}`);
               }
 
               // if (++count > 10) {
@@ -111,7 +104,7 @@ function App (props) {
   
       if (parachainSpecs.api)
       {
-        // parachain(parachainSpecs.api).catch((er) => { console.log(`APP.JS parachain Error: `,er);  });
+        parachain(parachainSpecs.api).catch((er) => { console.log(`APP.JS parachain Error: `,er);  });
         console.log(`#Will be running a check here`);
       }
       else console.log(`App.js => setupSpecs.provider is undefined`);

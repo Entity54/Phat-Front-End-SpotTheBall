@@ -165,18 +165,10 @@ const SideBar = () => {
       <PerfectScrollbar className="deznav-scroll">
         <MM className="metismenu" id="menu">
           <li className={`${charts.includes(path) ? "mm-active" : ""}`}>
-            <Link className="ai-icon" to="/smartpaydashboard"><i className="fa fa-home"></i> <span className="nav-text">SmartPay Dashboard</span></Link>
-          </li>
-          <li className={`${charts.includes(path) ? "mm-active" : ""}`}>
-            <Link className="ai-icon" to="/JobApplicationForm"><i className="fa fa-file-text-o"></i> <span className="nav-text">Submit Application</span></Link>
-          </li>
-          <li className={`${charts.includes(path) ? "mm-active" : ""}`}>
-            <Link className="ai-icon" to="/LiveJobss"><i className="fa fa-list"></i> <span className="nav-text">Live Jobs</span></Link>
-
-          </li>
-          <li className={`${charts.includes(path) ? "mm-active" : ""}`}>
             <Link className="ai-icon" to="/readme"><i className="fa fa-book"></i> <span className="nav-text">Readme</span></Link>
-
+          </li>
+          <li className={`${charts.includes(path) ? "mm-active" : ""}`}>
+            <Link className="ai-icon" to="/Tickets"><i className="fa fa-list"></i> <span className="nav-text">Tickets</span></Link>
           </li>
           <li className={`${charts.includes(path) ? "mm-active" : ""}`}>
             <Link className="ai-icon" to="/SpotTheBall"><i className="fa fa-list"></i> <span className="nav-text">SpotTheBall</span></Link>

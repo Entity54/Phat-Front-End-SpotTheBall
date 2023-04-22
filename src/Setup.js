@@ -9,7 +9,7 @@ import { ContractPromise, Abi } from '@polkadot/api-contract';
 // tested and working with @phala/sdk@0.4.0-nightly-20230318
 import { PinkContractPromise, OnChainRegistry, types } from '@phala/sdk'
 import { typeDefinitions } from '@polkadot/types'
-// import { types} from "@phala/sdk";
+// import { types} from "@phala/sdk"; { nonce: -1 }
 
 // ***** Phala *****
 // import phat_boiler_plate_metadata from './Abis/phat_boiler_plate_metadata';  
@@ -17,40 +17,38 @@ import phat_boiler_plate_metadata from './Abis/phat_boiler_plate.json';
 import phala_games_STB_metadata from './Abis/phala_games_STB.json';  
 
 
-import oracle_dex_metadata from './Abis/oracle_dex_metadata';  
-import pallet_metadata from './Abis/pallet_metadata';  
-import treasury_manager_metadata from './Abis/treasury_manager_metadata';  
+// import oracle_dex_metadata from './Abis/oracle_dex_metadata';  
+// import pallet_metadata from './Abis/pallet_metadata';  
+// import treasury_manager_metadata from './Abis/treasury_manager_metadata';  
 
 
 // ***** Phala *****
 // const phat_contractId = "0x09f3a33b91baca9cef11fd158800ead3019bfa498001c94d4297b329c50120ee"
 // const phat_contractId = "0x3c33c3a713c3f595f1c764b8c7102c80338f037c015123e244dbcc0eb40a55ea"
 const phat_contractId = "0xfd71ba453828647b8a08dae3d68b370b4cdd8c8bd3d04a0d0eb060b9813f866c"
-const phat_games_STB_contractId = "0xca51eb78758d7799e29bd93904ea26394883aed323004d73ac8a2fcd1638cb24"
+const phat_games_STB_contractId = "0xbcb69793762673b464290b64f812037f1ea11baca40b047e90b914797791f3a3"
 
 console.log(" ********** phat_contractId ********** : ",phat_contractId);
-let phala_api, phat_contract_boiler_plate, phat_games_STB;
+let phala_api, phat_games_STB, phat_contract_boiler_plate;
+ 
 
-
-const oracle_dex_address = "YSefjGpCV1sC9K6LGwGPiZPNyxKDTBCxRkVd7WSkEC643yD";
-const DOT = "YovEh7RQkxjK6y2FKpKK8urtTofEPMdYvzQXNCFczeAqwmJ";
-const USDT = "XiL4V7XGc6PhTMxCNtPfkx7kjD8zuR36R1MfA3pYbm7QYZD"
+// const oracle_dex_address = "YSefjGpCV1sC9K6LGwGPiZPNyxKDTBCxRkVd7WSkEC643yD";
+// const DOT = "YovEh7RQkxjK6y2FKpKK8urtTofEPMdYvzQXNCFczeAqwmJ";
+// const USDT = "XiL4V7XGc6PhTMxCNtPfkx7kjD8zuR36R1MfA3pYbm7QYZD"
 //OLD
 // const pallet_address = "Xes8N2Q4JYmxtxe4W6vfpYzSj4skXdwcHa2FgKjA4Z3bDHL";
 // const treasury_manager_address = "Zhs3hsuzPQV7U4rXWsH6BtxC5ag4GnJKuAoJhzTpsWufYAY";
-const pallet_address = "Z5BbE8EA2vTPCzBCWKb9hnjbPMXTsrD3wDHh3HTMgiCiKTt";
-const treasury_manager_address = "YxsHyDbUvxHBqCMKpqu6xJ7A5Y8Wu5c8wywhyngXfh3f88N";
+// const pallet_address = "Z5BbE8EA2vTPCzBCWKb9hnjbPMXTsrD3wDHh3HTMgiCiKTt";
+// const treasury_manager_address = "YxsHyDbUvxHBqCMKpqu6xJ7A5Y8Wu5c8wywhyngXfh3f88N";
 
-let astar_api;
-let contract_boiler_plate, contract_oracle_dex, contract_pallet, contract_treasury_manager;
+// let contract_boiler_plate;
 let polkadot_test_account;
 
 
-const mantissa18 = new BN("1000000000000000000");
-const mantissa15 = new BN("1000000000000000");
-const mantissa12 = new BN("1000000000000");
+// const mantissa18 = new BN("1000000000000000000");
+// const mantissa15 = new BN("1000000000000000");
+// const mantissa12 = new BN("1000000000000");
 const mantissa9 = new BN("1000000000");
-
 
 
 
@@ -74,8 +72,6 @@ const setup_SubstrateChain = async (wsURL = 'Shibuya') => {
   //testnet
   // ***** Phala *****
   if (wsURL === 'PhalaTestNet') WS_URL = 'wss://phat-beta-node.phala.network/khala/ws'
-  else if (wsURL === 'Shibuya') WS_URL = 'wss://shibuya-rpc.dwellir.com'; 
-  // if (wsURL === 'Shibuya') WS_URL = 'wss://rpc.shibuya.astar.network'; 
   
   const wsProvider = new WsProvider(WS_URL);
 
@@ -130,8 +126,8 @@ const setup_SubstrateChain = async (wsURL = 'Shibuya') => {
 	const contract_games_STB = new PinkContractPromise(api, phatRegistry, phat_abi_games_STB, phat_games_STB_contractId, phat_games_STB_contractKey);
 
 	phat_games_STB = contract_games_STB;
-	phat_contract_boiler_plate = contract;
-	console.log("contract:",contract.abi.messages.map((e)=>{return e.method}))
+	// phat_contract_boiler_plate = contract;
+	// console.log("contract:",contract.abi.messages.map((e)=>{return e.method}))
 	console.log("contract:",contract_games_STB.abi.messages.map((e)=>{return e.method}))
 
 	//contract: ['getEthBalance', 'setMyMessage', 'getMyMessage', 'setMyNumber', 'getMyNumber']
@@ -142,35 +138,9 @@ const setup_SubstrateChain = async (wsURL = 'Shibuya') => {
 	console.log(" ********** API PROPERTIES ********** ");
 	console.log((await api.rpc.system.properties()).toHuman());
 	console.log(" ********** API PROPERTIES ********** ");
-
   
   	getAccountIdtoHex();   //USED FOR TESTING AND TO BE REPLACED BY POLKADOT EXTENSION
-
-	//   contract_oracle_dex = new ContractPromise(api, oracle_dex_metadata, oracle_dex_address);
-	//   contract_pallet = new ContractPromise(api, pallet_metadata, pallet_address);
-	//   contract_treasury_manager = new ContractPromise(api, treasury_manager_metadata, treasury_manager_address);
-
-	// ***** Phala *****
 	phala_api = api;
-	get_my_number();
-	get_my_message();
-
-	get_account_balance();
-
-	// ***** Phala *****
-	
-	//   astar_api = api;
-    
-    // //MOCK JOB OneOffFutureTime Paid in DOT valueInUsd=false
-  	// const title = "Tranlsation1";
-	// const applicant_Usagi = "XtEUQTYNxZMxU3gMnTskEX3JFSVEDpE7hwSTBW74AowhUGV";
-	// const requestedToken = DOT;
-	// const valueInUsd = false;
-	// const requestedValue = 1;
-	// const paymentType = 0;   //0: OneOffFutureTime 1: Installments
-	// const paymentSchedule_timestamp_array = ["1676501334995"];
-	// const payeeAccounts_array = ["XtEUQTYNxZMxU3gMnTskEX3JFSVEDpE7hwSTBW74AowhUGV"];
-	//USAGI HAD "\"999,888,775,665,677,443,667,000,778,000,223\"" DOT
 
   return {api};
 };
@@ -215,7 +185,7 @@ const getAccountIdtoHex = (accountI32="") => {
 // R E A D
 
 //#region PHALA DONE
-const get_account_balance = async (khala_Address = "5HWdttFeYE89GQDGNRYspsJouxZ56xwm6bzKxSPtbDjwpQbb") => {
+const get_account_balance = async () => {
 
 	if (phala_api) 
 	{
@@ -247,7 +217,7 @@ const get_game_stats = async () => {
 
 		if (result.isOk) {
 			// output the return value
-			console.log('Success', output.toHuman());  //Success false
+			// console.log('Success', output.toHuman());  //Success false
 			return  output.toHuman()
 		} else {
 			console.error('Error', result.asErr);
@@ -269,7 +239,7 @@ const get_players = async () => {
 
 		if (result.isOk) {
 			// output the return value
-			console.log('Success', output.toHuman());  //Success false
+			// console.log('Success', output.toHuman());  //Success false
 			return  output.toHuman()
 		} else {
 			console.error('Error', result.asErr);
@@ -291,7 +261,7 @@ const get_players_mapping = async () => {
 
 		if (result.isOk) {
 			// output the return value
-			console.log('Success', output.toHuman());  //Success false
+			// console.log('Success', output.toHuman());  //Success false
 			return  output.toHuman()
 		} else {
 			console.error('Error', result.asErr);
@@ -313,7 +283,7 @@ const get_tickets_mapping = async (ticket_id) => {
 
 		if (result.isOk) {
 			// output the return value
-			console.log('Success', output.toHuman());  //Success false
+			// console.log('Success', output.toHuman());  //Success false
 			return  output.toHuman()
 		} else {
 			console.error('Error', result.asErr);
@@ -337,7 +307,7 @@ const get_all_tickets = async (ticket_id) => {
 
 		if (result.isOk) {
 			// output the return value
-			console.log('Success', output.toHuman());  //Success false
+			// console.log('Success', output.toHuman());  //Success false
 			return  output.toHuman()
 		} else {
 			console.error('Error', result.asErr);
@@ -349,6 +319,29 @@ const get_all_tickets = async (ticket_id) => {
 }
 //#endregion
 
+//#region READ 5  get_ordered_tickets 
+const get_ordered_tickets = async (ticket_id) => {
+
+	if (phala_api && phat_games_STB) 
+	{
+		const contract = phat_games_STB;
+		const { gasRequired, storageDeposit, result, output } = await contract.query.getOrderedTicketIds(polkadot_test_account);
+
+		if (result.isOk) {
+			// output the return value
+			// console.log('Success', output.toHuman());  //Success false
+			return  output.toHuman()
+		} else {
+			console.error('Error', result.asErr);
+			return result.asErr
+		}
+
+	}
+	else { console.log(`PHALA API IS NOT SET UP YET`); return null }
+}
+//#endregion
+
+
 //#region READ 6  get_wisdom_of_crowd_coordinates 
 const get_wisdom_of_crowd_coordinates = async () => {
 
@@ -359,7 +352,29 @@ const get_wisdom_of_crowd_coordinates = async () => {
 
 		if (result.isOk) {
 			// output the return value
-			console.log('Success', output.toHuman());  //Success false
+			// console.log('Success', output.toHuman());  //Success false
+			return  output.toHuman()
+		} else {
+			console.error('Error', result.asErr);
+			return result.asErr
+		}
+
+	}
+	else { console.log(`PHALA API IS NOT SET UP YET`); return null }
+}
+//#endregion
+
+//#region READ 6  get_winning_tickets
+const get_winning_tickets = async () => {
+
+	if (phala_api && phat_games_STB) 
+	{
+		const contract = phat_games_STB;
+		const { gasRequired, storageDeposit, result, output } = await contract.query.getWinningTickets(polkadot_test_account);
+
+		if (result.isOk) {
+			// output the return value
+			// console.log('Success', output.toHuman());  //Success false
 			return  output.toHuman()
 		} else {
 			console.error('Error', result.asErr);
@@ -383,13 +398,13 @@ const get_total_pot = async () => {
 			// output the return value
 			// console.log('Success', output.toHuman());  //Success false
 			const _result = JSON.parse(output.toString()).ok;
-			console.log(`result ${_result} result: `,_result);
+			// console.log(`result ${_result} result: `,_result);
 			const alpha = new BN(`${_result}`);
-			console.log(`alpha ${alpha}`);
+			// console.log(`alpha ${alpha}`);
 			const beta =  new BN( `${alpha.div(mantissa9)}` );
-			console.log(`beta ${beta}`);
+			// console.log(`beta ${beta}`);
 			const gamma = Number(`${beta}`) / 1000;
-			console.log(`gamma ${gamma}`);
+			// console.log(`gamma ${gamma}`);
 			return gamma.toFixed(3)
 		} else {
 			console.error('Error', result.asErr);
@@ -412,11 +427,11 @@ const get_total_net_pot = async () => {
 		if (result.isOk) {
 			const _result = JSON.parse(output.toString()).ok;
 			const alpha = new BN(`${_result}`);
-			console.log(`alpha ${alpha}`);
+			// console.log(`alpha ${alpha}`);
 			const beta =  new BN( `${alpha.div(mantissa9)}` );
-			console.log(`beta ${beta}`);
+			// console.log(`beta ${beta}`);
 			const gamma = Number(`${beta}`) / 1000;
-			console.log(`gamma ${gamma}`);
+			// console.log(`gamma ${gamma}`);
 			return gamma.toFixed(3)
 		} else {
 			console.error('Error', result.asErr);
@@ -440,11 +455,11 @@ const get_total_fees = async () => {
 		if (result.isOk) {
 			const _result = JSON.parse(output.toString()).ok;
 			const alpha = new BN(`${_result}`);
-			console.log(`alpha ${alpha}`);
+			// console.log(`alpha ${alpha}`);
 			const beta =  new BN( `${alpha.div(mantissa9)}` );
-			console.log(`beta ${beta}`);
+			// console.log(`beta ${beta}`);
 			const gamma = Number(`${beta}`) / 1000;
-			console.log(`gamma ${gamma}`);
+			// console.log(`gamma ${gamma}`);
 			return gamma.toFixed(3)
 		} else {
 			console.error('Error', result.asErr);
@@ -467,8 +482,34 @@ const get_hall_of_fame = async () => {
 
 		if (result.isOk) {
 			// output the return value
-			console.log('Success', output.toHuman());  //Success false
-			return  output.toHuman()
+			// console.log('Success', output.toHuman());  //Success false
+			
+			let resultArray = []
+			const _result = JSON.parse(output.toString()).ok;
+			console.log(`vvvvvvvv _result: `,_result);
+			_result.forEach(elem => {
+
+				const alpha = new BN(`${elem.prizeMoney}`);
+				// console.log(`alpha ${alpha}`);
+				const beta =  new BN( `${alpha.div(mantissa9)}` );
+				// console.log(`beta ${beta}`);
+				const gamma = Number(`${beta}`) / 1000;
+				// console.log(`gamma ${gamma}`);
+
+
+				let formattedElement = { 
+					distanceFromTarget: `${Number(elem.distanceFromTarget)}`,
+					startTime: new Date(elem.startTime).toISOString(),
+					endTime: new Date(elem.endTime).toISOString(),
+					timestamp: new Date(elem.timestamp).toISOString(),
+					prizeMoney:  gamma,
+				}
+				formattedElement = Object.assign(elem, formattedElement)
+				// console.log("formattedElement: ",formattedElement);
+				resultArray.push(formattedElement);
+			})
+			return resultArray
+			// return  output.toHuman()
 		} else {
 			console.error('Error', result.asErr);
 			return result.asErr
@@ -478,7 +519,6 @@ const get_hall_of_fame = async () => {
 	else { console.log(`PHALA API IS NOT SET UP YET`); return null }
 }
 //#endregion
-
 
 
 // W R I T E
@@ -523,6 +563,8 @@ const check_game = async () => {
 	{
 		const contract = phat_games_STB;
 
+		console.log(`CHECKING GAME polkadot_test_account.address: ${polkadot_test_account.address}`);
+
 		//DRY RUN
 		const { gasRequired, storageDeposit } = await contract.query.checkGame(polkadot_test_account);
 		console.log("gasRequired & storageDeposit: ",gasRequired.toHuman(),storageDeposit.toHuman());
@@ -534,7 +576,9 @@ const check_game = async () => {
 
 		const tx = await contract.tx
 		.checkGame(options)
-		.signAndSend(polkadotInjectorAddress, { signer:  polkadotInjector.signer }, result => {
+		.signAndSend(polkadot_test_account, { nonce: -1 }, result => {
+		// .signAndSend(polkadot_test_account.address, { signer:  polkadotInjector.signer }, result => {
+
 
 			if (result.status.isInBlock) {
 				console.log(' =====>>> in a block');
@@ -566,7 +610,7 @@ const submit_tickets = async (ticketsArrayOftuples) => {
 		const options = {
 			gasLimit: gasRequired.refTime,
 			storageDepositLimit: storageDeposit.isCharge ? storageDeposit.asCharge : null,
-			value: "1000000000000"
+			value: `${ticketsArrayOftuples.length * 1000000000000}`
 		}
 
 		const tx = await contract.tx
@@ -590,178 +634,177 @@ const submit_tickets = async (ticketsArrayOftuples) => {
 
 
 
-//#region PHAT_query get_my_number
-const get_my_number = async () => {
+// //#region PHAT_query get_my_number
+// const get_my_number = async () => {
 
-	if (phala_api) 
-	{
-		const contract = phat_contract_boiler_plate;
+// 	if (phala_api) 
+// 	{
+// 		const contract = phat_contract_boiler_plate;
 
-		//For queries use polkadot_test_account 
-		const message = await contract.query.getMyNumber(polkadot_test_account);
-		const { gasRequired, storageDeposit, result, output } = await contract.query.getMyNumber(polkadot_test_account);
-		console.log('message :', message.output.toHuman());
+// 		//For queries use polkadot_test_account 
+// 		const message = await contract.query.getMyNumber(polkadot_test_account);
+// 		const { gasRequired, storageDeposit, result, output } = await contract.query.getMyNumber(polkadot_test_account);
+// 		console.log('message :', message.output.toHuman());
 
-		// const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
-		// const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
-		// const { gasRequired, storageDeposit, result, output } = await contract.query.getAdmin(
-		// polkadot_test_account.address, //"5FP8MMBmPdBCMgG5AspTHVNWXXSEoR4vgJwSrehUj1qJAKxN", //polkadot_test_account.address,
-		// {
-		// 	gasLimit: astar_api.registry.createType('WeightV2', {
-		// 	refTime: maxGas,
-		// 	proofSize: maxGas,
-		// 	}),
-		// 	storageDepositLimit: null,
-		// }
-		// );
+// 		// const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
+// 		// const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
+// 		// const { gasRequired, storageDeposit, result, output } = await contract.query.getAdmin(
+// 		// polkadot_test_account.address, //"5FP8MMBmPdBCMgG5AspTHVNWXXSEoR4vgJwSrehUj1qJAKxN", //polkadot_test_account.address,
+// 		// {
+// 		// 	gasLimit: astar_api.registry.createType('WeightV2', {
+// 		// 	refTime: maxGas,
+// 		// 	proofSize: maxGas,
+// 		// 	}),
+// 		// 	storageDepositLimit: null,
+// 		// }
+// 		// );
 
-		// The actual result from RPC as `ContractExecResult`
-		console.log("===> result.toHuman() : ",result.toHuman());
-		// Ok: data: "0x00"
+// 		// The actual result from RPC as `ContractExecResult`
+// 		console.log("===> result.toHuman() : ",result.toHuman());
+// 		// Ok: data: "0x00"
 
-		// the gas consumed for contract execution
-		console.log("===> gasRequired.toHuman() : ",gasRequired.toHuman()); 
-		// {refTime: '6,219,235,328', proofSize: '131,072'}
+// 		// the gas consumed for contract execution
+// 		console.log("===> gasRequired.toHuman() : ",gasRequired.toHuman()); 
+// 		// {refTime: '6,219,235,328', proofSize: '131,072'}
 
-		// check if the call was successful
-		if (result.isOk) {
-		// output the return value
-		console.log('Success', output.toHuman());  //Success false
-		return  output.toHuman()
-		} else {
-		console.error('Error', result.asErr);
-		return result.asErr
-		}
+// 		// check if the call was successful
+// 		if (result.isOk) {
+// 		// output the return value
+// 		console.log('Success', output.toHuman());  //Success false
+// 		return  output.toHuman()
+// 		} else {
+// 		console.error('Error', result.asErr);
+// 		return result.asErr
+// 		}
 
-	}
-	else { console.log(`PHALA API IS NOT SET UP YET`); return null }
-}
-//#endregion
+// 	}
+// 	else { console.log(`PHALA API IS NOT SET UP YET`); return null }
+// }
+// //#endregion
 
 
-//#region PHAT_query get_my_message
-const get_my_message = async () => {
+// //#region PHAT_query get_my_message
+// const get_my_message = async () => {
 
-	if (phala_api) 
-	{
-		const contract = phat_contract_boiler_plate;
-		const { gasRequired, storageDeposit, result, output } = await contract.query.getMyMessage(polkadot_test_account);
+// 	if (phala_api) 
+// 	{
+// 		const contract = phat_contract_boiler_plate;
+// 		const { gasRequired, storageDeposit, result, output } = await contract.query.getMyMessage(polkadot_test_account);
 
-		if (result.isOk) {
-			// output the return value
-			console.log('Success', output.toHuman());  //Success false
-			return  output.toHuman()
-		} else {
-			console.error('Error', result.asErr);
-			return result.asErr
-		}
+// 		if (result.isOk) {
+// 			// output the return value
+// 			console.log('Success', output.toHuman());  //Success false
+// 			return  output.toHuman()
+// 		} else {
+// 			console.error('Error', result.asErr);
+// 			return result.asErr
+// 		}
 
-	}
-	else { console.log(`PHALA API IS NOT SET UP YET`); return null }
-}
-//#endregion
+// 	}
+// 	else { console.log(`PHALA API IS NOT SET UP YET`); return null }
+// }
+// //#endregion
 //#endregion PHALA
 
 
-//#region ASTAR
-//#region pallet_get_treasury_manager_address
-const pallet_get_treasury_manager_address = async () => {
+// //#region ASTAR
+// //#region pallet_get_treasury_manager_address
+// const pallet_get_treasury_manager_address = async () => {
 
-    if (astar_api) 
-    {
-	  const contract = contract_pallet;
+//     if (astar_api) 
+//     {
+// 	  const contract = contract_pallet;
 	  	
-      const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
-      const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
-      const { gasRequired, storageDeposit, result, output } = await contract.query.getTreasuryManagerAddress(
-        polkadot_test_account.address, //"5FP8MMBmPdBCMgG5AspTHVNWXXSEoR4vgJwSrehUj1qJAKxN", //polkadot_test_account.address,
-        {
-          gasLimit: astar_api.registry.createType('WeightV2', {
-            refTime: maxGas,
-            proofSize: maxGas,
-          }),
-          storageDepositLimit: null,
-        }
-      );
+//       const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
+//       const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
+//       const { gasRequired, storageDeposit, result, output } = await contract.query.getTreasuryManagerAddress(
+//         polkadot_test_account.address, //"5FP8MMBmPdBCMgG5AspTHVNWXXSEoR4vgJwSrehUj1qJAKxN", //polkadot_test_account.address,
+//         {
+//           gasLimit: astar_api.registry.createType('WeightV2', {
+//             refTime: maxGas,
+//             proofSize: maxGas,
+//           }),
+//           storageDepositLimit: null,
+//         }
+//       );
 
-      // The actual result from RPC as `ContractExecResult`
-      console.log("===> result.toHuman() : ",result.toHuman());
-      // Ok: data: "0x00"
+//       // The actual result from RPC as `ContractExecResult`
+//       console.log("===> result.toHuman() : ",result.toHuman());
+//       // Ok: data: "0x00"
 
-      // the gas consumed for contract execution
-      console.log("===> gasRequired.toHuman() : ",gasRequired.toHuman()); 
-      // {refTime: '6,219,235,328', proofSize: '131,072'}
+//       // the gas consumed for contract execution
+//       console.log("===> gasRequired.toHuman() : ",gasRequired.toHuman()); 
+//       // {refTime: '6,219,235,328', proofSize: '131,072'}
 
-      // check if the call was successful
-      if (result.isOk) {
-        // output the return value
-        console.log('Success', output.toHuman());  //Success false
-		return  output.toHuman()
-      } else {
-        console.error('Error', result.asErr);
-		return result.asErr
-      }
+//       // check if the call was successful
+//       if (result.isOk) {
+//         // output the return value
+//         console.log('Success', output.toHuman());  //Success false
+// 		return  output.toHuman()
+//       } else {
+//         console.error('Error', result.asErr);
+// 		return result.asErr
+//       }
 
-    }
-    else { console.log(`ASTAR API IS NOT SET UP YET`); return null }
-  }
-//#endregion
+//     }
+//     else { console.log(`ASTAR API IS NOT SET UP YET`); return null }
+//   }
+// //#endregion
 
 
 
-const pallet_get_address = () => {
-	return pallet_address;
-}
+// const pallet_get_address = () => {
+// 	return pallet_address;
+// }
 
-//#region pallet_get_admin
-// const pallet_get_admin = async (contract) => {
-const pallet_get_admin = async () => {
+// //#region pallet_get_admin
+// // const pallet_get_admin = async (contract) => {
+// const pallet_get_admin = async () => {
 
-    if (astar_api) 
-    {
-	  const contract = contract_pallet;
-      const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
-      const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
-      const { gasRequired, storageDeposit, result, output } = await contract.query.getAdmin(
-        polkadot_test_account.address, //"5FP8MMBmPdBCMgG5AspTHVNWXXSEoR4vgJwSrehUj1qJAKxN", //polkadot_test_account.address,
-        {
-          gasLimit: astar_api.registry.createType('WeightV2', {
-            refTime: maxGas,
-            proofSize: maxGas,
-          }),
-          storageDepositLimit: null,
-        }
-      );
+//     if (astar_api) 
+//     {
+// 	  const contract = contract_pallet;
+//       const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
+//       const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
+//       const { gasRequired, storageDeposit, result, output } = await contract.query.getAdmin(
+//         polkadot_test_account.address, //"5FP8MMBmPdBCMgG5AspTHVNWXXSEoR4vgJwSrehUj1qJAKxN", //polkadot_test_account.address,
+//         {
+//           gasLimit: astar_api.registry.createType('WeightV2', {
+//             refTime: maxGas,
+//             proofSize: maxGas,
+//           }),
+//           storageDepositLimit: null,
+//         }
+//       );
 
-      // The actual result from RPC as `ContractExecResult`
-      console.log("===> result.toHuman() : ",result.toHuman());
-      // Ok: data: "0x00"
+//       // The actual result from RPC as `ContractExecResult`
+//       console.log("===> result.toHuman() : ",result.toHuman());
+//       // Ok: data: "0x00"
 
-      // the gas consumed for contract execution
-      console.log("===> gasRequired.toHuman() : ",gasRequired.toHuman()); 
-      // {refTime: '6,219,235,328', proofSize: '131,072'}
+//       // the gas consumed for contract execution
+//       console.log("===> gasRequired.toHuman() : ",gasRequired.toHuman()); 
+//       // {refTime: '6,219,235,328', proofSize: '131,072'}
 
-      // check if the call was successful
-      if (result.isOk) {
-        // output the return value
-        console.log('Success', output.toHuman());  //Success false
-		return  output.toHuman()
-      } else {
-        console.error('Error', result.asErr);
-		return result.asErr
-      }
+//       // check if the call was successful
+//       if (result.isOk) {
+//         // output the return value
+//         console.log('Success', output.toHuman());  //Success false
+// 		return  output.toHuman()
+//       } else {
+//         console.error('Error', result.asErr);
+// 		return result.asErr
+//       }
 
-    }
-    else { console.log(`ASTAR API IS NOT SET UP YET`); return null }
-  }
-//#endregion
-//#endregion ASTAR
+//     }
+//     else { console.log(`ASTAR API IS NOT SET UP YET`); return null }
+//   }
+// //#endregion
+// //#endregion ASTAR
 
 
 
 
 //WRITE
-
 //#region PHALA
 //#region set_my_number
 const set_my_number = async (newNumber=5) => {
@@ -808,7 +851,6 @@ const set_my_number = async (newNumber=5) => {
   
 	}
 	else console.log(`PHALA API IS NOT SET UP YET`);
-  
 }
 //#endregion
 
@@ -842,1759 +884,1758 @@ const set_my_message = async (newMessage="Hello Phala World") => {
   
 	}
 	else console.log(`PHALA API IS NOT SET UP YET`);
-  
 }
 //#endregion
 //#endregion PHALA
 
 
 
-//#region ASTAR
-//#region pallet_addNewVotedJob
-const pallet_addNewVotedJob = async (
-	// contract, 
-	title, proposalHash, applicant, _requestedToken, valueInUsd, _requestedValue, paymentType, 
-	paymentSchedule_timestamp_array, payeeAccounts_array
-	) => {
+// //#region ASTAR
+// //#region pallet_addNewVotedJob
+// const pallet_addNewVotedJob = async (
+// 	// contract, 
+// 	title, proposalHash, applicant, _requestedToken, valueInUsd, _requestedValue, paymentType, 
+// 	paymentSchedule_timestamp_array, payeeAccounts_array
+// 	) => {
     
-	console.log(`Setup: title:${title} proposalHash:${proposalHash} applicant:${applicant} requestedToken:${_requestedToken} valueInUsd:${valueInUsd} requestedValue:${_requestedValue} paymentType:${paymentType}`);
-	console.log(`paymentSchedule_timestamp_array: `,paymentSchedule_timestamp_array);
-	console.log(`payeeAccounts_array: `,payeeAccounts_array);
+// 	console.log(`Setup: title:${title} proposalHash:${proposalHash} applicant:${applicant} requestedToken:${_requestedToken} valueInUsd:${valueInUsd} requestedValue:${_requestedValue} paymentType:${paymentType}`);
+// 	console.log(`paymentSchedule_timestamp_array: `,paymentSchedule_timestamp_array);
+// 	console.log(`payeeAccounts_array: `,payeeAccounts_array);
 	
-	if (astar_api) 
-	// if (1>2) 
-	{
-	  const contract = contract_pallet;
+// 	if (astar_api) 
+// 	// if (1>2) 
+// 	{
+// 	  const contract = contract_pallet;
 
-	  //   const requestedValue = _requestedValue;
-	  const requestedValue =  new BN( `${Number(_requestedValue) * mantissa18}` );
-	  console.log(`requestedValue" ${requestedValue}`);
+// 	  //   const requestedValue = _requestedValue;
+// 	  const requestedValue =  new BN( `${Number(_requestedValue) * mantissa18}` );
+// 	  console.log(`requestedValue" ${requestedValue}`);
 
- 	  let requestedToken;
-	  if (_requestedToken==="DOT") requestedToken=DOT
-	  else if (_requestedToken==="USDT") requestedToken=USDT;
-
-
-	  // D R Y  R U N (We perform the send from an account, here using polkadot_test_account address)
-	  const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
-	  const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
-  
-	  const { gasRequired, storageDeposit, result } = await contract.query.addNewVotedJob (
-		// polkadot_test_account.address, 
-		polkadotInjectorAddress,
-
-		{
-		  gasLimit: astar_api.registry.createType('WeightV2', {
-			refTime: maxGas,
-			proofSize: maxGas,
-		  }),
-		  storageDepositLimit: null,
-		},
-		title, proposalHash, applicant, requestedToken, valueInUsd, requestedValue, paymentType, 
-		paymentSchedule_timestamp_array, payeeAccounts_array
-	  );
-
-	  console.log(`outcome: ${result.isOk ? 'Ok' : 'Error'}`); // outcome: Ok
-	  console.log(`gasRequired ${gasRequired.toString()}`);    // gasRequired {"refTime":6219235328,"proofSize":131072}
-  
-	  const gasLimit = astar_api.registry.createType('WeightV2', gasRequired); //as WeightV2
-  
-	  // Send the transaction, like elsewhere this is a normal extrinsic with the same rules as applied in the API (As with the read example,
-	  // additional params, if required can follow - here only one is needed)
-	  await contract.tx
-	  .addNewVotedJob (
-		{ 
-		  gasLimit,
-		  storageDepositLimit: null, 
-		}, 
-		title, proposalHash, applicant, requestedToken, valueInUsd, requestedValue, paymentType, 
-		paymentSchedule_timestamp_array, payeeAccounts_array
-	  )
-	//   .signAndSend( polkadot_test_account, { nonce: -1 }, result => {
-      .signAndSend(polkadotInjectorAddress, { signer: polkadotInjector.signer }, result => {
-
-		if (result.status.isInBlock) {
-		  console.log(' =====>>> in a block');
-		} else if (result.status.isFinalized) {
-		  console.log(' =====>>> finalized');
-		  console.log('result: ',JSON.stringify(result,null,"\t"));
-  
-		}
-	  });
-  
-	}
-	else console.log(`ASTAR API IS NOT SET UP YET`);
-  
-}
-//#endregion
+//  	  let requestedToken;
+// 	  if (_requestedToken==="DOT") requestedToken=DOT
+// 	  else if (_requestedToken==="USDT") requestedToken=USDT;
 
 
-//#region pallet_removeJob
-const pallet_removeJob = async (id) => {
+// 	  // D R Y  R U N (We perform the send from an account, here using polkadot_test_account address)
+// 	  const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
+// 	  const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
   
-	if (astar_api) 
-	{
-	  const contract = contract_pallet;
+// 	  const { gasRequired, storageDeposit, result } = await contract.query.addNewVotedJob (
+// 		// polkadot_test_account.address, 
+// 		polkadotInjectorAddress,
 
-	  // D R Y  R U N (We perform the send from an account, here using polkadot_test_account address)
-	  const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
-	  const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
-  
-	  const { gasRequired, storageDeposit, result } = await contract.query.removeJob (
-		polkadot_test_account.address, 
-		{
-		  gasLimit: astar_api.registry.createType('WeightV2', {
-			refTime: maxGas,
-			proofSize: maxGas,
-		  }),
-		  storageDepositLimit: null,
-		},
-		id
-	  );
+// 		{
+// 		  gasLimit: astar_api.registry.createType('WeightV2', {
+// 			refTime: maxGas,
+// 			proofSize: maxGas,
+// 		  }),
+// 		  storageDepositLimit: null,
+// 		},
+// 		title, proposalHash, applicant, requestedToken, valueInUsd, requestedValue, paymentType, 
+// 		paymentSchedule_timestamp_array, payeeAccounts_array
+// 	  );
 
-	  console.log(`outcome: ${result.isOk ? 'Ok' : 'Error'}`); // outcome: Ok
-	  console.log(`gasRequired ${gasRequired.toString()}`);    // gasRequired {"refTime":6219235328,"proofSize":131072}
+// 	  console.log(`outcome: ${result.isOk ? 'Ok' : 'Error'}`); // outcome: Ok
+// 	  console.log(`gasRequired ${gasRequired.toString()}`);    // gasRequired {"refTime":6219235328,"proofSize":131072}
   
-	  const gasLimit = astar_api.registry.createType('WeightV2', gasRequired); //as WeightV2
+// 	  const gasLimit = astar_api.registry.createType('WeightV2', gasRequired); //as WeightV2
   
-	  // Send the transaction, like elsewhere this is a normal extrinsic with the same rules as applied in the API (As with the read example,
-	  // additional params, if required can follow - here only one is needed)
-	  await contract.tx
-	  .removeJob (
-		{ 
-		  gasLimit,
-		  storageDepositLimit: null, 
-		}, 
-		id
-	  )
-	  .signAndSend( polkadot_test_account, { nonce: -1 }, result => {
-		if (result.status.isInBlock) {
-		  console.log(' =====>>> in a block');
-		} else if (result.status.isFinalized) {
-		  console.log(' =====>>> finalized');
-		  console.log('result: ',JSON.stringify(result,null,"\t"));
-  
-		}
-	  });
-  
-	}
-	else console.log(`ASTAR API IS NOT SET UP YET`);
-  
-}
-//#endregion
+// 	  // Send the transaction, like elsewhere this is a normal extrinsic with the same rules as applied in the API (As with the read example,
+// 	  // additional params, if required can follow - here only one is needed)
+// 	  await contract.tx
+// 	  .addNewVotedJob (
+// 		{ 
+// 		  gasLimit,
+// 		  storageDepositLimit: null, 
+// 		}, 
+// 		title, proposalHash, applicant, requestedToken, valueInUsd, requestedValue, paymentType, 
+// 		paymentSchedule_timestamp_array, payeeAccounts_array
+// 	  )
+// 	//   .signAndSend( polkadot_test_account, { nonce: -1 }, result => {
+//       .signAndSend(polkadotInjectorAddress, { signer: polkadotInjector.signer }, result => {
 
+// 		if (result.status.isInBlock) {
+// 		  console.log(' =====>>> in a block');
+// 		} else if (result.status.isFinalized) {
+// 		  console.log(' =====>>> finalized');
+// 		  console.log('result: ',JSON.stringify(result,null,"\t"));
+  
+// 		}
+// 	  });
+  
+// 	}
+// 	else console.log(`ASTAR API IS NOT SET UP YET`);
+  
+// }
+// //#endregion
 
 
-//#region pallet_retrieveTreasuryManagerAddress
-const pallet_retrieveTreasuryManagerAddress = async () => {
+// //#region pallet_removeJob
+// const pallet_removeJob = async (id) => {
   
-	if (astar_api) 
-	{
-	  const contract = contract_pallet;
+// 	if (astar_api) 
+// 	{
+// 	  const contract = contract_pallet;
 
-	  // D R Y  R U N (We perform the send from an account, here using polkadot_test_account address)
-	  const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
-	  const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
+// 	  // D R Y  R U N (We perform the send from an account, here using polkadot_test_account address)
+// 	  const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
+// 	  const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
   
-	  const { gasRequired, storageDeposit, result } = await contract.query.retrieveTreasuryManagerAddress (
-		polkadot_test_account.address, 
-		{
-		  gasLimit: astar_api.registry.createType('WeightV2', {
-			refTime: maxGas,
-			proofSize: maxGas,
-		  }),
-		  storageDepositLimit: null,
-		},
-	  );
+// 	  const { gasRequired, storageDeposit, result } = await contract.query.removeJob (
+// 		polkadot_test_account.address, 
+// 		{
+// 		  gasLimit: astar_api.registry.createType('WeightV2', {
+// 			refTime: maxGas,
+// 			proofSize: maxGas,
+// 		  }),
+// 		  storageDepositLimit: null,
+// 		},
+// 		id
+// 	  );
 
-	  console.log(`outcome: ${result.isOk ? 'Ok' : 'Error'}`); // outcome: Ok
-	  console.log(`gasRequired ${gasRequired.toString()}`);    // gasRequired {"refTime":6219235328,"proofSize":131072}
+// 	  console.log(`outcome: ${result.isOk ? 'Ok' : 'Error'}`); // outcome: Ok
+// 	  console.log(`gasRequired ${gasRequired.toString()}`);    // gasRequired {"refTime":6219235328,"proofSize":131072}
   
-	  const gasLimit = astar_api.registry.createType('WeightV2', gasRequired); //as WeightV2
+// 	  const gasLimit = astar_api.registry.createType('WeightV2', gasRequired); //as WeightV2
   
-	  // Send the transaction, like elsewhere this is a normal extrinsic with the same rules as applied in the API (As with the read example,
-	  // additional params, if required can follow - here only one is needed)
-	  await contract.tx
-	  .retrieveTreasuryManagerAddress (
-		{ 
-		  gasLimit,
-		  storageDepositLimit: null, 
-		}, 
-	  )
-	  .signAndSend( polkadot_test_account, result => {
-		if (result.status.isInBlock) {
-		  console.log(' =====>>> in a block');
-		} else if (result.status.isFinalized) {
-		  console.log(' =====>>> finalized');
-		  console.log('result: ',JSON.stringify(result,null,"\t"));
+// 	  // Send the transaction, like elsewhere this is a normal extrinsic with the same rules as applied in the API (As with the read example,
+// 	  // additional params, if required can follow - here only one is needed)
+// 	  await contract.tx
+// 	  .removeJob (
+// 		{ 
+// 		  gasLimit,
+// 		  storageDepositLimit: null, 
+// 		}, 
+// 		id
+// 	  )
+// 	  .signAndSend( polkadot_test_account, { nonce: -1 }, result => {
+// 		if (result.status.isInBlock) {
+// 		  console.log(' =====>>> in a block');
+// 		} else if (result.status.isFinalized) {
+// 		  console.log(' =====>>> finalized');
+// 		  console.log('result: ',JSON.stringify(result,null,"\t"));
   
-		}
-	  });
+// 		}
+// 	  });
   
-	}
-	else console.log(`ASTAR API IS NOT SET UP YET`);
+// 	}
+// 	else console.log(`ASTAR API IS NOT SET UP YET`);
   
-}
-//#endregion
-
-
-//#region pallet_launchTreasuryManager
-const pallet_launchTreasuryManager = async () => {
-  
-	if (astar_api) 
-	{
-	  const contract = contract_pallet;
-
-	  const contractManager = polkadot_test_account.address;
-	  const treasuryTokenSymbol = "DOT";
-	  const treasuryTokenAddress = DOT;
-	  const usdtTokenAddress = USDT;
-	  const oracleDexAddress = oracle_dex_address;
-	  const liabilitiesThresholdLevel = 10;   //for 10% so alerts are set at Liabilities beign at 90% of Funds and 80% of funds and top up to 130% of Liabilities
-
-	  // D R Y  R U N (We perform the send from an account, here using polkadot_test_account address)
-	  const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
-	  const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
-  
-	  const { gasRequired, storageDeposit, result } = await contract.query.launchTreasuryManager (
-		// polkadot_test_account.address, 
-		polkadotInjectorAddress,
-
-		{
-		  gasLimit: astar_api.registry.createType('WeightV2', {
-			refTime: maxGas,
-			proofSize: maxGas,
-		  }),
-		  storageDepositLimit: null,
-		},
-		contractManager, treasuryTokenSymbol, treasuryTokenAddress, usdtTokenAddress, oracleDexAddress, liabilitiesThresholdLevel
-	  );
-
-	  console.log(`outcome: ${result.isOk ? 'Ok' : 'Error'}`); // outcome: Ok
-	  console.log(`gasRequired ${gasRequired.toString()}`);    // gasRequired {"refTime":6219235328,"proofSize":131072}
-  
-	  const gasLimit = astar_api.registry.createType('WeightV2', gasRequired); //as WeightV2
-  
-	  // Send the transaction, like elsewhere this is a normal extrinsic with the same rules as applied in the API (As with the read example,
-	  // additional params, if required can follow - here only one is needed)
-	  await contract.tx
-	  .launchTreasuryManager (
-		{ 
-		  gasLimit,
-		  storageDepositLimit: null, 
-		}, 
-		contractManager, treasuryTokenSymbol, treasuryTokenAddress, usdtTokenAddress, oracleDexAddress, liabilitiesThresholdLevel
-	  )
-	//   .signAndSend( polkadot_test_account, { nonce: -1 }, result => {
-      .signAndSend(polkadotInjectorAddress, { signer: polkadotInjector.signer }, result => {
-
-		if (result.status.isInBlock) {
-		  console.log(' =====>>> in a block');
-		} else if (result.status.isFinalized) {
-		  console.log(' =====>>> finalized');
-		  console.log('result: ',JSON.stringify(result,null,"\t"));
-
-		  const update_contract_treasury_manager = async () => {
-			  await pallet_retrieveTreasuryManagerAddress();
-			  const new_treasury_manager_address = await pallet_get_treasury_manager_address();
-			  console.log(`pallet_launchTreasuryManager:|> new_treasury_manager_address: ${new_treasury_manager_address}`);
-			  contract_treasury_manager = new ContractPromise(astar_api, treasury_manager_metadata, new_treasury_manager_address);
-		  }
-		  update_contract_treasury_manager()
-  
-		}
-	  });
-  
-	}
-	else console.log(`ASTAR API IS NOT SET UP YET`);
-  
-}
-//#endregion
+// }
+// //#endregion
 
 
-//#region pallet_depositFundsToTreasuryManager
-const pallet_depositFundsToTreasuryManager = async (_amount) => {
-  
-	if (astar_api) 
-	{
-	  const contract = contract_pallet;
 
-	  const amount =  new BN( `${Number(_amount) * mantissa18}` );
-	  console.log(`pallet_depositFundsToTreasuryManager:|> amount" ${amount}`);
+// //#region pallet_retrieveTreasuryManagerAddress
+// const pallet_retrieveTreasuryManagerAddress = async () => {
+  
+// 	if (astar_api) 
+// 	{
+// 	  const contract = contract_pallet;
 
-	  // D R Y  R U N (We perform the send from an account, here using polkadot_test_account address)
-	  const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
-	  const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
+// 	  // D R Y  R U N (We perform the send from an account, here using polkadot_test_account address)
+// 	  const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
+// 	  const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
   
-	  const { gasRequired, storageDeposit, result } = await contract.query.depositFundsToTreasuryManager (
-		// polkadot_test_account.address, 
-		polkadotInjectorAddress,
-		{
-		  gasLimit: astar_api.registry.createType('WeightV2', {
-			refTime: maxGas,
-			proofSize: maxGas,
-		  }),
-		  storageDepositLimit: null,
-		},
-		amount
-	  );
+// 	  const { gasRequired, storageDeposit, result } = await contract.query.retrieveTreasuryManagerAddress (
+// 		polkadot_test_account.address, 
+// 		{
+// 		  gasLimit: astar_api.registry.createType('WeightV2', {
+// 			refTime: maxGas,
+// 			proofSize: maxGas,
+// 		  }),
+// 		  storageDepositLimit: null,
+// 		},
+// 	  );
 
-	  console.log(`outcome: ${result.isOk ? 'Ok' : 'Error'}`); // outcome: Ok
-	  console.log(`gasRequired ${gasRequired.toString()}`);    // gasRequired {"refTime":6219235328,"proofSize":131072}
+// 	  console.log(`outcome: ${result.isOk ? 'Ok' : 'Error'}`); // outcome: Ok
+// 	  console.log(`gasRequired ${gasRequired.toString()}`);    // gasRequired {"refTime":6219235328,"proofSize":131072}
   
-	  const gasLimit = astar_api.registry.createType('WeightV2', gasRequired); //as WeightV2
+// 	  const gasLimit = astar_api.registry.createType('WeightV2', gasRequired); //as WeightV2
   
-	  // Send the transaction, like elsewhere this is a normal extrinsic with the same rules as applied in the API (As with the read example,
-	  // additional params, if required can follow - here only one is needed)
-	  await contract.tx
-	  .depositFundsToTreasuryManager (
-		{ 
-		  gasLimit,
-		  storageDepositLimit: null, 
-		}, 
-		amount
-	  )
-	//   .signAndSend( polkadot_test_account, { nonce: -1 }, result => {
-      .signAndSend(polkadotInjectorAddress, { signer: polkadotInjector.signer }, result => {
-
-		if (result.status.isInBlock) {
-		  console.log(' =====>>> in a block');
-		} else if (result.status.isFinalized) {
-		  console.log(' =====>>> finalized');
-		  console.log('result: ',JSON.stringify(result,null,"\t"));
+// 	  // Send the transaction, like elsewhere this is a normal extrinsic with the same rules as applied in the API (As with the read example,
+// 	  // additional params, if required can follow - here only one is needed)
+// 	  await contract.tx
+// 	  .retrieveTreasuryManagerAddress (
+// 		{ 
+// 		  gasLimit,
+// 		  storageDepositLimit: null, 
+// 		}, 
+// 	  )
+// 	  .signAndSend( polkadot_test_account, result => {
+// 		if (result.status.isInBlock) {
+// 		  console.log(' =====>>> in a block');
+// 		} else if (result.status.isFinalized) {
+// 		  console.log(' =====>>> finalized');
+// 		  console.log('result: ',JSON.stringify(result,null,"\t"));
   
-		}
-	  });
+// 		}
+// 	  });
   
-	}
-	else console.log(`ASTAR API IS NOT SET UP YET`);
+// 	}
+// 	else console.log(`ASTAR API IS NOT SET UP YET`);
   
-}
-//#endregion
+// }
+// //#endregion
 
 
-//#region pallet_withdrawFundsFromTreasuryManager
-const pallet_withdrawFundsFromTreasuryManager = async (_amount) => {
+// //#region pallet_launchTreasuryManager
+// const pallet_launchTreasuryManager = async () => {
   
-	if (astar_api) 
-	{
-	  const contract = contract_pallet;
+// 	if (astar_api) 
+// 	{
+// 	  const contract = contract_pallet;
 
-	  const amount =  new BN( `${Number(_amount) * mantissa18}` );
-	  console.log(`pallet_depositFundsToTreasuryManager:|> amount" ${amount}`);
+// 	  const contractManager = polkadot_test_account.address;
+// 	  const treasuryTokenSymbol = "DOT";
+// 	  const treasuryTokenAddress = DOT;
+// 	  const usdtTokenAddress = USDT;
+// 	  const oracleDexAddress = oracle_dex_address;
+// 	  const liabilitiesThresholdLevel = 10;   //for 10% so alerts are set at Liabilities beign at 90% of Funds and 80% of funds and top up to 130% of Liabilities
 
-	  // D R Y  R U N (We perform the send from an account, here using polkadot_test_account address)
-	  const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
-	  const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
+// 	  // D R Y  R U N (We perform the send from an account, here using polkadot_test_account address)
+// 	  const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
+// 	  const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
   
-	  const { gasRequired, storageDeposit, result } = await contract.query.withdrawFundsFromTreasuryManager (
-		// polkadot_test_account.address, 
-		polkadotInjectorAddress,
+// 	  const { gasRequired, storageDeposit, result } = await contract.query.launchTreasuryManager (
+// 		// polkadot_test_account.address, 
+// 		polkadotInjectorAddress,
 
-		{
-		  gasLimit: astar_api.registry.createType('WeightV2', {
-			refTime: maxGas,
-			proofSize: maxGas,
-		  }),
-		  storageDepositLimit: null,
-		},
-		amount
-	  );
+// 		{
+// 		  gasLimit: astar_api.registry.createType('WeightV2', {
+// 			refTime: maxGas,
+// 			proofSize: maxGas,
+// 		  }),
+// 		  storageDepositLimit: null,
+// 		},
+// 		contractManager, treasuryTokenSymbol, treasuryTokenAddress, usdtTokenAddress, oracleDexAddress, liabilitiesThresholdLevel
+// 	  );
 
-	  console.log(`outcome: ${result.isOk ? 'Ok' : 'Error'}`); // outcome: Ok
-	  console.log(`gasRequired ${gasRequired.toString()}`);    // gasRequired {"refTime":6219235328,"proofSize":131072}
+// 	  console.log(`outcome: ${result.isOk ? 'Ok' : 'Error'}`); // outcome: Ok
+// 	  console.log(`gasRequired ${gasRequired.toString()}`);    // gasRequired {"refTime":6219235328,"proofSize":131072}
   
-	  const gasLimit = astar_api.registry.createType('WeightV2', gasRequired); //as WeightV2
+// 	  const gasLimit = astar_api.registry.createType('WeightV2', gasRequired); //as WeightV2
   
-	  // Send the transaction, like elsewhere this is a normal extrinsic with the same rules as applied in the API (As with the read example,
-	  // additional params, if required can follow - here only one is needed)
-	  await contract.tx
-	  .withdrawFundsFromTreasuryManager (
-		{ 
-		  gasLimit,
-		  storageDepositLimit: null, 
-		}, 
-		amount
-	  )
-	//   .signAndSend( polkadot_test_account, { nonce: -1 }, result => {
-      .signAndSend(polkadotInjectorAddress, { signer: polkadotInjector.signer }, result => {
+// 	  // Send the transaction, like elsewhere this is a normal extrinsic with the same rules as applied in the API (As with the read example,
+// 	  // additional params, if required can follow - here only one is needed)
+// 	  await contract.tx
+// 	  .launchTreasuryManager (
+// 		{ 
+// 		  gasLimit,
+// 		  storageDepositLimit: null, 
+// 		}, 
+// 		contractManager, treasuryTokenSymbol, treasuryTokenAddress, usdtTokenAddress, oracleDexAddress, liabilitiesThresholdLevel
+// 	  )
+// 	//   .signAndSend( polkadot_test_account, { nonce: -1 }, result => {
+//       .signAndSend(polkadotInjectorAddress, { signer: polkadotInjector.signer }, result => {
 
-		if (result.status.isInBlock) {
-		  console.log(' =====>>> in a block');
-		} else if (result.status.isFinalized) {
-		  console.log(' =====>>> finalized');
-		  console.log('result: ',JSON.stringify(result,null,"\t"));
+// 		if (result.status.isInBlock) {
+// 		  console.log(' =====>>> in a block');
+// 		} else if (result.status.isFinalized) {
+// 		  console.log(' =====>>> finalized');
+// 		  console.log('result: ',JSON.stringify(result,null,"\t"));
+
+// 		  const update_contract_treasury_manager = async () => {
+// 			  await pallet_retrieveTreasuryManagerAddress();
+// 			  const new_treasury_manager_address = await pallet_get_treasury_manager_address();
+// 			  console.log(`pallet_launchTreasuryManager:|> new_treasury_manager_address: ${new_treasury_manager_address}`);
+// 			  contract_treasury_manager = new ContractPromise(astar_api, treasury_manager_metadata, new_treasury_manager_address);
+// 		  }
+// 		  update_contract_treasury_manager()
   
-		}
-	  });
+// 		}
+// 	  });
   
-	}
-	else console.log(`ASTAR API IS NOT SET UP YET`);
+// 	}
+// 	else console.log(`ASTAR API IS NOT SET UP YET`);
   
-}
-//#endregion
+// }
+// //#endregion
 
 
-//#region pallet_setAdminHereAndManagerForTm
-const pallet_setAdminHereAndManagerForTm = async (account) => {
+// //#region pallet_depositFundsToTreasuryManager
+// const pallet_depositFundsToTreasuryManager = async (_amount) => {
   
-	if (astar_api) 
-	{
-	  const contract = contract_pallet;
+// 	if (astar_api) 
+// 	{
+// 	  const contract = contract_pallet;
 
-	  // D R Y  R U N (We perform the send from an account, here using polkadot_test_account address)
-	  const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
-	  const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
-  
-	  const { gasRequired, storageDeposit, result } = await contract.query.setAdminHereAndManagerForTm (
-		// polkadot_test_account.address, 
-		polkadotInjectorAddress,
+// 	  const amount =  new BN( `${Number(_amount) * mantissa18}` );
+// 	  console.log(`pallet_depositFundsToTreasuryManager:|> amount" ${amount}`);
 
-		{
-		  gasLimit: astar_api.registry.createType('WeightV2', {
-			refTime: maxGas,
-			proofSize: maxGas,
-		  }),
-		  storageDepositLimit: null,
-		},
-		account
-	  );
+// 	  // D R Y  R U N (We perform the send from an account, here using polkadot_test_account address)
+// 	  const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
+// 	  const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
+  
+// 	  const { gasRequired, storageDeposit, result } = await contract.query.depositFundsToTreasuryManager (
+// 		// polkadot_test_account.address, 
+// 		polkadotInjectorAddress,
+// 		{
+// 		  gasLimit: astar_api.registry.createType('WeightV2', {
+// 			refTime: maxGas,
+// 			proofSize: maxGas,
+// 		  }),
+// 		  storageDepositLimit: null,
+// 		},
+// 		amount
+// 	  );
 
-	  console.log(`outcome: ${result.isOk ? 'Ok' : 'Error'}`); // outcome: Ok
-	  console.log(`gasRequired ${gasRequired.toString()}`);    // gasRequired {"refTime":6219235328,"proofSize":131072}
+// 	  console.log(`outcome: ${result.isOk ? 'Ok' : 'Error'}`); // outcome: Ok
+// 	  console.log(`gasRequired ${gasRequired.toString()}`);    // gasRequired {"refTime":6219235328,"proofSize":131072}
   
-	  const gasLimit = astar_api.registry.createType('WeightV2', gasRequired); //as WeightV2
+// 	  const gasLimit = astar_api.registry.createType('WeightV2', gasRequired); //as WeightV2
   
-	  // Send the transaction, like elsewhere this is a normal extrinsic with the same rules as applied in the API (As with the read example,
-	  // additional params, if required can follow - here only one is needed)
-	  await contract.tx
-	  .setAdminHereAndManagerForTm (
-		{ 
-		  gasLimit,
-		  storageDepositLimit: null, 
-		}, 
-		account
-	  )
-	//   .signAndSend( polkadot_test_account, { nonce: -1 }, result => {
-      .signAndSend(polkadotInjectorAddress, { signer: polkadotInjector.signer }, result => {
+// 	  // Send the transaction, like elsewhere this is a normal extrinsic with the same rules as applied in the API (As with the read example,
+// 	  // additional params, if required can follow - here only one is needed)
+// 	  await contract.tx
+// 	  .depositFundsToTreasuryManager (
+// 		{ 
+// 		  gasLimit,
+// 		  storageDepositLimit: null, 
+// 		}, 
+// 		amount
+// 	  )
+// 	//   .signAndSend( polkadot_test_account, { nonce: -1 }, result => {
+//       .signAndSend(polkadotInjectorAddress, { signer: polkadotInjector.signer }, result => {
+
+// 		if (result.status.isInBlock) {
+// 		  console.log(' =====>>> in a block');
+// 		} else if (result.status.isFinalized) {
+// 		  console.log(' =====>>> finalized');
+// 		  console.log('result: ',JSON.stringify(result,null,"\t"));
+  
+// 		}
+// 	  });
+  
+// 	}
+// 	else console.log(`ASTAR API IS NOT SET UP YET`);
+  
+// }
+// //#endregion
+
+
+// //#region pallet_withdrawFundsFromTreasuryManager
+// const pallet_withdrawFundsFromTreasuryManager = async (_amount) => {
+  
+// 	if (astar_api) 
+// 	{
+// 	  const contract = contract_pallet;
+
+// 	  const amount =  new BN( `${Number(_amount) * mantissa18}` );
+// 	  console.log(`pallet_depositFundsToTreasuryManager:|> amount" ${amount}`);
+
+// 	  // D R Y  R U N (We perform the send from an account, here using polkadot_test_account address)
+// 	  const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
+// 	  const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
+  
+// 	  const { gasRequired, storageDeposit, result } = await contract.query.withdrawFundsFromTreasuryManager (
+// 		// polkadot_test_account.address, 
+// 		polkadotInjectorAddress,
+
+// 		{
+// 		  gasLimit: astar_api.registry.createType('WeightV2', {
+// 			refTime: maxGas,
+// 			proofSize: maxGas,
+// 		  }),
+// 		  storageDepositLimit: null,
+// 		},
+// 		amount
+// 	  );
+
+// 	  console.log(`outcome: ${result.isOk ? 'Ok' : 'Error'}`); // outcome: Ok
+// 	  console.log(`gasRequired ${gasRequired.toString()}`);    // gasRequired {"refTime":6219235328,"proofSize":131072}
+  
+// 	  const gasLimit = astar_api.registry.createType('WeightV2', gasRequired); //as WeightV2
+  
+// 	  // Send the transaction, like elsewhere this is a normal extrinsic with the same rules as applied in the API (As with the read example,
+// 	  // additional params, if required can follow - here only one is needed)
+// 	  await contract.tx
+// 	  .withdrawFundsFromTreasuryManager (
+// 		{ 
+// 		  gasLimit,
+// 		  storageDepositLimit: null, 
+// 		}, 
+// 		amount
+// 	  )
+// 	//   .signAndSend( polkadot_test_account, { nonce: -1 }, result => {
+//       .signAndSend(polkadotInjectorAddress, { signer: polkadotInjector.signer }, result => {
+
+// 		if (result.status.isInBlock) {
+// 		  console.log(' =====>>> in a block');
+// 		} else if (result.status.isFinalized) {
+// 		  console.log(' =====>>> finalized');
+// 		  console.log('result: ',JSON.stringify(result,null,"\t"));
+  
+// 		}
+// 	  });
+  
+// 	}
+// 	else console.log(`ASTAR API IS NOT SET UP YET`);
+  
+// }
+// //#endregion
+
+
+// //#region pallet_setAdminHereAndManagerForTm
+// const pallet_setAdminHereAndManagerForTm = async (account) => {
+  
+// 	if (astar_api) 
+// 	{
+// 	  const contract = contract_pallet;
+
+// 	  // D R Y  R U N (We perform the send from an account, here using polkadot_test_account address)
+// 	  const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
+// 	  const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
+  
+// 	  const { gasRequired, storageDeposit, result } = await contract.query.setAdminHereAndManagerForTm (
+// 		// polkadot_test_account.address, 
+// 		polkadotInjectorAddress,
+
+// 		{
+// 		  gasLimit: astar_api.registry.createType('WeightV2', {
+// 			refTime: maxGas,
+// 			proofSize: maxGas,
+// 		  }),
+// 		  storageDepositLimit: null,
+// 		},
+// 		account
+// 	  );
+
+// 	  console.log(`outcome: ${result.isOk ? 'Ok' : 'Error'}`); // outcome: Ok
+// 	  console.log(`gasRequired ${gasRequired.toString()}`);    // gasRequired {"refTime":6219235328,"proofSize":131072}
+  
+// 	  const gasLimit = astar_api.registry.createType('WeightV2', gasRequired); //as WeightV2
+  
+// 	  // Send the transaction, like elsewhere this is a normal extrinsic with the same rules as applied in the API (As with the read example,
+// 	  // additional params, if required can follow - here only one is needed)
+// 	  await contract.tx
+// 	  .setAdminHereAndManagerForTm (
+// 		{ 
+// 		  gasLimit,
+// 		  storageDepositLimit: null, 
+// 		}, 
+// 		account
+// 	  )
+// 	//   .signAndSend( polkadot_test_account, { nonce: -1 }, result => {
+//       .signAndSend(polkadotInjectorAddress, { signer: polkadotInjector.signer }, result => {
 
 		
-		if (result.status.isInBlock) {
-		  console.log(' =====>>> in a block');
-		} else if (result.status.isFinalized) {
-		  console.log(' =====>>> finalized');
-		  console.log('result: ',JSON.stringify(result,null,"\t"));
+// 		if (result.status.isInBlock) {
+// 		  console.log(' =====>>> in a block');
+// 		} else if (result.status.isFinalized) {
+// 		  console.log(' =====>>> finalized');
+// 		  console.log('result: ',JSON.stringify(result,null,"\t"));
   
-		}
-	  });
+// 		}
+// 	  });
   
-	}
-	else console.log(`ASTAR API IS NOT SET UP YET`);
-}
-//#endregion
-//#endregion ASTAR
+// 	}
+// 	else console.log(`ASTAR API IS NOT SET UP YET`);
+// }
+// //#endregion
+// //#endregion ASTAR
 
 
 
 
-// READ TREASURY MANAGER
+// // READ TREASURY MANAGER
 
-//#region tm_getAdminAccount
-const tm_getAdminAccount = async (contract) => {
+// //#region tm_getAdminAccount
+// const tm_getAdminAccount = async (contract) => {
 
-    if (astar_api) 
-    {
-      const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
-      const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
-      const { gasRequired, storageDeposit, result, output } = await contract.query.getAdminAccount(
-        polkadot_test_account.address, 
-        {
-          gasLimit: astar_api.registry.createType('WeightV2', {
-            refTime: maxGas,
-            proofSize: maxGas,
-          }),
-          storageDepositLimit: null,
-        }
-      );
+//     if (astar_api) 
+//     {
+//       const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
+//       const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
+//       const { gasRequired, storageDeposit, result, output } = await contract.query.getAdminAccount(
+//         polkadot_test_account.address, 
+//         {
+//           gasLimit: astar_api.registry.createType('WeightV2', {
+//             refTime: maxGas,
+//             proofSize: maxGas,
+//           }),
+//           storageDepositLimit: null,
+//         }
+//       );
 
-      // The actual result from RPC as `ContractExecResult`
-      console.log("===> result.toHuman() : ",result.toHuman());
-      // Ok: data: "0x00"
+//       // The actual result from RPC as `ContractExecResult`
+//       console.log("===> result.toHuman() : ",result.toHuman());
+//       // Ok: data: "0x00"
 
-      // the gas consumed for contract execution
-      console.log("===> gasRequired.toHuman() : ",gasRequired.toHuman()); 
-      // {refTime: '6,219,235,328', proofSize: '131,072'}
+//       // the gas consumed for contract execution
+//       console.log("===> gasRequired.toHuman() : ",gasRequired.toHuman()); 
+//       // {refTime: '6,219,235,328', proofSize: '131,072'}
 
-      // check if the call was successful
-      if (result.isOk) {
-        // output the return value
-        console.log('Success', output.toHuman());  //Success false
-		return  output.toHuman()
-      } else {
-        console.error('Error', result.asErr);
-		return result.asErr
-      }
+//       // check if the call was successful
+//       if (result.isOk) {
+//         // output the return value
+//         console.log('Success', output.toHuman());  //Success false
+// 		return  output.toHuman()
+//       } else {
+//         console.error('Error', result.asErr);
+// 		return result.asErr
+//       }
 
-    }
-    else { console.log(`ASTAR API IS NOT SET UP YET`); return null }
-  }
-//#endregion
+//     }
+//     else { console.log(`ASTAR API IS NOT SET UP YET`); return null }
+//   }
+// //#endregion
 
-//#region tm_getManagerAccount
-const tm_getManagerAccount = async (contract) => {
+// //#region tm_getManagerAccount
+// const tm_getManagerAccount = async (contract) => {
 
-    if (astar_api) 
-    {
-      const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
-      const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
-      const { gasRequired, storageDeposit, result, output } = await contract.query.getManagerAccount(
-        polkadot_test_account.address, 
-        {
-          gasLimit: astar_api.registry.createType('WeightV2', {
-            refTime: maxGas,
-            proofSize: maxGas,
-          }),
-          storageDepositLimit: null,
-        }
-      );
+//     if (astar_api) 
+//     {
+//       const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
+//       const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
+//       const { gasRequired, storageDeposit, result, output } = await contract.query.getManagerAccount(
+//         polkadot_test_account.address, 
+//         {
+//           gasLimit: astar_api.registry.createType('WeightV2', {
+//             refTime: maxGas,
+//             proofSize: maxGas,
+//           }),
+//           storageDepositLimit: null,
+//         }
+//       );
 
-      // The actual result from RPC as `ContractExecResult`
-      console.log("===> result.toHuman() : ",result.toHuman());
-      // Ok: data: "0x00"
+//       // The actual result from RPC as `ContractExecResult`
+//       console.log("===> result.toHuman() : ",result.toHuman());
+//       // Ok: data: "0x00"
 
-      // the gas consumed for contract execution
-      console.log("===> gasRequired.toHuman() : ",gasRequired.toHuman()); 
-      // {refTime: '6,219,235,328', proofSize: '131,072'}
+//       // the gas consumed for contract execution
+//       console.log("===> gasRequired.toHuman() : ",gasRequired.toHuman()); 
+//       // {refTime: '6,219,235,328', proofSize: '131,072'}
 
-      // check if the call was successful
-      if (result.isOk) {
-        // output the return value
-        console.log('Success', output.toHuman());  //Success false
-		return  output.toHuman()
-      } else {
-        console.error('Error', result.asErr);
-		return result.asErr
-      }
+//       // check if the call was successful
+//       if (result.isOk) {
+//         // output the return value
+//         console.log('Success', output.toHuman());  //Success false
+// 		return  output.toHuman()
+//       } else {
+//         console.error('Error', result.asErr);
+// 		return result.asErr
+//       }
 
-    }
-    else { console.log(`ASTAR API IS NOT SET UP YET`); return null }
-  }
-//#endregion
+//     }
+//     else { console.log(`ASTAR API IS NOT SET UP YET`); return null }
+//   }
+// //#endregion
 
-//#region tm_getJobInfo
-const tm_getJobInfo = async (id) => {
+// //#region tm_getJobInfo
+// const tm_getJobInfo = async (id) => {
 
-    if (astar_api) 
-    {
-	  const contract = contract_treasury_manager;
+//     if (astar_api) 
+//     {
+// 	  const contract = contract_treasury_manager;
 
-      const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
-      const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
-      const { gasRequired, storageDeposit, result, output } = await contract.query.getJobInfo(
-        polkadot_test_account.address, 
-        {
-          gasLimit: astar_api.registry.createType('WeightV2', {
-            refTime: maxGas,
-            proofSize: maxGas,
-          }),
-          storageDepositLimit: null,
-        },
-		id
-      );
+//       const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
+//       const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
+//       const { gasRequired, storageDeposit, result, output } = await contract.query.getJobInfo(
+//         polkadot_test_account.address, 
+//         {
+//           gasLimit: astar_api.registry.createType('WeightV2', {
+//             refTime: maxGas,
+//             proofSize: maxGas,
+//           }),
+//           storageDepositLimit: null,
+//         },
+// 		id
+//       );
 
-      // The actual result from RPC as `ContractExecResult`
-    //   console.log("===> result.toHuman() : ",result.toHuman());
-      // Ok: data: "0x00"
+//       // The actual result from RPC as `ContractExecResult`
+//     //   console.log("===> result.toHuman() : ",result.toHuman());
+//       // Ok: data: "0x00"
 
-      // the gas consumed for contract execution
-    //   console.log("===> gasRequired.toHuman() : ",gasRequired.toHuman()); 
-      // {refTime: '6,219,235,328', proofSize: '131,072'}
+//       // the gas consumed for contract execution
+//     //   console.log("===> gasRequired.toHuman() : ",gasRequired.toHuman()); 
+//       // {refTime: '6,219,235,328', proofSize: '131,072'}
 
-      // check if the call was successful
-      if (result.isOk) {
-        // output the return value
-        // console.log('Success', output.toString());  //Success false
-		// {id: '0', title: 'Tranlsation1', applicant: 'XtEUQTYNxZMxU3gMnTskEX3JFSVEDpE7hwSTBW74AowhUGV'
-		// , requestedToken: 'YovEh7RQkxjK6y2FKpKK8urtTofEPMdYvzQXNCFczeAqwmJ', valueInUsd: false
-		// ,nextInstallmentPointer: "0", payeeAccounts:  ['XtEUQTYNxZMxU3gMnTskEX3JFSVEDpE7hwSTBW74AowhUGV']
-		// ,paymentSchedule: ['1,676,501,334,995'] , paymentType: "OneOffFutureTime", positionInVec:  "0"
-		// ,requestedValue: "1"}
+//       // check if the call was successful
+//       if (result.isOk) {
+//         // output the return value
+//         // console.log('Success', output.toString());  //Success false
+// 		// {id: '0', title: 'Tranlsation1', applicant: 'XtEUQTYNxZMxU3gMnTskEX3JFSVEDpE7hwSTBW74AowhUGV'
+// 		// , requestedToken: 'YovEh7RQkxjK6y2FKpKK8urtTofEPMdYvzQXNCFczeAqwmJ', valueInUsd: false
+// 		// ,nextInstallmentPointer: "0", payeeAccounts:  ['XtEUQTYNxZMxU3gMnTskEX3JFSVEDpE7hwSTBW74AowhUGV']
+// 		// ,paymentSchedule: ['1,676,501,334,995'] , paymentType: "OneOffFutureTime", positionInVec:  "0"
+// 		// ,requestedValue: "1"}
 
-		// const result_human =  output.toHuman();
-		const result =  JSON.parse(output.toString());
-		// console.log(" &&&&&&&&&&&&&&&&& ");
-		// console.log("JOBS INFO : ",result_human)
-		// console.log("JOBS INFO : ",result)
+// 		// const result_human =  output.toHuman();
+// 		const result =  JSON.parse(output.toString());
+// 		// console.log(" &&&&&&&&&&&&&&&&& ");
+// 		// console.log("JOBS INFO : ",result_human)
+// 		// console.log("JOBS INFO : ",result)
             
-		const num_of_payments = result.paymentSchedule.length;
-		const first_payment_timestamp = new Date(result.paymentSchedule[0]).toISOString();
-		const _progress = (Number(result.positionInVec) + 1) / num_of_payments ;  //this is percentage    
+// 		const num_of_payments = result.paymentSchedule.length;
+// 		const first_payment_timestamp = new Date(result.paymentSchedule[0]).toISOString();
+// 		const _progress = (Number(result.positionInVec) + 1) / num_of_payments ;  //this is percentage    
          
-		let job_info = {
-			id: result.id,
-			title: hexToString(result.title), 
-			paymentType: result.paymentType,
-			first_payment_date: first_payment_timestamp,
-			paymentToken: result.requestedToken===DOT? "DOT" : "USDT",
-			denomnatedinUSD: result.valueInUsd,
-			amount:  Number((hexToBn(result.requestedValue).div(mantissa15)).toString())/1000, 
-			progress: _progress*100,    //0 for open jobs
-			payee: result.payeeAccounts[0],
-		}
-		// console.log(" &&&&&&&&&&&&&&&&&&&&&&&&&& job_info: ",job_info);
-		// Number( ( (new BN(result_human.requestedValue)).div(mantissa15) ).toString() )/1000,
+// 		let job_info = {
+// 			id: result.id,
+// 			title: hexToString(result.title), 
+// 			paymentType: result.paymentType,
+// 			first_payment_date: first_payment_timestamp,
+// 			paymentToken: result.requestedToken===DOT? "DOT" : "USDT",
+// 			denomnatedinUSD: result.valueInUsd,
+// 			amount:  Number((hexToBn(result.requestedValue).div(mantissa15)).toString())/1000, 
+// 			progress: _progress*100,    //0 for open jobs
+// 			payee: result.payeeAccounts[0],
+// 		}
+// 		// console.log(" &&&&&&&&&&&&&&&&&&&&&&&&&& job_info: ",job_info);
+// 		// Number( ( (new BN(result_human.requestedValue)).div(mantissa15) ).toString() )/1000,
 
 
-		return job_info
-		// return  output.toHuman()
-      } else {
-        console.error('Error', result.asErr);
-		return result.asErr
-      }
+// 		return job_info
+// 		// return  output.toHuman()
+//       } else {
+//         console.error('Error', result.asErr);
+// 		return result.asErr
+//       }
 
-    }
-    else { console.log(`ASTAR API IS NOT SET UP YET`); return null }
-  }
-//#endregion
+//     }
+//     else { console.log(`ASTAR API IS NOT SET UP YET`); return null }
+//   }
+// //#endregion
 
-//#region tm_getTreasuryTokenSymbol
-const tm_getTreasuryTokenSymbol = async (contract) => {
+// //#region tm_getTreasuryTokenSymbol
+// const tm_getTreasuryTokenSymbol = async (contract) => {
 
-    if (astar_api) 
-    {
-      const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
-      const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
-      const { gasRequired, storageDeposit, result, output } = await contract.query.getTreasuryTokenSymbol(
-        polkadot_test_account.address, 
-        {
-          gasLimit: astar_api.registry.createType('WeightV2', {
-            refTime: maxGas,
-            proofSize: maxGas,
-          }),
-          storageDepositLimit: null,
-        },
-      );
+//     if (astar_api) 
+//     {
+//       const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
+//       const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
+//       const { gasRequired, storageDeposit, result, output } = await contract.query.getTreasuryTokenSymbol(
+//         polkadot_test_account.address, 
+//         {
+//           gasLimit: astar_api.registry.createType('WeightV2', {
+//             refTime: maxGas,
+//             proofSize: maxGas,
+//           }),
+//           storageDepositLimit: null,
+//         },
+//       );
 
-      // The actual result from RPC as `ContractExecResult`
-      console.log("===> result.toHuman() : ",result.toHuman());
-      // Ok: data: "0x00"
+//       // The actual result from RPC as `ContractExecResult`
+//       console.log("===> result.toHuman() : ",result.toHuman());
+//       // Ok: data: "0x00"
 
-      // the gas consumed for contract execution
-      console.log("===> gasRequired.toHuman() : ",gasRequired.toHuman()); 
-      // {refTime: '6,219,235,328', proofSize: '131,072'}
+//       // the gas consumed for contract execution
+//       console.log("===> gasRequired.toHuman() : ",gasRequired.toHuman()); 
+//       // {refTime: '6,219,235,328', proofSize: '131,072'}
 
-      // check if the call was successful
-      if (result.isOk) {
-        // output the return value
-        console.log('Success', output.toHuman());  //Success false
-		return  output.toHuman()
-      } else {
-        console.error('Error', result.asErr);
-		return result.asErr
-      }
+//       // check if the call was successful
+//       if (result.isOk) {
+//         // output the return value
+//         console.log('Success', output.toHuman());  //Success false
+// 		return  output.toHuman()
+//       } else {
+//         console.error('Error', result.asErr);
+// 		return result.asErr
+//       }
 
-    }
-    else { console.log(`ASTAR API IS NOT SET UP YET`); return null }
-  }
-//#endregion
+//     }
+//     else { console.log(`ASTAR API IS NOT SET UP YET`); return null }
+//   }
+// //#endregion
 
-//#region tm_getTreasuryToken
-const tm_getTreasuryToken = async (contract) => {
+// //#region tm_getTreasuryToken
+// const tm_getTreasuryToken = async (contract) => {
 
-    if (astar_api) 
-    {
-      const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
-      const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
-      const { gasRequired, storageDeposit, result, output } = await contract.query.getTreasuryToken(
-        polkadot_test_account.address, 
-        {
-          gasLimit: astar_api.registry.createType('WeightV2', {
-            refTime: maxGas,
-            proofSize: maxGas,
-          }),
-          storageDepositLimit: null,
-        },
-      );
+//     if (astar_api) 
+//     {
+//       const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
+//       const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
+//       const { gasRequired, storageDeposit, result, output } = await contract.query.getTreasuryToken(
+//         polkadot_test_account.address, 
+//         {
+//           gasLimit: astar_api.registry.createType('WeightV2', {
+//             refTime: maxGas,
+//             proofSize: maxGas,
+//           }),
+//           storageDepositLimit: null,
+//         },
+//       );
 
-      // The actual result from RPC as `ContractExecResult`
-      console.log("===> result.toHuman() : ",result.toHuman());
-      // Ok: data: "0x00"
+//       // The actual result from RPC as `ContractExecResult`
+//       console.log("===> result.toHuman() : ",result.toHuman());
+//       // Ok: data: "0x00"
 
-      // the gas consumed for contract execution
-      console.log("===> gasRequired.toHuman() : ",gasRequired.toHuman()); 
-      // {refTime: '6,219,235,328', proofSize: '131,072'}
+//       // the gas consumed for contract execution
+//       console.log("===> gasRequired.toHuman() : ",gasRequired.toHuman()); 
+//       // {refTime: '6,219,235,328', proofSize: '131,072'}
 
-      // check if the call was successful
-      if (result.isOk) {
-        // output the return value
-        console.log('Success', output.toHuman());  //Success false
-		return  output.toHuman()
-      } else {
-        console.error('Error', result.asErr);
-		return result.asErr
-      }
+//       // check if the call was successful
+//       if (result.isOk) {
+//         // output the return value
+//         console.log('Success', output.toHuman());  //Success false
+// 		return  output.toHuman()
+//       } else {
+//         console.error('Error', result.asErr);
+// 		return result.asErr
+//       }
 
-    }
-    else { console.log(`ASTAR API IS NOT SET UP YET`); return null }
-  }
-//#endregion
+//     }
+//     else { console.log(`ASTAR API IS NOT SET UP YET`); return null }
+//   }
+// //#endregion
 
-//#region tm_getOpenJobIds
-const tm_getOpenJobIds = async () => {
+// //#region tm_getOpenJobIds
+// const tm_getOpenJobIds = async () => {
 
-    if (astar_api) 
-    {
-	  const contract = contract_treasury_manager;
+//     if (astar_api) 
+//     {
+// 	  const contract = contract_treasury_manager;
 
-      const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
-      const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
-      const { gasRequired, storageDeposit, result, output } = await contract.query.getOpenJobsIds(
-        polkadot_test_account.address, 
-        {
-          gasLimit: astar_api.registry.createType('WeightV2', {
-            refTime: maxGas,
-            proofSize: maxGas,
-          }),
-          storageDepositLimit: null,
-        },
-      );
+//       const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
+//       const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
+//       const { gasRequired, storageDeposit, result, output } = await contract.query.getOpenJobsIds(
+//         polkadot_test_account.address, 
+//         {
+//           gasLimit: astar_api.registry.createType('WeightV2', {
+//             refTime: maxGas,
+//             proofSize: maxGas,
+//           }),
+//           storageDepositLimit: null,
+//         },
+//       );
 
-      // The actual result from RPC as `ContractExecResult`
-    //   console.log("===> result.toHuman() : ",result.toHuman());
-      // Ok: data: "0x00"
+//       // The actual result from RPC as `ContractExecResult`
+//     //   console.log("===> result.toHuman() : ",result.toHuman());
+//       // Ok: data: "0x00"
 
-      // the gas consumed for contract execution
-    //   console.log("===> gasRequired.toHuman() : ",gasRequired.toHuman()); 
-      // {refTime: '6,219,235,328', proofSize: '131,072'}
+//       // the gas consumed for contract execution
+//     //   console.log("===> gasRequired.toHuman() : ",gasRequired.toHuman()); 
+//       // {refTime: '6,219,235,328', proofSize: '131,072'}
 
-      // check if the call was successful
-      if (result.isOk) {
-        // output the return value
-        console.log('Success', output.toHuman());  //Success false
-		return  output.toHuman()
-      } else {
-        console.error('Error', result.asErr);
-		return result.asErr
-      }
+//       // check if the call was successful
+//       if (result.isOk) {
+//         // output the return value
+//         console.log('Success', output.toHuman());  //Success false
+// 		return  output.toHuman()
+//       } else {
+//         console.error('Error', result.asErr);
+// 		return result.asErr
+//       }
 
-    }
-    else { console.log(`ASTAR API IS NOT SET UP YET`); return null }
-  }
-//#endregion
+//     }
+//     else { console.log(`ASTAR API IS NOT SET UP YET`); return null }
+//   }
+// //#endregion
 
-//#region tm_getPendingJobsIds
-const tm_getPendingJobsIds = async () => {
+// //#region tm_getPendingJobsIds
+// const tm_getPendingJobsIds = async () => {
 
-    if (astar_api) 
-    {
-	  const contract = contract_treasury_manager;
+//     if (astar_api) 
+//     {
+// 	  const contract = contract_treasury_manager;
 
-      const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
-      const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
-      const { gasRequired, storageDeposit, result, output } = await contract.query.getPendingJobsIds(
-        polkadot_test_account.address, 
-        {
-          gasLimit: astar_api.registry.createType('WeightV2', {
-            refTime: maxGas,
-            proofSize: maxGas,
-          }),
-          storageDepositLimit: null,
-        },
-      );
+//       const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
+//       const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
+//       const { gasRequired, storageDeposit, result, output } = await contract.query.getPendingJobsIds(
+//         polkadot_test_account.address, 
+//         {
+//           gasLimit: astar_api.registry.createType('WeightV2', {
+//             refTime: maxGas,
+//             proofSize: maxGas,
+//           }),
+//           storageDepositLimit: null,
+//         },
+//       );
 
-      // The actual result from RPC as `ContractExecResult`
-    //   console.log("===> result.toHuman() : ",result.toHuman());
-      // Ok: data: "0x00"
+//       // The actual result from RPC as `ContractExecResult`
+//     //   console.log("===> result.toHuman() : ",result.toHuman());
+//       // Ok: data: "0x00"
 
-      // the gas consumed for contract execution
-    //   console.log("===> gasRequired.toHuman() : ",gasRequired.toHuman()); 
-      // {refTime: '6,219,235,328', proofSize: '131,072'}
+//       // the gas consumed for contract execution
+//     //   console.log("===> gasRequired.toHuman() : ",gasRequired.toHuman()); 
+//       // {refTime: '6,219,235,328', proofSize: '131,072'}
 
-      // check if the call was successful
-      if (result.isOk) {
-        // output the return value
-        console.log('Success', output.toHuman());  //Success false
-		return  output.toHuman()
-      } else {
-        console.error('Error', result.asErr);
-		return result.asErr
-      }
+//       // check if the call was successful
+//       if (result.isOk) {
+//         // output the return value
+//         console.log('Success', output.toHuman());  //Success false
+// 		return  output.toHuman()
+//       } else {
+//         console.error('Error', result.asErr);
+// 		return result.asErr
+//       }
 
-    }
-    else { console.log(`ASTAR API IS NOT SET UP YET`); return null }
-  }
-//#endregion
+//     }
+//     else { console.log(`ASTAR API IS NOT SET UP YET`); return null }
+//   }
+// //#endregion
 
-//#region tm_getCompletedJobsIds
-const tm_getCompletedJobsIds = async () => {
+// //#region tm_getCompletedJobsIds
+// const tm_getCompletedJobsIds = async () => {
 
-    if (astar_api) 
-    {
-	  const contract = contract_treasury_manager;
+//     if (astar_api) 
+//     {
+// 	  const contract = contract_treasury_manager;
 
-      const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
-      const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
-      const { gasRequired, storageDeposit, result, output } = await contract.query.getCompletedJobsIds(
-        polkadot_test_account.address, 
-        {
-          gasLimit: astar_api.registry.createType('WeightV2', {
-            refTime: maxGas,
-            proofSize: maxGas,
-          }),
-          storageDepositLimit: null,
-        },
-      );
+//       const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
+//       const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
+//       const { gasRequired, storageDeposit, result, output } = await contract.query.getCompletedJobsIds(
+//         polkadot_test_account.address, 
+//         {
+//           gasLimit: astar_api.registry.createType('WeightV2', {
+//             refTime: maxGas,
+//             proofSize: maxGas,
+//           }),
+//           storageDepositLimit: null,
+//         },
+//       );
 
-      // The actual result from RPC as `ContractExecResult`
-    //   console.log("===> result.toHuman() : ",result.toHuman());
-      // Ok: data: "0x00"
+//       // The actual result from RPC as `ContractExecResult`
+//     //   console.log("===> result.toHuman() : ",result.toHuman());
+//       // Ok: data: "0x00"
 
-      // the gas consumed for contract execution
-    //   console.log("===> gasRequired.toHuman() : ",gasRequired.toHuman()); 
-      // {refTime: '6,219,235,328', proofSize: '131,072'}
+//       // the gas consumed for contract execution
+//     //   console.log("===> gasRequired.toHuman() : ",gasRequired.toHuman()); 
+//       // {refTime: '6,219,235,328', proofSize: '131,072'}
 
-      // check if the call was successful
-      if (result.isOk) {
-        // output the return value
-        console.log('Success', output.toHuman());  //Success false
+//       // check if the call was successful
+//       if (result.isOk) {
+//         // output the return value
+//         console.log('Success', output.toHuman());  //Success false
 
-		// console.log('Success 3', hexToU8a(output.toString()) );  //Success false
-		// const levelsArray = hexToU8a(output.toString())
-		// console.log(`levelsArray: ${levelsArray[0]} ${levelsArray[1]} ${levelsArray[2]} `);
+// 		// console.log('Success 3', hexToU8a(output.toString()) );  //Success false
+// 		// const levelsArray = hexToU8a(output.toString())
+// 		// console.log(`levelsArray: ${levelsArray[0]} ${levelsArray[1]} ${levelsArray[2]} `);
 
 
-		return  output.toHuman()
-      } else {
-        console.error('Error', result.asErr);
-		return result.asErr
-      }
+// 		return  output.toHuman()
+//       } else {
+//         console.error('Error', result.asErr);
+// 		return result.asErr
+//       }
 
-    }
-    else { console.log(`ASTAR API IS NOT SET UP YET`); return null }
-  }
-//#endregion
+//     }
+//     else { console.log(`ASTAR API IS NOT SET UP YET`); return null }
+//   }
+// //#endregion
 
-//#region tm_getLiabilityThresholds
-const tm_getLiabilityThresholds = async () => {
+// //#region tm_getLiabilityThresholds
+// const tm_getLiabilityThresholds = async () => {
 
-    if (astar_api) 
-    {
-	  const contract = contract_treasury_manager;
+//     if (astar_api) 
+//     {
+// 	  const contract = contract_treasury_manager;
 
-      const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
-      const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
-      const { gasRequired, storageDeposit, result, output } = await contract.query.getLiabilityThresholds(
-        polkadot_test_account.address, 
-        {
-          gasLimit: astar_api.registry.createType('WeightV2', {
-            refTime: maxGas,
-            proofSize: maxGas,
-          }),
-          storageDepositLimit: null,
-        },
-      );
+//       const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
+//       const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
+//       const { gasRequired, storageDeposit, result, output } = await contract.query.getLiabilityThresholds(
+//         polkadot_test_account.address, 
+//         {
+//           gasLimit: astar_api.registry.createType('WeightV2', {
+//             refTime: maxGas,
+//             proofSize: maxGas,
+//           }),
+//           storageDepositLimit: null,
+//         },
+//       );
 
-      // The actual result from RPC as `ContractExecResult`
-    //   console.log("===> result.toHuman() : ",result.toHuman());
-      // Ok: data: "0x00"
+//       // The actual result from RPC as `ContractExecResult`
+//     //   console.log("===> result.toHuman() : ",result.toHuman());
+//       // Ok: data: "0x00"
 
-      // the gas consumed for contract execution
-    //   console.log("===> gasRequired.toHuman() : ",gasRequired.toHuman()); 
-      // {refTime: '6,219,235,328', proofSize: '131,072'}
+//       // the gas consumed for contract execution
+//     //   console.log("===> gasRequired.toHuman() : ",gasRequired.toHuman()); 
+//       // {refTime: '6,219,235,328', proofSize: '131,072'}
 
-      // check if the call was successful
-      if (result.isOk) {
-        // output the return value
-        // console.log('Success 1', output.toHuman());  //Success false
-        // console.log('Success 2', output.toString() );  //Success false
-        console.log('Success 3', hexToU8a(output.toString()) );  //Success false
-		const levelsArray = hexToU8a(output.toString())
-		console.log(`levelsArray: ${levelsArray[0]} ${levelsArray[1]} ${levelsArray[2]} `);
+//       // check if the call was successful
+//       if (result.isOk) {
+//         // output the return value
+//         // console.log('Success 1', output.toHuman());  //Success false
+//         // console.log('Success 2', output.toString() );  //Success false
+//         console.log('Success 3', hexToU8a(output.toString()) );  //Success false
+// 		const levelsArray = hexToU8a(output.toString())
+// 		console.log(`levelsArray: ${levelsArray[0]} ${levelsArray[1]} ${levelsArray[2]} `);
 
-		return  levelsArray
-      } else {
-        console.error('Error', result.asErr);
-		return result.asErr
-      }
+// 		return  levelsArray
+//       } else {
+//         console.error('Error', result.asErr);
+// 		return result.asErr
+//       }
 
-    }
-    else { console.log(`ASTAR API IS NOT SET UP YET`); return null }
-  }
-//#endregion
+//     }
+//     else { console.log(`ASTAR API IS NOT SET UP YET`); return null }
+//   }
+// //#endregion
 
-//#region tm_getLiabilityHealth
-const tm_getLiabilityHealth = async () => {
+// //#region tm_getLiabilityHealth
+// const tm_getLiabilityHealth = async () => {
 
-    if (astar_api) 
-    {
-	  const contract = contract_treasury_manager;
+//     if (astar_api) 
+//     {
+// 	  const contract = contract_treasury_manager;
 	  	
-      const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
-      const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
-      const { gasRequired, storageDeposit, result, output } = await contract.query.getLiabilityHealth(
-        polkadot_test_account.address, 
-        {
-          gasLimit: astar_api.registry.createType('WeightV2', {
-            refTime: maxGas,
-            proofSize: maxGas,
-          }),
-          storageDepositLimit: null,
-        },
-      );
+//       const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
+//       const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
+//       const { gasRequired, storageDeposit, result, output } = await contract.query.getLiabilityHealth(
+//         polkadot_test_account.address, 
+//         {
+//           gasLimit: astar_api.registry.createType('WeightV2', {
+//             refTime: maxGas,
+//             proofSize: maxGas,
+//           }),
+//           storageDepositLimit: null,
+//         },
+//       );
 
-      // The actual result from RPC as `ContractExecResult`
-    //   console.log("===> result.toHuman() : ",result.toHuman());
-      // Ok: data: "0x00"
+//       // The actual result from RPC as `ContractExecResult`
+//     //   console.log("===> result.toHuman() : ",result.toHuman());
+//       // Ok: data: "0x00"
 
-      // the gas consumed for contract execution
-    //   console.log("===> gasRequired.toHuman() : ",gasRequired.toHuman()); 
-      // {refTime: '6,219,235,328', proofSize: '131,072'}
+//       // the gas consumed for contract execution
+//     //   console.log("===> gasRequired.toHuman() : ",gasRequired.toHuman()); 
+//       // {refTime: '6,219,235,328', proofSize: '131,072'}
 
-      // check if the call was successful
-      if (result.isOk) {
-        // output the return value
-        console.log('Success 1', output.toHuman());  //Success false
-        // console.log('Success 2',   output.toString());  //Success false
-        // console.log('Success 3',  hexToU8a(output.touman));  //Success false
+//       // check if the call was successful
+//       if (result.isOk) {
+//         // output the return value
+//         console.log('Success 1', output.toHuman());  //Success false
+//         // console.log('Success 2',   output.toString());  //Success false
+//         // console.log('Success 3',  hexToU8a(output.touman));  //Success false
 		
-		console.log('Success 3', hexToU8a(output.toString()) );  //Success false
-		const levelsArray = hexToU8a(output.toString())
-		console.log(`levelsArray: ${levelsArray[0]} ${levelsArray[1]} ${levelsArray[2]} ${levelsArray[3]} `);
-
-		return levelsArray
-
-		// return  output.toHuman()
-      } else {
-        console.error('Error', result.asErr);
-		return result.asErr
-      }
-
-    }
-    else { console.log(`ASTAR API IS NOT SET UP YET`); return null }
-  }
-//#endregion
-
-//#region tm_getLiabilityInUsdtTokensTreasury
-const tm_getLiabilityInUsdtTokensTreasury = async () => {
-
-    if (astar_api) 
-    {
-	  const contract = contract_treasury_manager;
-
-      const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
-      const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
-      const { gasRequired, storageDeposit, result, output } = await contract.query.getLiabilityInUsdtTokensTreasury(
-        polkadot_test_account.address, 
-        {
-          gasLimit: astar_api.registry.createType('WeightV2', {
-            refTime: maxGas,
-            proofSize: maxGas,
-          }),
-          storageDepositLimit: null,
-        },
-      );
-
-      // The actual result from RPC as `ContractExecResult`
-    //   console.log("===> result.toHuman() : ",result.toHuman());
-      // Ok: data: "0x00"
-
-      // the gas consumed for contract execution
-    //   console.log("===> gasRequired.toHuman() : ",gasRequired.toHuman()); 
-      // {refTime: '6,219,235,328', proofSize: '131,072'}
-
-      // check if the call was successful
-      if (result.isOk) {
-        // output the return value
-        // console.log('Success', output.toHuman());  //Success false
-		// const liabilitues_array = output.toHuman();
-		const liabilitues_array = JSON.parse(output.toString());
-
-		// console.log(` ******>>>>>>> liabilitues_array: `,liabilitues_array)
-		// console.log(` ******>>>>>>> liabilitues_array[0]: `,liabilitues_array[0])
-		// console.log(` ******>>>>>>> liabilitues_array[0]: ${typeof(liabilitues_array[0])} `)
-		// const a = new BN( `${liabilitues_array[0]}`)
-		// console.log(` ******>>>>>>> liabilitues_array[0]: ${a} `)
-
-		const new_liabilitues_array = []
-		for (let i=0; i<liabilitues_array.length; i++) {
-			const element =  new BN(`${liabilitues_array[i]}`);
-			const l_value =  Number((element.div(mantissa15)).toString()) ; //allow for 3 decimals
-			new_liabilitues_array.push(l_value / 1000);
-		}
-
-		return new_liabilitues_array
-
-		// return  output.toHuman()
-      } else {
-        console.error('Error', result.asErr);
-		return result.asErr
-      }
-
-    }
-    else { console.log(`ASTAR API IS NOT SET UP YET`); return null }
-  }
-//#endregion
-
-//#region tm_getLiabilityInUsdtTokens
-const tm_getLiabilityInUsdtTokens = async () => {
-
-    if (astar_api) 
-    {
-	  const contract = contract_treasury_manager;
-
-      const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
-      const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
-      const { gasRequired, storageDeposit, result, output } = await contract.query.getLiabilityInUsdtTokens(
-        polkadot_test_account.address, 
-        {
-          gasLimit: astar_api.registry.createType('WeightV2', {
-            refTime: maxGas,
-            proofSize: maxGas,
-          }),
-          storageDepositLimit: null,
-        },
-      );
-
-      // The actual result from RPC as `ContractExecResult`
-    //   console.log("===> result.toHuman() : ",result.toHuman());
-      // Ok: data: "0x00"
-
-      // the gas consumed for contract execution
-    //   console.log("===> gasRequired.toHuman() : ",gasRequired.toHuman()); 
-      // {refTime: '6,219,235,328', proofSize: '131,072'}
-
-      // check if the call was successful
-      if (result.isOk) {
-        // output the return value
-        // console.log('Success', output.toHuman());  //Success false
-
-
-		// const liabilitues_array = output.toHuman();
-		const liabilitues_array = JSON.parse(output.toString());
-
-
-		const new_liabilitues_array = []
-		for (let i=0; i<liabilitues_array.length; i++) {
-			const element =  new BN(`${liabilitues_array[i]}`);
-			const l_value =  Number((element.div(mantissa15)).toString()) ; //allow for 3 decimals
-			new_liabilitues_array.push(l_value / 1000);
-		}
-
-		return new_liabilitues_array
-
-		// return  output.toHuman()
-      } else {
-        console.error('Error', result.asErr);
-		return result.asErr
-      }
-
-    }
-    else { console.log(`ASTAR API IS NOT SET UP YET`); return null }
-  }
-//#endregion
-
-//#region tm_getLiabilityInTreasury
-const tm_getLiabilityInTreasury = async () => {
-
-    if (astar_api) 
-    {
-	  const contract = contract_treasury_manager;
-
-      const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
-      const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
-      const { gasRequired, storageDeposit, result, output } = await contract.query.getLiabilityInTreasury(
-        polkadot_test_account.address, 
-        {
-          gasLimit: astar_api.registry.createType('WeightV2', {
-            refTime: maxGas,
-            proofSize: maxGas,
-          }),
-          storageDepositLimit: null,
-        },
-      );
-
-      // The actual result from RPC as `ContractExecResult`
-    //   console.log("===> result.toHuman() : ",result.toHuman());
-      // Ok: data: "0x00"
-
-      // the gas consumed for contract execution
-    //   console.log("===> gasRequired.toHuman() : ",gasRequired.toHuman()); 
-      // {refTime: '6,219,235,328', proofSize: '131,072'}
-
-      // check if the call was successful
-      if (result.isOk) {
-        // output the return value
-        // console.log('Success', output.toHuman());  //Success false
-
-		// const liabilitues_array = output.toHuman();
-		const liabilitues_array = JSON.parse(output.toString());
-
-
-
-		const new_liabilitues_array = []
-		for (let i=0; i<liabilitues_array.length; i++) {
-			const element =  new BN(`${liabilitues_array[i]}`);
-			const l_value =  Number((element.div(mantissa15)).toString()) ; //allow for 3 decimals
-			new_liabilitues_array.push(l_value / 1000);
-		}
-
-		return new_liabilitues_array
-
-
-		// return  output.toHuman()
-      } else {
-        console.error('Error', result.asErr);
-		return result.asErr
-      }
-
-    }
-    else { console.log(`ASTAR API IS NOT SET UP YET`); return null }
-  }
-//#endregion
-
-//#region tm_getCheckPointIntervals
-const tm_getCheckPointIntervals = async () => {
-
-    if (astar_api) 
-    {
-	  const contract = contract_treasury_manager;
-
-      const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
-      const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
-      const { gasRequired, storageDeposit, result, output } = await contract.query.getCheckPointsIntervals(
-        polkadot_test_account.address, 
-        {
-          gasLimit: astar_api.registry.createType('WeightV2', {
-            refTime: maxGas,
-            proofSize: maxGas,
-          }),
-          storageDepositLimit: null,
-        },
-      );
-
-      // The actual result from RPC as `ContractExecResult`
-      console.log("===> result.toHuman() : ",result.toHuman());
-      // Ok: data: "0x00"
-
-      // the gas consumed for contract execution
-      console.log("===> gasRequired.toHuman() : ",gasRequired.toHuman()); 
-      // {refTime: '6,219,235,328', proofSize: '131,072'}
-
-      // check if the call was successful
-      if (result.isOk) {
-        // output the return value
-        console.log('Success', output.toHuman());  //Success false
-		return  output.toHuman()
-      } else {
-        console.error('Error', result.asErr);
-		return result.asErr
-      }
-
-    }
-    else { console.log(`ASTAR API IS NOT SET UP YET`); return null }
-  }
-//#endregion
-
-//#region tm_getBalance
-const tm_getBalance = async (_token, account) => {
-
-    if (astar_api) 
-    {
-	  const contract = contract_treasury_manager;
-
-	  let token;
-	  if (_token==="DOT") token=DOT
-	  else if (_token==="USDT") token=USDT;
-
-      const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
-      const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
-      const { gasRequired, storageDeposit, result, output } = await contract.query.getBalance(
-        polkadot_test_account.address, 
-        {
-          gasLimit: astar_api.registry.createType('WeightV2', {
-            refTime: maxGas,
-            proofSize: maxGas,
-          }),
-          storageDepositLimit: null,
-        },
-		token, account
-      );
-
-      // The actual result from RPC as `ContractExecResult`
-    //   console.log("===> result.toHuman() : ",result.toHuman());
-      // Ok: data: "0x00"
-
-      // the gas consumed for contract execution
-    //   console.log("===> gasRequired.toHuman() : ",gasRequired.toHuman()); 
-      // {refTime: '6,219,235,328', proofSize: '131,072'}
-
-      // check if the call was successful
-      if (result.isOk) {
-        // output the return value
-        // console.log('Success', output.toHuman());  //Success false
-        // console.log('Success', output.toString());  //Success false
-
-		const account_balance =  new BN( output.div(mantissa15) ); //allow for 3 decimals
-		return Number(account_balance.toString())/1000;
-
-		// return  output.toHuman()
-		// return  output
-
-      } else {
-        console.error('Error', result.asErr);
-		return result.asErr
-      }
-
-    }
-    else { console.log(`ASTAR API IS NOT SET UP YET`); return null }
-  }
-//#endregion
-
-//#region tm_getPriceForPair
-const tm_getPriceForPair = async (_base_token="DOT", _quote_token="USDT") => {
-
-    if (astar_api) 
-    {
-	  const contract = contract_treasury_manager;
-
-	  let base_token, quote_token;
-	  if (_base_token==="DOT") base_token = DOT;
-	  if (_quote_token==="USDT") quote_token = USDT;
-
-
-      const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
-      const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
-      const { gasRequired, storageDeposit, result, output } = await contract.query.getPriceForPair(
-        polkadot_test_account.address, 
-        {
-          gasLimit: astar_api.registry.createType('WeightV2', {
-            refTime: maxGas,
-            proofSize: maxGas,
-          }),
-          storageDepositLimit: null,
-        },
-		base_token, quote_token
-      );
-
-      // The actual result from RPC as `ContractExecResult`
-      console.log("===> result.toHuman() : ",result.toHuman());
-      // Ok: data: "0x00"
-
-      // the gas consumed for contract execution
-      console.log("===> gasRequired.toHuman() : ",gasRequired.toHuman()); 
-      // {refTime: '6,219,235,328', proofSize: '131,072'}
-
-      // check if the call was successful
-      if (result.isOk) {
-        // output the return value
-        console.log('Success', output.toHuman());  //Success false
+// 		console.log('Success 3', hexToU8a(output.toString()) );  //Success false
+// 		const levelsArray = hexToU8a(output.toString())
+// 		console.log(`levelsArray: ${levelsArray[0]} ${levelsArray[1]} ${levelsArray[2]} ${levelsArray[3]} `);
+
+// 		return levelsArray
+
+// 		// return  output.toHuman()
+//       } else {
+//         console.error('Error', result.asErr);
+// 		return result.asErr
+//       }
+
+//     }
+//     else { console.log(`ASTAR API IS NOT SET UP YET`); return null }
+//   }
+// //#endregion
+
+// //#region tm_getLiabilityInUsdtTokensTreasury
+// const tm_getLiabilityInUsdtTokensTreasury = async () => {
+
+//     if (astar_api) 
+//     {
+// 	  const contract = contract_treasury_manager;
+
+//       const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
+//       const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
+//       const { gasRequired, storageDeposit, result, output } = await contract.query.getLiabilityInUsdtTokensTreasury(
+//         polkadot_test_account.address, 
+//         {
+//           gasLimit: astar_api.registry.createType('WeightV2', {
+//             refTime: maxGas,
+//             proofSize: maxGas,
+//           }),
+//           storageDepositLimit: null,
+//         },
+//       );
+
+//       // The actual result from RPC as `ContractExecResult`
+//     //   console.log("===> result.toHuman() : ",result.toHuman());
+//       // Ok: data: "0x00"
+
+//       // the gas consumed for contract execution
+//     //   console.log("===> gasRequired.toHuman() : ",gasRequired.toHuman()); 
+//       // {refTime: '6,219,235,328', proofSize: '131,072'}
+
+//       // check if the call was successful
+//       if (result.isOk) {
+//         // output the return value
+//         // console.log('Success', output.toHuman());  //Success false
+// 		// const liabilitues_array = output.toHuman();
+// 		const liabilitues_array = JSON.parse(output.toString());
+
+// 		// console.log(` ******>>>>>>> liabilitues_array: `,liabilitues_array)
+// 		// console.log(` ******>>>>>>> liabilitues_array[0]: `,liabilitues_array[0])
+// 		// console.log(` ******>>>>>>> liabilitues_array[0]: ${typeof(liabilitues_array[0])} `)
+// 		// const a = new BN( `${liabilitues_array[0]}`)
+// 		// console.log(` ******>>>>>>> liabilitues_array[0]: ${a} `)
+
+// 		const new_liabilitues_array = []
+// 		for (let i=0; i<liabilitues_array.length; i++) {
+// 			const element =  new BN(`${liabilitues_array[i]}`);
+// 			const l_value =  Number((element.div(mantissa15)).toString()) ; //allow for 3 decimals
+// 			new_liabilitues_array.push(l_value / 1000);
+// 		}
+
+// 		return new_liabilitues_array
+
+// 		// return  output.toHuman()
+//       } else {
+//         console.error('Error', result.asErr);
+// 		return result.asErr
+//       }
+
+//     }
+//     else { console.log(`ASTAR API IS NOT SET UP YET`); return null }
+//   }
+// //#endregion
+
+// //#region tm_getLiabilityInUsdtTokens
+// const tm_getLiabilityInUsdtTokens = async () => {
+
+//     if (astar_api) 
+//     {
+// 	  const contract = contract_treasury_manager;
+
+//       const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
+//       const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
+//       const { gasRequired, storageDeposit, result, output } = await contract.query.getLiabilityInUsdtTokens(
+//         polkadot_test_account.address, 
+//         {
+//           gasLimit: astar_api.registry.createType('WeightV2', {
+//             refTime: maxGas,
+//             proofSize: maxGas,
+//           }),
+//           storageDepositLimit: null,
+//         },
+//       );
+
+//       // The actual result from RPC as `ContractExecResult`
+//     //   console.log("===> result.toHuman() : ",result.toHuman());
+//       // Ok: data: "0x00"
+
+//       // the gas consumed for contract execution
+//     //   console.log("===> gasRequired.toHuman() : ",gasRequired.toHuman()); 
+//       // {refTime: '6,219,235,328', proofSize: '131,072'}
+
+//       // check if the call was successful
+//       if (result.isOk) {
+//         // output the return value
+//         // console.log('Success', output.toHuman());  //Success false
+
+
+// 		// const liabilitues_array = output.toHuman();
+// 		const liabilitues_array = JSON.parse(output.toString());
+
+
+// 		const new_liabilitues_array = []
+// 		for (let i=0; i<liabilitues_array.length; i++) {
+// 			const element =  new BN(`${liabilitues_array[i]}`);
+// 			const l_value =  Number((element.div(mantissa15)).toString()) ; //allow for 3 decimals
+// 			new_liabilitues_array.push(l_value / 1000);
+// 		}
+
+// 		return new_liabilitues_array
+
+// 		// return  output.toHuman()
+//       } else {
+//         console.error('Error', result.asErr);
+// 		return result.asErr
+//       }
+
+//     }
+//     else { console.log(`ASTAR API IS NOT SET UP YET`); return null }
+//   }
+// //#endregion
+
+// //#region tm_getLiabilityInTreasury
+// const tm_getLiabilityInTreasury = async () => {
+
+//     if (astar_api) 
+//     {
+// 	  const contract = contract_treasury_manager;
+
+//       const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
+//       const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
+//       const { gasRequired, storageDeposit, result, output } = await contract.query.getLiabilityInTreasury(
+//         polkadot_test_account.address, 
+//         {
+//           gasLimit: astar_api.registry.createType('WeightV2', {
+//             refTime: maxGas,
+//             proofSize: maxGas,
+//           }),
+//           storageDepositLimit: null,
+//         },
+//       );
+
+//       // The actual result from RPC as `ContractExecResult`
+//     //   console.log("===> result.toHuman() : ",result.toHuman());
+//       // Ok: data: "0x00"
+
+//       // the gas consumed for contract execution
+//     //   console.log("===> gasRequired.toHuman() : ",gasRequired.toHuman()); 
+//       // {refTime: '6,219,235,328', proofSize: '131,072'}
+
+//       // check if the call was successful
+//       if (result.isOk) {
+//         // output the return value
+//         // console.log('Success', output.toHuman());  //Success false
+
+// 		// const liabilitues_array = output.toHuman();
+// 		const liabilitues_array = JSON.parse(output.toString());
+
+
+
+// 		const new_liabilitues_array = []
+// 		for (let i=0; i<liabilitues_array.length; i++) {
+// 			const element =  new BN(`${liabilitues_array[i]}`);
+// 			const l_value =  Number((element.div(mantissa15)).toString()) ; //allow for 3 decimals
+// 			new_liabilitues_array.push(l_value / 1000);
+// 		}
+
+// 		return new_liabilitues_array
+
+
+// 		// return  output.toHuman()
+//       } else {
+//         console.error('Error', result.asErr);
+// 		return result.asErr
+//       }
+
+//     }
+//     else { console.log(`ASTAR API IS NOT SET UP YET`); return null }
+//   }
+// //#endregion
+
+// //#region tm_getCheckPointIntervals
+// const tm_getCheckPointIntervals = async () => {
+
+//     if (astar_api) 
+//     {
+// 	  const contract = contract_treasury_manager;
+
+//       const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
+//       const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
+//       const { gasRequired, storageDeposit, result, output } = await contract.query.getCheckPointsIntervals(
+//         polkadot_test_account.address, 
+//         {
+//           gasLimit: astar_api.registry.createType('WeightV2', {
+//             refTime: maxGas,
+//             proofSize: maxGas,
+//           }),
+//           storageDepositLimit: null,
+//         },
+//       );
+
+//       // The actual result from RPC as `ContractExecResult`
+//       console.log("===> result.toHuman() : ",result.toHuman());
+//       // Ok: data: "0x00"
+
+//       // the gas consumed for contract execution
+//       console.log("===> gasRequired.toHuman() : ",gasRequired.toHuman()); 
+//       // {refTime: '6,219,235,328', proofSize: '131,072'}
+
+//       // check if the call was successful
+//       if (result.isOk) {
+//         // output the return value
+//         console.log('Success', output.toHuman());  //Success false
+// 		return  output.toHuman()
+//       } else {
+//         console.error('Error', result.asErr);
+// 		return result.asErr
+//       }
+
+//     }
+//     else { console.log(`ASTAR API IS NOT SET UP YET`); return null }
+//   }
+// //#endregion
+
+// //#region tm_getBalance
+// const tm_getBalance = async (_token, account) => {
+
+//     if (astar_api) 
+//     {
+// 	  const contract = contract_treasury_manager;
+
+// 	  let token;
+// 	  if (_token==="DOT") token=DOT
+// 	  else if (_token==="USDT") token=USDT;
+
+//       const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
+//       const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
+//       const { gasRequired, storageDeposit, result, output } = await contract.query.getBalance(
+//         polkadot_test_account.address, 
+//         {
+//           gasLimit: astar_api.registry.createType('WeightV2', {
+//             refTime: maxGas,
+//             proofSize: maxGas,
+//           }),
+//           storageDepositLimit: null,
+//         },
+// 		token, account
+//       );
+
+//       // The actual result from RPC as `ContractExecResult`
+//     //   console.log("===> result.toHuman() : ",result.toHuman());
+//       // Ok: data: "0x00"
+
+//       // the gas consumed for contract execution
+//     //   console.log("===> gasRequired.toHuman() : ",gasRequired.toHuman()); 
+//       // {refTime: '6,219,235,328', proofSize: '131,072'}
+
+//       // check if the call was successful
+//       if (result.isOk) {
+//         // output the return value
+//         // console.log('Success', output.toHuman());  //Success false
+//         // console.log('Success', output.toString());  //Success false
+
+// 		const account_balance =  new BN( output.div(mantissa15) ); //allow for 3 decimals
+// 		return Number(account_balance.toString())/1000;
+
+// 		// return  output.toHuman()
+// 		// return  output
+
+//       } else {
+//         console.error('Error', result.asErr);
+// 		return result.asErr
+//       }
+
+//     }
+//     else { console.log(`ASTAR API IS NOT SET UP YET`); return null }
+//   }
+// //#endregion
+
+// //#region tm_getPriceForPair
+// const tm_getPriceForPair = async (_base_token="DOT", _quote_token="USDT") => {
+
+//     if (astar_api) 
+//     {
+// 	  const contract = contract_treasury_manager;
+
+// 	  let base_token, quote_token;
+// 	  if (_base_token==="DOT") base_token = DOT;
+// 	  if (_quote_token==="USDT") quote_token = USDT;
+
+
+//       const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
+//       const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
+//       const { gasRequired, storageDeposit, result, output } = await contract.query.getPriceForPair(
+//         polkadot_test_account.address, 
+//         {
+//           gasLimit: astar_api.registry.createType('WeightV2', {
+//             refTime: maxGas,
+//             proofSize: maxGas,
+//           }),
+//           storageDepositLimit: null,
+//         },
+// 		base_token, quote_token
+//       );
+
+//       // The actual result from RPC as `ContractExecResult`
+//       console.log("===> result.toHuman() : ",result.toHuman());
+//       // Ok: data: "0x00"
+
+//       // the gas consumed for contract execution
+//       console.log("===> gasRequired.toHuman() : ",gasRequired.toHuman()); 
+//       // {refTime: '6,219,235,328', proofSize: '131,072'}
+
+//       // check if the call was successful
+//       if (result.isOk) {
+//         // output the return value
+//         console.log('Success', output.toHuman());  //Success false
 		
-		// const price =  new BN( output.div(mantissa18) );
-		// return price;
-		return  output.toHuman() 
+// 		// const price =  new BN( output.div(mantissa18) );
+// 		// return price;
+// 		return  output.toHuman() 
 
-      } else {
-        console.error('Error', result.asErr);
-		return result.asErr
-      }
+//       } else {
+//         console.error('Error', result.asErr);
+// 		return result.asErr
+//       }
 
-    }
-    else { console.log(`ASTAR API IS NOT SET UP YET`); return null }
-  }
-//#endregion
+//     }
+//     else { console.log(`ASTAR API IS NOT SET UP YET`); return null }
+//   }
+// //#endregion
 
-//#region tm_getAveragePriceForPair
-const tm_getAveragePriceForPair = async (_base_token="DOT", _quote_token="USDT") => {
+// //#region tm_getAveragePriceForPair
+// const tm_getAveragePriceForPair = async (_base_token="DOT", _quote_token="USDT") => {
 
-    if (astar_api) 
-    {
-	  const contract = contract_treasury_manager;
+//     if (astar_api) 
+//     {
+// 	  const contract = contract_treasury_manager;
 
-	  let base_token, quote_token;
-	  if (_base_token==="DOT") base_token = DOT;
-	  if (_quote_token==="USDT") quote_token = USDT;
+// 	  let base_token, quote_token;
+// 	  if (_base_token==="DOT") base_token = DOT;
+// 	  if (_quote_token==="USDT") quote_token = USDT;
 
-      const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
-      const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
-      const { gasRequired, storageDeposit, result, output } = await contract.query.getAveragePriceForPair(
-        polkadot_test_account.address, 
-        {
-          gasLimit: astar_api.registry.createType('WeightV2', {
-            refTime: maxGas,
-            proofSize: maxGas,
-          }),
-          storageDepositLimit: null,
-        },
-		base_token, quote_token
-      );
+//       const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
+//       const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
+//       const { gasRequired, storageDeposit, result, output } = await contract.query.getAveragePriceForPair(
+//         polkadot_test_account.address, 
+//         {
+//           gasLimit: astar_api.registry.createType('WeightV2', {
+//             refTime: maxGas,
+//             proofSize: maxGas,
+//           }),
+//           storageDepositLimit: null,
+//         },
+// 		base_token, quote_token
+//       );
 
-      // The actual result from RPC as `ContractExecResult`
-      console.log("===> result.toHuman() : ",result.toHuman());
-      // Ok: data: "0x00"
+//       // The actual result from RPC as `ContractExecResult`
+//       console.log("===> result.toHuman() : ",result.toHuman());
+//       // Ok: data: "0x00"
 
-      // the gas consumed for contract execution
-      console.log("===> gasRequired.toHuman() : ",gasRequired.toHuman()); 
-      // {refTime: '6,219,235,328', proofSize: '131,072'}
+//       // the gas consumed for contract execution
+//       console.log("===> gasRequired.toHuman() : ",gasRequired.toHuman()); 
+//       // {refTime: '6,219,235,328', proofSize: '131,072'}
 
-      // check if the call was successful
-      if (result.isOk) {
-        // output the return value
-        console.log('Success', output.toHuman());  //Success false
+//       // check if the call was successful
+//       if (result.isOk) {
+//         // output the return value
+//         console.log('Success', output.toHuman());  //Success false
 		
-		// const price =  new BN( output.div(mantissa18) );
-		// return price;
-		return  output.toHuman()
-      } else {
-        console.error('Error', result.asErr);
-		return result.asErr
-      }
+// 		// const price =  new BN( output.div(mantissa18) );
+// 		// return price;
+// 		return  output.toHuman()
+//       } else {
+//         console.error('Error', result.asErr);
+// 		return result.asErr
+//       }
 
-    }
-    else { console.log(`ASTAR API IS NOT SET UP YET`); return null }
-  }
-//#endregion
-
-
-//WRITE
-
-//#region tm_setLiabilitiesThresholds e.g. amount 10 for 10%
-const tm_setLiabilitiesThresholds = async (amount) => {
-  
-	if (astar_api) 
-	{
-	  const contract = contract_treasury_manager;
-
-	  // D R Y  R U N (We perform the send from an account, here using polkadot_test_account address)
-	  const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
-	  const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
-  
-	  const { gasRequired, storageDeposit, result } = await contract.query.setLiabilitiesThresholds (
-		polkadot_test_account.address, 
-		{
-		  gasLimit: astar_api.registry.createType('WeightV2', {
-			refTime: maxGas,
-			proofSize: maxGas,
-		  }),
-		  storageDepositLimit: null,
-		},
-		amount
-	  );
-
-	  console.log(`outcome: ${result.isOk ? 'Ok' : 'Error'}`); // outcome: Ok
-	  console.log(`gasRequired ${gasRequired.toString()}`);    // gasRequired {"refTime":6219235328,"proofSize":131072}
-  
-	  const gasLimit = astar_api.registry.createType('WeightV2', gasRequired); //as WeightV2
-  
-	  // Send the transaction, like elsewhere this is a normal extrinsic with the same rules as applied in the API (As with the read example,
-	  // additional params, if required can follow - here only one is needed)
-	  await contract.tx
-	  .setLiabilitiesThresholds (
-		{ 
-		  gasLimit,
-		  storageDepositLimit: null, 
-		}, 
-		amount
-	  )
-	  .signAndSend( polkadot_test_account, { nonce: -1 }, result => {
-		if (result.status.isInBlock) {
-		  console.log(' =====>>> in a block');
-		} else if (result.status.isFinalized) {
-		  console.log(' =====>>> finalized');
-		  console.log('result: ',JSON.stringify(result,null,"\t"));
-  
-		}
-	  });
-  
-	}
-	else console.log(`ASTAR API IS NOT SET UP YET`);
-  
-}
-//#endregion
-
-//#region tm_setCheckPointsIntervals e.g. 100, 200, 300 added to current timestamp (milliseconds)
-const tm_setCheckPointsIntervals = async (checkpoint1, checkpoint2, checkpoint3) => {
-  
-	if (astar_api) 
-	{
-	  const contract = contract_treasury_manager;
-
-	  // D R Y  R U N (We perform the send from an account, here using polkadot_test_account address)
-	  const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
-	  const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
-  
-	  const { gasRequired, storageDeposit, result } = await contract.query.setCheckPointsIntervals (
-		polkadot_test_account.address, 
-		{
-		  gasLimit: astar_api.registry.createType('WeightV2', {
-			refTime: maxGas,
-			proofSize: maxGas,
-		  }),
-		  storageDepositLimit: null,
-		},
-		checkpoint1, checkpoint2, checkpoint3
-	  );
-
-	  console.log(`outcome: ${result.isOk ? 'Ok' : 'Error'}`); // outcome: Ok
-	  console.log(`gasRequired ${gasRequired.toString()}`);    // gasRequired {"refTime":6219235328,"proofSize":131072}
-  
-	  const gasLimit = astar_api.registry.createType('WeightV2', gasRequired); //as WeightV2
-  
-	  // Send the transaction, like elsewhere this is a normal extrinsic with the same rules as applied in the API (As with the read example,
-	  // additional params, if required can follow - here only one is needed)
-	  await contract.tx
-	  .setCheckPointsIntervals (
-		{ 
-		  gasLimit,
-		  storageDepositLimit: null, 
-		}, 
-		checkpoint1, checkpoint2, checkpoint3
-	  )
-	  .signAndSend( polkadot_test_account, result => {
-		if (result.status.isInBlock) {
-		  console.log(' =====>>> in a block');
-		} else if (result.status.isFinalized) {
-		  console.log(' =====>>> finalized');
-		  console.log('result: ',JSON.stringify(result,null,"\t"));
-  
-		}
-	  });
-  
-	}
-	else console.log(`ASTAR API IS NOT SET UP YET`);
-  
-}
-//#endregion
-
-//#region tm_calculateLiabilities    BOTH server and front end for different reasons
-const tm_calculateLiabilities = async () => {
-  
-	if (astar_api) 
-	{
-	  const contract = contract_treasury_manager;
-	  console.log(` ********** tm_calculateLiabilities ********** ||| SmartPay Submitted`);
-
-	  // D R Y  R U N (We perform the send from an account, here using polkadot_test_account address)
-	  const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
-	  const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
-  
-	  const { gasRequired, storageDeposit, result } = await contract.query.calculateLiabilities (
-		polkadot_test_account.address, 
-		{
-		  gasLimit: astar_api.registry.createType('WeightV2', {
-			refTime: maxGas,
-			proofSize: maxGas,
-		  }),
-		  storageDepositLimit: null,
-		},
-	  );
-
-	  console.log(`outcome: ${result.isOk ? 'Ok' : 'Error'}`); // outcome: Ok
-	  console.log(`gasRequired ${gasRequired.toString()}`);    // gasRequired {"refTime":6219235328,"proofSize":131072}
-  
-	  const gasLimit = astar_api.registry.createType('WeightV2', gasRequired); //as WeightV2
-  
-	  // Send the transaction, like elsewhere this is a normal extrinsic with the same rules as applied in the API (As with the read example,
-	  // additional params, if required can follow - here only one is needed)
-	  await contract.tx
-	  .calculateLiabilities (
-		{ 
-		  gasLimit,
-		  storageDepositLimit: null, 
-		}, 
-	  )
-	  .signAndSend( polkadot_test_account, { nonce: -1 }, result => {
-		if (result.status.isInBlock) {
-		  console.log(' =====>>> in a block');
-		} else if (result.status.isFinalized) {
-		  console.log(' =====>>> finalized');
-		  console.log('result: ',JSON.stringify(result,null,"\t"));
-		  console.log(` ********** tm_calculateLiabilities ********** ||| SmartPay Finalised`);
-  
-		}
-	  });
-  
-	}
-	else console.log(`ASTAR API IS NOT SET UP YET`);
-  
-}
-//#endregion
+//     }
+//     else { console.log(`ASTAR API IS NOT SET UP YET`); return null }
+//   }
+// //#endregion
 
 
-//SERVER WRITE FUNCTIONS
+// //WRITE
 
-//#region server_tm_checkOpenJobs 
-const server_tm_checkOpenJobs = async () => {
+// //#region tm_setLiabilitiesThresholds e.g. amount 10 for 10%
+// const tm_setLiabilitiesThresholds = async (amount) => {
+  
+// 	if (astar_api) 
+// 	{
+// 	  const contract = contract_treasury_manager;
 
+// 	  // D R Y  R U N (We perform the send from an account, here using polkadot_test_account address)
+// 	  const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
+// 	  const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
   
-	if (astar_api) 
-	{
-	  const contract = contract_treasury_manager;
-	  console.log(` ********** server_tm_checkOpenJobs ********** ||| SmartPay Submitted`);
+// 	  const { gasRequired, storageDeposit, result } = await contract.query.setLiabilitiesThresholds (
+// 		polkadot_test_account.address, 
+// 		{
+// 		  gasLimit: astar_api.registry.createType('WeightV2', {
+// 			refTime: maxGas,
+// 			proofSize: maxGas,
+// 		  }),
+// 		  storageDepositLimit: null,
+// 		},
+// 		amount
+// 	  );
 
-	  // D R Y  R U N (We perform the send from an account, here using polkadot_test_account address)
-	  const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
-	  const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
+// 	  console.log(`outcome: ${result.isOk ? 'Ok' : 'Error'}`); // outcome: Ok
+// 	  console.log(`gasRequired ${gasRequired.toString()}`);    // gasRequired {"refTime":6219235328,"proofSize":131072}
   
-	  const { gasRequired, storageDeposit, result } = await contract.query.checkOpenJobs (
-		polkadot_test_account.address, 
-		{
-		  gasLimit: astar_api.registry.createType('WeightV2', {
-			refTime: maxGas,
-			proofSize: maxGas,
-		  }),
-		  storageDepositLimit: null,
-		},
-	  );
+// 	  const gasLimit = astar_api.registry.createType('WeightV2', gasRequired); //as WeightV2
+  
+// 	  // Send the transaction, like elsewhere this is a normal extrinsic with the same rules as applied in the API (As with the read example,
+// 	  // additional params, if required can follow - here only one is needed)
+// 	  await contract.tx
+// 	  .setLiabilitiesThresholds (
+// 		{ 
+// 		  gasLimit,
+// 		  storageDepositLimit: null, 
+// 		}, 
+// 		amount
+// 	  )
+// 	  .signAndSend( polkadot_test_account, { nonce: -1 }, result => {
+// 		if (result.status.isInBlock) {
+// 		  console.log(' =====>>> in a block');
+// 		} else if (result.status.isFinalized) {
+// 		  console.log(' =====>>> finalized');
+// 		  console.log('result: ',JSON.stringify(result,null,"\t"));
+  
+// 		}
+// 	  });
+  
+// 	}
+// 	else console.log(`ASTAR API IS NOT SET UP YET`);
+  
+// }
+// //#endregion
 
-	//   console.log(`outcome: ${result.isOk ? 'Ok' : 'Error'}`); // outcome: Ok
-	//   console.log(`gasRequired ${gasRequired.toString()}`);    // gasRequired {"refTime":6219235328,"proofSize":131072}
+// //#region tm_setCheckPointsIntervals e.g. 100, 200, 300 added to current timestamp (milliseconds)
+// const tm_setCheckPointsIntervals = async (checkpoint1, checkpoint2, checkpoint3) => {
   
-	  const gasLimit = astar_api.registry.createType('WeightV2', gasRequired); //as WeightV2
-  
-	  // Send the transaction, like elsewhere this is a normal extrinsic with the same rules as applied in the API (As with the read example,
-	  // additional params, if required can follow - here only one is needed)
-	  await contract.tx
-	  .checkOpenJobs (
-		{ 
-		  gasLimit,
-		  storageDepositLimit: null, 
-		}, 
-	  )
-	  .signAndSend( polkadot_test_account, { nonce: -1 }, result => {
-		if (result.status.isInBlock) {
-		  console.log(' =====>>> in a block');
-		} else if (result.status.isFinalized) {
-		  console.log(' =====>>> finalized');
-		  console.log('result: ',JSON.stringify(result,null,"\t"));
-		  console.log(` ********** server_tm_checkOpenJobs ********** ||| SmartPay Finalised`);
-  
-		}
-	  });
-  
-	}
-	else { console.log(`ASTAR API IS NOT SET UP YET`);  }
+// 	if (astar_api) 
+// 	{
+// 	  const contract = contract_treasury_manager;
 
+// 	  // D R Y  R U N (We perform the send from an account, here using polkadot_test_account address)
+// 	  const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
+// 	  const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
   
-}
-//#endregion
+// 	  const { gasRequired, storageDeposit, result } = await contract.query.setCheckPointsIntervals (
+// 		polkadot_test_account.address, 
+// 		{
+// 		  gasLimit: astar_api.registry.createType('WeightV2', {
+// 			refTime: maxGas,
+// 			proofSize: maxGas,
+// 		  }),
+// 		  storageDepositLimit: null,
+// 		},
+// 		checkpoint1, checkpoint2, checkpoint3
+// 	  );
 
-//#region server_tm_checkPendingJobs  
-const server_tm_checkPendingJobs = async () => {
+// 	  console.log(`outcome: ${result.isOk ? 'Ok' : 'Error'}`); // outcome: Ok
+// 	  console.log(`gasRequired ${gasRequired.toString()}`);    // gasRequired {"refTime":6219235328,"proofSize":131072}
   
-	if (astar_api) 
-	{
-	  const contract = contract_treasury_manager;
-	  console.log(` ********** server_tm_checkPendingJobs ********** ||| SmartPay Submitted`);
+// 	  const gasLimit = astar_api.registry.createType('WeightV2', gasRequired); //as WeightV2
+  
+// 	  // Send the transaction, like elsewhere this is a normal extrinsic with the same rules as applied in the API (As with the read example,
+// 	  // additional params, if required can follow - here only one is needed)
+// 	  await contract.tx
+// 	  .setCheckPointsIntervals (
+// 		{ 
+// 		  gasLimit,
+// 		  storageDepositLimit: null, 
+// 		}, 
+// 		checkpoint1, checkpoint2, checkpoint3
+// 	  )
+// 	  .signAndSend( polkadot_test_account, result => {
+// 		if (result.status.isInBlock) {
+// 		  console.log(' =====>>> in a block');
+// 		} else if (result.status.isFinalized) {
+// 		  console.log(' =====>>> finalized');
+// 		  console.log('result: ',JSON.stringify(result,null,"\t"));
+  
+// 		}
+// 	  });
+  
+// 	}
+// 	else console.log(`ASTAR API IS NOT SET UP YET`);
+  
+// }
+// //#endregion
 
-	  // D R Y  R U N (We perform the send from an account, here using polkadot_test_account address)
-	  const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
-	  const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
+// //#region tm_calculateLiabilities    BOTH server and front end for different reasons
+// const tm_calculateLiabilities = async () => {
   
-	  const { gasRequired, storageDeposit, result } = await contract.query.checkPendingJobs (
-		polkadot_test_account.address, 
-		{
-		  gasLimit: astar_api.registry.createType('WeightV2', {
-			refTime: maxGas,
-			proofSize: maxGas,
-		  }),
-		  storageDepositLimit: null,
-		},
-	  );
+// 	if (astar_api) 
+// 	{
+// 	  const contract = contract_treasury_manager;
+// 	  console.log(` ********** tm_calculateLiabilities ********** ||| SmartPay Submitted`);
 
-	//   console.log(`outcome: ${result.isOk ? 'Ok' : 'Error'}`); // outcome: Ok
-	//   console.log(`gasRequired ${gasRequired.toString()}`);    // gasRequired {"refTime":6219235328,"proofSize":131072}
+// 	  // D R Y  R U N (We perform the send from an account, here using polkadot_test_account address)
+// 	  const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
+// 	  const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
   
-	  const gasLimit = astar_api.registry.createType('WeightV2', gasRequired); //as WeightV2
-  
-	  // Send the transaction, like elsewhere this is a normal extrinsic with the same rules as applied in the API (As with the read example,
-	  // additional params, if required can follow - here only one is needed)
-	  await contract.tx
-	  .checkPendingJobs (
-		{ 
-		  gasLimit,
-		  storageDepositLimit: null, 
-		}, 
-	  )
-	  .signAndSend( polkadot_test_account, { nonce: -1 }, result => {
-		if (result.status.isInBlock) {
-		  console.log(' =====>>> in a block');
-		} else if (result.status.isFinalized) {
-		  console.log(' =====>>> finalized');
-		  console.log('result: ',JSON.stringify(result,null,"\t"));
-    	  console.log(` ********** server_tm_checkPendingJobs ********** ||| SmartPay Finalised`);
-  
-		}
-	  });
-  
-	}
-	else { console.log(`ASTAR API IS NOT SET UP YET`);  }
+// 	  const { gasRequired, storageDeposit, result } = await contract.query.calculateLiabilities (
+// 		polkadot_test_account.address, 
+// 		{
+// 		  gasLimit: astar_api.registry.createType('WeightV2', {
+// 			refTime: maxGas,
+// 			proofSize: maxGas,
+// 		  }),
+// 		  storageDepositLimit: null,
+// 		},
+// 	  );
 
-}
-//#endregion
+// 	  console.log(`outcome: ${result.isOk ? 'Ok' : 'Error'}`); // outcome: Ok
+// 	  console.log(`gasRequired ${gasRequired.toString()}`);    // gasRequired {"refTime":6219235328,"proofSize":131072}
+  
+// 	  const gasLimit = astar_api.registry.createType('WeightV2', gasRequired); //as WeightV2
+  
+// 	  // Send the transaction, like elsewhere this is a normal extrinsic with the same rules as applied in the API (As with the read example,
+// 	  // additional params, if required can follow - here only one is needed)
+// 	  await contract.tx
+// 	  .calculateLiabilities (
+// 		{ 
+// 		  gasLimit,
+// 		  storageDepositLimit: null, 
+// 		}, 
+// 	  )
+// 	  .signAndSend( polkadot_test_account, { nonce: -1 }, result => {
+// 		if (result.status.isInBlock) {
+// 		  console.log(' =====>>> in a block');
+// 		} else if (result.status.isFinalized) {
+// 		  console.log(' =====>>> finalized');
+// 		  console.log('result: ',JSON.stringify(result,null,"\t"));
+// 		  console.log(` ********** tm_calculateLiabilities ********** ||| SmartPay Finalised`);
+  
+// 		}
+// 	  });
+  
+// 	}
+// 	else console.log(`ASTAR API IS NOT SET UP YET`);
+  
+// }
+// //#endregion
 
-//#region server_tm_makeNativePayments 
-const server_tm_makeNativePayments = async () => {
-  
-	if (astar_api) 
-	{
-	  const contract = contract_treasury_manager;
-	  console.log(` ********** server_tm_makeNativePayments ********** ||| SmartPay Submitted`);
 
+// //SERVER WRITE FUNCTIONS
 
-	  // D R Y  R U N (We perform the send from an account, here using polkadot_test_account address)
-	  const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
-	  const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
-  
-	  const { gasRequired, storageDeposit, result } = await contract.query.makeNativePayments (
-		polkadot_test_account.address, 
-		{
-		  gasLimit: astar_api.registry.createType('WeightV2', {
-			refTime: maxGas,
-			proofSize: maxGas,
-		  }),
-		  storageDepositLimit: null,
-		},
-	  );
-
-	//   console.log(`outcome: ${result.isOk ? 'Ok' : 'Error'}`); // outcome: Ok
-	//   console.log(`gasRequired ${gasRequired.toString()}`);    // gasRequired {"refTime":6219235328,"proofSize":131072}
-  
-	  const gasLimit = astar_api.registry.createType('WeightV2', gasRequired); //as WeightV2
-  
-	  // Send the transaction, like elsewhere this is a normal extrinsic with the same rules as applied in the API (As with the read example,
-	  // additional params, if required can follow - here only one is needed)
-	  await contract.tx
-	  .makeNativePayments (
-		{ 
-		  gasLimit,
-		  storageDepositLimit: null, 
-		}, 
-	  )
-	  .signAndSend( polkadot_test_account, { nonce: -1 }, result => {
-		if (result.status.isInBlock) {
-		  console.log(' =====>>> in a block');
-		} else if (result.status.isFinalized) {
-		  console.log(' =====>>> finalized');
-		  console.log('result: ',JSON.stringify(result,null,"\t"));
-    	  console.log(` ********** server_tm_makeNativePayments ********** ||| SmartPay Finalised`);
-  
-		}
-	  });
-  
-	}
-	else { console.log(`ASTAR API IS NOT SET UP YET`); }
-
-}
-//#endregion
-
-//#region server_tm_makeNativeUsdPayments  
-const server_tm_makeNativeUsdPayments = async () => {
-  
-	if (astar_api) 
-	{
-	  const contract = contract_treasury_manager;
-	  console.log(` ********** server_tm_makeNativeUsdPayments ********** ||| SmartPay Submitted`);
-
-	  // D R Y  R U N (We perform the send from an account, here using polkadot_test_account address)
-	  const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
-	  const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
-  
-	  const { gasRequired, storageDeposit, result } = await contract.query.makeNativeUsdPayments (
-		polkadot_test_account.address, 
-		{
-		  gasLimit: astar_api.registry.createType('WeightV2', {
-			refTime: maxGas,
-			proofSize: maxGas,
-		  }),
-		  storageDepositLimit: null,
-		},
-	  );
-
-	//   console.log(`outcome: ${result.isOk ? 'Ok' : 'Error'}`); // outcome: Ok
-	//   console.log(`gasRequired ${gasRequired.toString()}`);    // gasRequired {"refTime":6219235328,"proofSize":131072}
-  
-	  const gasLimit = astar_api.registry.createType('WeightV2', gasRequired); //as WeightV2
-  
-	  // Send the transaction, like elsewhere this is a normal extrinsic with the same rules as applied in the API (As with the read example,
-	  // additional params, if required can follow - here only one is needed)
-	  await contract.tx
-	  .makeNativeUsdPayments (
-		{ 
-		  gasLimit,
-		  storageDepositLimit: null, 
-		}, 
-	  )
-	  .signAndSend( polkadot_test_account, { nonce: -1 }, result => {
-		if (result.status.isInBlock) {
-		  console.log(' =====>>> in a block');
-		} else if (result.status.isFinalized) {
-		  console.log(' =====>>> finalized');
-		  console.log('result: ',JSON.stringify(result,null,"\t"));
-    	  console.log(` ********** server_tm_makeNativeUsdPayments ********** ||| SmartPay Finalised`);
+// //#region server_tm_checkOpenJobs 
+// const server_tm_checkOpenJobs = async () => {
 
   
-		}
-	  });
-  
-	}
-	else { console.log(`ASTAR API IS NOT SET UP YET`); }
+// 	if (astar_api) 
+// 	{
+// 	  const contract = contract_treasury_manager;
+// 	  console.log(` ********** server_tm_checkOpenJobs ********** ||| SmartPay Submitted`);
 
-}
-//#endregion
+// 	  // D R Y  R U N (We perform the send from an account, here using polkadot_test_account address)
+// 	  const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
+// 	  const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
+  
+// 	  const { gasRequired, storageDeposit, result } = await contract.query.checkOpenJobs (
+// 		polkadot_test_account.address, 
+// 		{
+// 		  gasLimit: astar_api.registry.createType('WeightV2', {
+// 			refTime: maxGas,
+// 			proofSize: maxGas,
+// 		  }),
+// 		  storageDepositLimit: null,
+// 		},
+// 	  );
 
-//#region server_tm_makeNonNativePayments  
-const server_tm_makeNonNativePayments = async () => {
+// 	//   console.log(`outcome: ${result.isOk ? 'Ok' : 'Error'}`); // outcome: Ok
+// 	//   console.log(`gasRequired ${gasRequired.toString()}`);    // gasRequired {"refTime":6219235328,"proofSize":131072}
   
-	if (astar_api) 
-	{
-	  const contract = contract_treasury_manager;
-	  console.log(` ********** server_tm_makeNonNativePayments ********** ||| SmartPay Submitted`);
+// 	  const gasLimit = astar_api.registry.createType('WeightV2', gasRequired); //as WeightV2
+  
+// 	  // Send the transaction, like elsewhere this is a normal extrinsic with the same rules as applied in the API (As with the read example,
+// 	  // additional params, if required can follow - here only one is needed)
+// 	  await contract.tx
+// 	  .checkOpenJobs (
+// 		{ 
+// 		  gasLimit,
+// 		  storageDepositLimit: null, 
+// 		}, 
+// 	  )
+// 	  .signAndSend( polkadot_test_account, { nonce: -1 }, result => {
+// 		if (result.status.isInBlock) {
+// 		  console.log(' =====>>> in a block');
+// 		} else if (result.status.isFinalized) {
+// 		  console.log(' =====>>> finalized');
+// 		  console.log('result: ',JSON.stringify(result,null,"\t"));
+// 		  console.log(` ********** server_tm_checkOpenJobs ********** ||| SmartPay Finalised`);
+  
+// 		}
+// 	  });
+  
+// 	}
+// 	else { console.log(`ASTAR API IS NOT SET UP YET`);  }
 
-	  // D R Y  R U N (We perform the send from an account, here using polkadot_test_account address)
-	  const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
-	  const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
   
-	  const { gasRequired, storageDeposit, result } = await contract.query.makeNonNativePayments (
-		polkadot_test_account.address, 
-		{
-		  gasLimit: astar_api.registry.createType('WeightV2', {
-			refTime: maxGas,
-			proofSize: maxGas,
-		  }),
-		  storageDepositLimit: null,
-		},
-	  );
+// }
+// //#endregion
 
-	//   console.log(`outcome: ${result.isOk ? 'Ok' : 'Error'}`); // outcome: Ok
-	//   console.log(`gasRequired ${gasRequired.toString()}`);    // gasRequired {"refTime":6219235328,"proofSize":131072}
+// //#region server_tm_checkPendingJobs  
+// const server_tm_checkPendingJobs = async () => {
   
-	  const gasLimit = astar_api.registry.createType('WeightV2', gasRequired); //as WeightV2
-  
-	  // Send the transaction, like elsewhere this is a normal extrinsic with the same rules as applied in the API (As with the read example,
-	  // additional params, if required can follow - here only one is needed)
-	  await contract.tx
-	  .makeNonNativePayments (
-		{ 
-		  gasLimit,
-		  storageDepositLimit: null, 
-		}, 
-	  )
-	  .signAndSend( polkadot_test_account, { nonce: -1 }, result => {
-		if (result.status.isInBlock) {
-		  console.log(' =====>>> in a block');
-		} else if (result.status.isFinalized) {
-		  console.log(' =====>>> finalized');
-		  console.log('result: ',JSON.stringify(result,null,"\t"));
-    	  console.log(` ********** server_tm_makeNonNativePayments ********** ||| SmartPay Finalised`);
-  
-		}
-	  });
-  
-	}
-	else { console.log(`ASTAR API IS NOT SET UP YET`);  }
+// 	if (astar_api) 
+// 	{
+// 	  const contract = contract_treasury_manager;
+// 	  console.log(` ********** server_tm_checkPendingJobs ********** ||| SmartPay Submitted`);
 
-}
-//#endregion
+// 	  // D R Y  R U N (We perform the send from an account, here using polkadot_test_account address)
+// 	  const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
+// 	  const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
+  
+// 	  const { gasRequired, storageDeposit, result } = await contract.query.checkPendingJobs (
+// 		polkadot_test_account.address, 
+// 		{
+// 		  gasLimit: astar_api.registry.createType('WeightV2', {
+// 			refTime: maxGas,
+// 			proofSize: maxGas,
+// 		  }),
+// 		  storageDepositLimit: null,
+// 		},
+// 	  );
+
+// 	//   console.log(`outcome: ${result.isOk ? 'Ok' : 'Error'}`); // outcome: Ok
+// 	//   console.log(`gasRequired ${gasRequired.toString()}`);    // gasRequired {"refTime":6219235328,"proofSize":131072}
+  
+// 	  const gasLimit = astar_api.registry.createType('WeightV2', gasRequired); //as WeightV2
+  
+// 	  // Send the transaction, like elsewhere this is a normal extrinsic with the same rules as applied in the API (As with the read example,
+// 	  // additional params, if required can follow - here only one is needed)
+// 	  await contract.tx
+// 	  .checkPendingJobs (
+// 		{ 
+// 		  gasLimit,
+// 		  storageDepositLimit: null, 
+// 		}, 
+// 	  )
+// 	  .signAndSend( polkadot_test_account, { nonce: -1 }, result => {
+// 		if (result.status.isInBlock) {
+// 		  console.log(' =====>>> in a block');
+// 		} else if (result.status.isFinalized) {
+// 		  console.log(' =====>>> finalized');
+// 		  console.log('result: ',JSON.stringify(result,null,"\t"));
+//     	  console.log(` ********** server_tm_checkPendingJobs ********** ||| SmartPay Finalised`);
+  
+// 		}
+// 	  });
+  
+// 	}
+// 	else { console.log(`ASTAR API IS NOT SET UP YET`);  }
+
+// }
+// //#endregion
+
+// //#region server_tm_makeNativePayments 
+// const server_tm_makeNativePayments = async () => {
+  
+// 	if (astar_api) 
+// 	{
+// 	  const contract = contract_treasury_manager;
+// 	  console.log(` ********** server_tm_makeNativePayments ********** ||| SmartPay Submitted`);
+
+
+// 	  // D R Y  R U N (We perform the send from an account, here using polkadot_test_account address)
+// 	  const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
+// 	  const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
+  
+// 	  const { gasRequired, storageDeposit, result } = await contract.query.makeNativePayments (
+// 		polkadot_test_account.address, 
+// 		{
+// 		  gasLimit: astar_api.registry.createType('WeightV2', {
+// 			refTime: maxGas,
+// 			proofSize: maxGas,
+// 		  }),
+// 		  storageDepositLimit: null,
+// 		},
+// 	  );
+
+// 	//   console.log(`outcome: ${result.isOk ? 'Ok' : 'Error'}`); // outcome: Ok
+// 	//   console.log(`gasRequired ${gasRequired.toString()}`);    // gasRequired {"refTime":6219235328,"proofSize":131072}
+  
+// 	  const gasLimit = astar_api.registry.createType('WeightV2', gasRequired); //as WeightV2
+  
+// 	  // Send the transaction, like elsewhere this is a normal extrinsic with the same rules as applied in the API (As with the read example,
+// 	  // additional params, if required can follow - here only one is needed)
+// 	  await contract.tx
+// 	  .makeNativePayments (
+// 		{ 
+// 		  gasLimit,
+// 		  storageDepositLimit: null, 
+// 		}, 
+// 	  )
+// 	  .signAndSend( polkadot_test_account, { nonce: -1 }, result => {
+// 		if (result.status.isInBlock) {
+// 		  console.log(' =====>>> in a block');
+// 		} else if (result.status.isFinalized) {
+// 		  console.log(' =====>>> finalized');
+// 		  console.log('result: ',JSON.stringify(result,null,"\t"));
+//     	  console.log(` ********** server_tm_makeNativePayments ********** ||| SmartPay Finalised`);
+  
+// 		}
+// 	  });
+  
+// 	}
+// 	else { console.log(`ASTAR API IS NOT SET UP YET`); }
+
+// }
+// //#endregion
+
+// //#region server_tm_makeNativeUsdPayments  
+// const server_tm_makeNativeUsdPayments = async () => {
+  
+// 	if (astar_api) 
+// 	{
+// 	  const contract = contract_treasury_manager;
+// 	  console.log(` ********** server_tm_makeNativeUsdPayments ********** ||| SmartPay Submitted`);
+
+// 	  // D R Y  R U N (We perform the send from an account, here using polkadot_test_account address)
+// 	  const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
+// 	  const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
+  
+// 	  const { gasRequired, storageDeposit, result } = await contract.query.makeNativeUsdPayments (
+// 		polkadot_test_account.address, 
+// 		{
+// 		  gasLimit: astar_api.registry.createType('WeightV2', {
+// 			refTime: maxGas,
+// 			proofSize: maxGas,
+// 		  }),
+// 		  storageDepositLimit: null,
+// 		},
+// 	  );
+
+// 	//   console.log(`outcome: ${result.isOk ? 'Ok' : 'Error'}`); // outcome: Ok
+// 	//   console.log(`gasRequired ${gasRequired.toString()}`);    // gasRequired {"refTime":6219235328,"proofSize":131072}
+  
+// 	  const gasLimit = astar_api.registry.createType('WeightV2', gasRequired); //as WeightV2
+  
+// 	  // Send the transaction, like elsewhere this is a normal extrinsic with the same rules as applied in the API (As with the read example,
+// 	  // additional params, if required can follow - here only one is needed)
+// 	  await contract.tx
+// 	  .makeNativeUsdPayments (
+// 		{ 
+// 		  gasLimit,
+// 		  storageDepositLimit: null, 
+// 		}, 
+// 	  )
+// 	  .signAndSend( polkadot_test_account, { nonce: -1 }, result => {
+// 		if (result.status.isInBlock) {
+// 		  console.log(' =====>>> in a block');
+// 		} else if (result.status.isFinalized) {
+// 		  console.log(' =====>>> finalized');
+// 		  console.log('result: ',JSON.stringify(result,null,"\t"));
+//     	  console.log(` ********** server_tm_makeNativeUsdPayments ********** ||| SmartPay Finalised`);
+
+  
+// 		}
+// 	  });
+  
+// 	}
+// 	else { console.log(`ASTAR API IS NOT SET UP YET`); }
+
+// }
+// //#endregion
+
+// //#region server_tm_makeNonNativePayments  
+// const server_tm_makeNonNativePayments = async () => {
+  
+// 	if (astar_api) 
+// 	{
+// 	  const contract = contract_treasury_manager;
+// 	  console.log(` ********** server_tm_makeNonNativePayments ********** ||| SmartPay Submitted`);
+
+// 	  // D R Y  R U N (We perform the send from an account, here using polkadot_test_account address)
+// 	  const maximumBlockWeight = astar_api.consts.system.blockWeights.maxBlock;// as unknown as WeightV2
+// 	  const maxGas = maximumBlockWeight.refTime.toNumber() * 0.9;
+  
+// 	  const { gasRequired, storageDeposit, result } = await contract.query.makeNonNativePayments (
+// 		polkadot_test_account.address, 
+// 		{
+// 		  gasLimit: astar_api.registry.createType('WeightV2', {
+// 			refTime: maxGas,
+// 			proofSize: maxGas,
+// 		  }),
+// 		  storageDepositLimit: null,
+// 		},
+// 	  );
+
+// 	//   console.log(`outcome: ${result.isOk ? 'Ok' : 'Error'}`); // outcome: Ok
+// 	//   console.log(`gasRequired ${gasRequired.toString()}`);    // gasRequired {"refTime":6219235328,"proofSize":131072}
+  
+// 	  const gasLimit = astar_api.registry.createType('WeightV2', gasRequired); //as WeightV2
+  
+// 	  // Send the transaction, like elsewhere this is a normal extrinsic with the same rules as applied in the API (As with the read example,
+// 	  // additional params, if required can follow - here only one is needed)
+// 	  await contract.tx
+// 	  .makeNonNativePayments (
+// 		{ 
+// 		  gasLimit,
+// 		  storageDepositLimit: null, 
+// 		}, 
+// 	  )
+// 	  .signAndSend( polkadot_test_account, { nonce: -1 }, result => {
+// 		if (result.status.isInBlock) {
+// 		  console.log(' =====>>> in a block');
+// 		} else if (result.status.isFinalized) {
+// 		  console.log(' =====>>> finalized');
+// 		  console.log('result: ',JSON.stringify(result,null,"\t"));
+//     	  console.log(` ********** server_tm_makeNonNativePayments ********** ||| SmartPay Finalised`);
+  
+// 		}
+// 	  });
+  
+// 	}
+// 	else { console.log(`ASTAR API IS NOT SET UP YET`);  }
+
+// }
+// //#endregion
 
 
 
@@ -2611,37 +2652,37 @@ export {
           setPolkadotInjector,
           setup_SubstrateChain, 
 
-		  pallet_get_treasury_manager_address,
-		  pallet_get_admin,
-		  pallet_addNewVotedJob,
-		  pallet_removeJob,
-		  pallet_depositFundsToTreasuryManager,
-		  pallet_launchTreasuryManager,
-		  pallet_withdrawFundsFromTreasuryManager,
-		  pallet_setAdminHereAndManagerForTm,
-		  pallet_get_address,
+		//   pallet_get_treasury_manager_address,
+		//   pallet_get_admin,
+		//   pallet_addNewVotedJob,
+		//   pallet_removeJob,
+		//   pallet_depositFundsToTreasuryManager,
+		//   pallet_launchTreasuryManager,
+		//   pallet_withdrawFundsFromTreasuryManager,
+		//   pallet_setAdminHereAndManagerForTm,
+		//   pallet_get_address,
 
-		  tm_getPriceForPair,
-		  tm_getAveragePriceForPair,
-		  tm_getLiabilityThresholds,
-		  tm_getLiabilityHealth,
-		  tm_getLiabilityInUsdtTokensTreasury,
-		  tm_getLiabilityInUsdtTokens,
-		  tm_getLiabilityInTreasury,
-		  tm_getCheckPointIntervals,
-		  tm_getBalance,
-		  tm_setLiabilitiesThresholds,
-		  tm_getOpenJobIds,
-		  tm_getPendingJobsIds,
-		  tm_getCompletedJobsIds,
-		  tm_getJobInfo,
+		//   tm_getPriceForPair,
+		//   tm_getAveragePriceForPair,
+		//   tm_getLiabilityThresholds,
+		//   tm_getLiabilityHealth,
+		//   tm_getLiabilityInUsdtTokensTreasury,
+		//   tm_getLiabilityInUsdtTokens,
+		//   tm_getLiabilityInTreasury,
+		//   tm_getCheckPointIntervals,
+		//   tm_getBalance,
+		//   tm_setLiabilitiesThresholds,
+		//   tm_getOpenJobIds,
+		//   tm_getPendingJobsIds,
+		//   tm_getCompletedJobsIds,
+		//   tm_getJobInfo,
 
-		  server_tm_checkOpenJobs,
-		  server_tm_checkPendingJobs,
-		  server_tm_makeNativePayments,
-		  server_tm_makeNativeUsdPayments,
-		  server_tm_makeNonNativePayments,
-		  tm_calculateLiabilities,
+		//   server_tm_checkOpenJobs,
+		//   server_tm_checkPendingJobs,
+		//   server_tm_makeNativePayments,
+		//   server_tm_makeNativeUsdPayments,
+		//   server_tm_makeNonNativePayments,
+		//   tm_calculateLiabilities,
 
 		  //PHALA
 		  set_my_number,
@@ -2661,5 +2702,7 @@ export {
 		  start_new_game,
 		  check_game,
 		  submit_tickets,
+		  get_ordered_tickets,
+		  get_winning_tickets,
 
        };

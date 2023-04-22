@@ -9,15 +9,17 @@ import NAV_NavHade from "./layouts/nav/NavHader";
 import NAV_SideBar from "./layouts/nav/SideBar";
 import Footer from "./layouts/Footer";
 
-import SmartPayDashboard from "./components/Screens/SmartPayDashboard";
-import ApplicationForm from "./components/Screens/Application";
 import SpotTheBall from "./components/Screens/SpotTheBall";
-import LiveJobs from "./components/Screens/LiveJobs";
+
+import Tickets from "./components/Screens/Tickets";
+
+
+
 import ReadMe from "./components/Screens/ReadMe";
 
 import { ThemeContext } from "../context/ThemeContext";  
  
-const Markup = ( { astar_api, blockHeader, polakdotSignerfunction, polkadtoAccountList, walletConnected,
+const Markup = ( { api, blockHeader, polakdotSignerfunction, polkadtoAccountList, walletConnected,
 }) => {
 
   const { menuToggle } = useContext(ThemeContext);
@@ -45,26 +47,14 @@ const Markup = ( { astar_api, blockHeader, polakdotSignerfunction, polkadtoAccou
             style={{ minHeight: window.screen.height - 60 }}
           >
             <Switch>
-              <Route exact path='/smartpaydashboard'> 
-                  <SmartPayDashboard 
-                      astar_api={astar_api} blockHeader={blockHeader}
+              <Route exact path='/Tickets'> 
+                  <Tickets 
+                    api={api} blockHeader={blockHeader}
                   /> 
-              </Route>
-              <Route exact path='/JobApplicationForm'> 
-                  <ApplicationForm 
-                      astar_api={astar_api} blockHeader={blockHeader}
-                  /> 
-              </Route>
-              <Route exact path='/LiveJobss'> 
- 
-                  <LiveJobs 
-                    astar_api={astar_api} blockHeader={blockHeader}
-                  /> 
-
               </Route>
               <Route exact path='/SpotTheBall'> 
                   <SpotTheBall 
-                      astar_api={astar_api} blockHeader={blockHeader}
+                      api={api} blockHeader={blockHeader}
                   /> 
               </Route>
               <Route exact path='/readme'> <ReadMe/> </Route>

@@ -1,6 +1,6 @@
 {
   "source": {
-    "hash": "0xa80aee772096cde046dab4661aa2c18cbdd11f9d022560f8a83bbcb190fb89bb",
+    "hash": "0xdcc6397c593a2eff133833be72e3b4ba53d9200d6fecdaa5f8c9a4d088bdbf73",
     "language": "ink! 4.1.0",
     "compiler": "rustc 1.68.2",
     "build_info": {
@@ -96,7 +96,7 @@
           }
         ],
         "docs": [
-          " Configure the Game TESTED"
+          " Configure the Game  "
         ],
         "label": "config_game",
         "mutates": true,
@@ -130,7 +130,7 @@
       {
         "args": [],
         "docs": [
-          " Get Game state, image_hash, start and end time and ticket cost TESTED"
+          " Get Game state, image_hash, start and end time and ticket cost"
         ],
         "label": "get_game_stats",
         "mutates": false,
@@ -162,7 +162,7 @@
       {
         "args": [],
         "docs": [
-          " Get all player AccountIds TESTED"
+          " Get all player AccountIds  "
         ],
         "label": "get_players",
         "mutates": false,
@@ -179,7 +179,7 @@
       {
         "args": [],
         "docs": [
-          " Get Sums For Testing Only TESTED"
+          " Get Sums For Testing Only  "
         ],
         "label": "get_sums",
         "mutates": false,
@@ -206,7 +206,7 @@
           }
         ],
         "docs": [
-          " For a given AccountId get all ticket Ids TESTED"
+          " For a given AccountId get all ticket Ids  "
         ],
         "label": "get_players_mapping",
         "mutates": false,
@@ -233,7 +233,7 @@
           }
         ],
         "docs": [
-          " Give me ticket Id and get all ticket details TESTED"
+          " Give me ticket Id and get all ticket details  "
         ],
         "label": "get_tickets_mapping",
         "mutates": false,
@@ -250,7 +250,7 @@
       {
         "args": [],
         "docs": [
-          " Get all ticket coordinates TESTED"
+          " Get all ticket coordinates  "
         ],
         "label": "get_all_tickets",
         "mutates": false,
@@ -282,7 +282,7 @@
       {
         "args": [],
         "docs": [
-          " Get Solution TESTED"
+          " Get Solution  "
         ],
         "label": "get_wisdom_of_crowd_coordinates",
         "mutates": false,
@@ -387,7 +387,7 @@
           }
         ],
         "docs": [
-          " Submit new ticket TESTED"
+          " Submit new ticket  "
         ],
         "label": "submit_tickets",
         "mutates": true,
@@ -404,7 +404,7 @@
       {
         "args": [],
         "docs": [
-          " Calculate distances of tickets from solution TESTED"
+          " Calculate distances of tickets from solution  "
         ],
         "label": "calculate_distances",
         "mutates": true,
@@ -421,7 +421,7 @@
       {
         "args": [],
         "docs": [
-          " Admin of sc TESTED"
+          " Admin of sc  "
         ],
         "label": "get_admin",
         "mutates": false,
@@ -465,7 +465,7 @@
       {
         "args": [],
         "docs": [
-          " get_existential_deposit TESTED"
+          " get_existential_deposit  "
         ],
         "label": "get_existential_deposit",
         "mutates": false,
@@ -492,7 +492,7 @@
           }
         ],
         "docs": [
-          " check if accoutn is a contract TESTED"
+          " check if accoutn is a contract  "
         ],
         "label": "account_is_contract",
         "mutates": false,
@@ -509,7 +509,7 @@
       {
         "args": [],
         "docs": [
-          " get contract balance TESTED"
+          " get contract balance  "
         ],
         "label": "get_contract_balance",
         "mutates": false,
@@ -910,7 +910,7 @@
                   "name": "(A, B)"
                 }
               },
-              "name": "calculate_wisdom_of_crowd_coordinates"
+              "name": "wisdom_of_crowd_coordinates"
             },
             {
               "layout": {
