@@ -1,10 +1,15 @@
-THIS IS A BOILER PLATE FRONT END FOR PHALA DURING PHAT CLOSED BETA
+> Note: Please read instructions in the parent Phat Contract Repo here https://github.com/Entity54/Phat-Games-STB
 
-HAS A BOILER PLATE LIB.RS AND .CONTRACT IN SMART CONTRACT FOLDER AND THE FRON END IS LINKED ON SMARTPAU DASHBOARD THE BUTTONS
+For installation:
 
-CHANGE ADMIN
+    $yarn
+    $npm start
 
-PAHT SETMYNUM
+and can see in http://localhost:3000/ the front end application connected to the game Phat contract
+
+<br>
+<br>
+<br>
 
 # Getting Started with Create React App
 
@@ -78,11 +83,3 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
 
 <br>
-<br>
-<br>
-
-# POLKADOT CONTRACTS API FOR INK! SMART CONTRACTS
-
-$yarm
-
-to install

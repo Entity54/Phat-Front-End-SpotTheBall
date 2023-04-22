@@ -41,46 +41,71 @@ const ReadMe = () => {
 			  className="timeline-panel text-muted"
 			  to="/widget-basic"
 			>
-			  <strong className="text-primary fs-28">SmartPay</strong>.
+			  <strong className="text-primary fs-28">Spot The Ball</strong>.
 
-			  <p className="mb-4 mt-4 text-dark">
+<p className="m-4 mt-4 text-dark" style={{ fontSize:"24px"}}>
 			  
-			  SmartPay is an application designed to give projects multiple options when making payments from their Treasury accounts.<br/><br/>
+Step 1			  
+<br></br>
+In the Tickets page we can see the Start button which is Green when a new game can be started or greyed out if there is already an active game. A new game can only start after the completion of any active game.
+<br></br>
 
-SmartPay was born from the real-world problems and inefficiencies that project teams face when making payments that have been approved through their Treasury processes.<br/>
+The Start and End time show when the game started and when it will be completed
+<br></br>
 
-As it currently stands, when an applicant applies for funding from a project Treasury they normally include an estimation of the number of tokens they require to complete their proposal.<br/> This estimation is based on either the current or recent average price of the token against their fiat base currency they need to spend at the time the proposal is submitted.<br/>
-There are many fundamental problems with this approach, including:</p>
-
-<p className="m-4">
-•	The token/fiat price at the time of submitting the proposal can often be wildly different to the price at the time the proposal is eventually passed and the funds then distributed. If the applicant requires fiat to complete the proposed task this can result in there being either a shortfall or an overpayment of tokens by the treasury to the applicant.<br/>
-
-If there is a shortfall, due to the token/fiat price depreciating during the Treasury approval process, then the applicant often has to submit a follow-up Treasury proposal for a “Top Up” so they have all the fiat funds they originally needed. These “Top Up’ requests are always granted by the Treasury making the process very inefficient.<br/>
-
-If the token/fiat price appreciates during the Treasury approval process, this results in the applicant receiving more fiat than they needed when they finally execute their swap, sometimes considerably more. The Treasury could have saved many tokens if they had the ability to use a more current token/fiat price at the moment of distribution instead.<br/><br/>
-
-•	There are many Treasury proposals whereby the applicant does not require the funds until a date in the future, regardless of how long the Treasury approval process takes. These payments, whether they are either in the native token or a fiat-denominated amount of the native token, can be held in waiting, by the SmartPay smart contracts until the future date, at which point any token/fiat price calculations can be made before automatic distribution.<br/><br/>
-
-•	There are scenarios whereby successful Treasury proposal funds do not need to be transferred to the applicant at all.<br/> A good example of this would be whereby a company applies to organise a hackathon.<br/>
-
-To be efficient, the proposal should ideally be split into two parts, the first being the funds needed to organise the hackathon and the second being the prize monies involved. There is no real reason that the prize money allocations should be transferred to the hackathon organisers at any point. Aside from the trust involved in making this larger type of payment to an organiser (often months before prizes are due), there is also the price volatility problem mentioned above as many Hackathon prizes are denominated in fiat amounts.<br/><br/>
-
-It is entirely possible that some large proposals take advantage of the way the system currently works by hoping for the token/fiat price to appreciate to receive more money than needed, whilst simultaneously using the guaranteed “Top Up” process as a backstop.<br/><br/>
+Finally the remaining amount of minutes in the game is shown
+</p>
 
 
-•	There are often times when specialists from different ecosystems can help one another but they don’t wish to receive the native currency of that ecosystem. The SmartPay application also removes this friction by allowing the Treasury proposal to be settled in an alternative token, on a future date, making use of various oracles and a dex.<br/><br/>
+<p className="m-4 mt-4 text-dark" style={{ fontSize:"24px"}}>
+			  
+Step 2			  
+<br></br>
+Once a new game has started a fresh image is loaded which has the ball digitally removed
+<br></br>
 
-•	Smartpay distributions can also take the form of Interval Payments. This is especially useful if an applicant makes a Treasury proposal for ongoing work that involves regular payments.<br/> Examples might include payments for regular articles, translations, meetups etc. Whilst the Treasury would transfer the complete funds to SmartPay upon governance approval, the multiple payments to the applicant would be made on the agreed regular future interval dates and at the prevailing token/fiat price (if they were fiat denominated) at the moment of distribution.<br/>
+Each game participant can click on the image and create a ticket with the generated coordinates
+<br></br>
+
+Each ticket has a cost of 1 PHA and the user can play one or multiple tickets per time
+<br></br>
+
+Each time the user clicks on the image he should click the Play button to generate a ticket with these coordinates
+<br></br>
+
+When he is ready he can click Submit to submit his tickets. The total cost in PHA is shown next to the submit button
+<br></br>
+
+The Pot Size shows the total PHA that have been deposited
+<br></br>
+
+The Payout is 80% of the Pot Size and the Fees (20%) is for the owner of the game.
+<br></br>
 
 </p>
-<p className="text-dark">
-By using the SmartPay system, the project Treasuries have access to the latest information regarding the value of payments to be released on a rolling 2 Day, 7 Day, 30 Day and Total basis.<br/>
-By using this approach SmartPay can query the current average price via an oracle to make sure that it can safely meet the fiat denominated distributions for these multiple upcoming time horizons.<br/><br/>
 
-If the system detects an upcoming shortfall on the funds due to be distributed, due to the token/fiat price depreciating in value, a notification is sent to the Treasury to send more funds.<br/> This could be in the form of an automatic expedited Treasury proposal in future versions of SmartPay.<br/>
-Conversely, if the tokens held become in excess of the funds to be distributed, due to the token/fiat rate appreciating, a notification can be sent to the Treasury to inform them that excess tokens can be withdrawn back to the Treasury, making the whole Treasury funding process system much more efficient.<br/><br/>
+<p className="m-4 mt-4 text-dark" style={{ fontSize:"24px"}}>
 
-Introducing SmartPay to help manage Treasury approved funding requests, should benefit every project in the ecosystem.<br/>
+Step 3			  
+<br></br>
+When the game expires the Number of tickets played in the current game is shown underneath the Start button in the Tickets page
+<br></br>
+
+The winner of the game along with previous winners are shown in the second tab Hall of Fame with all relevant details e.g. owner of the ticket winning coordinates, competition id, number of players (account addresses), number of tickets and the Prize Money won
+<br></br>
+
+When the competition completes in the SpotTheBall page we can see the solution: "Wisdom of the Crowd Answer" and the winning ticket coordinates
+<br></br>
+
+Finally the user account balance in PHA is shown at the top right corner of the page
+<br></br>
+
+The wisdom of the crowd dictates that the more tickets played, the closer the average prediction of the coordinates is to the real position of the ball.
+<br></br>
+
+Therefore the winning ticket is the one with the smallest distance to the Wisdom of the Crowd Answer
+<br></br>
+
 
 			  </p>
 			</Link>
